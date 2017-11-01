@@ -1,0 +1,86 @@
+html, 
+body {
+    height:100%;
+    background-color: #fbfaf5;
+    color: #2b2b2b;
+    letter-spacing: 0.3em;
+}
+* html div#container {
+    height:100%;
+}
+div#container {
+    width: 100%;
+    margin:0px auto;
+    position:relative;
+    min-height: 100%;
+}
+body > #container {
+    height: auto;
+}
+div#main {
+    padding-bottom:30px;
+}
+div#contents {
+    padding: 10px;
+    word-break: break-all;
+}
+#foot {
+    position:absolute;
+    bottom:0px;
+    height:30px;
+    width:100%;
+    background-color: #c9caca;
+}
+#foot p {
+    padding-top: 7px;
+    text-align: center;
+    font-size: 80%;
+    letter-spacing: 0.2em;
+}
+
+h1 {
+    background-color: #bce2e8;
+    font-size: 150%;
+    font-weight: bold;
+    padding: 10px;
+    text-align: center;
+}
+
+h2 {
+    font-size: 120%;
+    font-weight: bold;
+    margin-bottom: 10px;
+    line-height: 1.5em;
+}
+
+p#text {
+    line-height: 1.5em;
+    margin-bottom: 15px;
+}
+
+p#url {
+    line-height: 1.3em;
+    margin-bottom: 15px;
+}
+
+p#image {
+    text-align: center;
+}
+
+p#image img {
+    border: 1px solid #bbb;
+    line-height: 1;
+    padding: 4px;
+    margin-bottom: 15px;
+    width: 80%;
+}
+
+hr {
+    color: #999;
+}
+
+p#funeral {
+    line-height: 1.5em;
+    margin-bottom: 15px;
+    font-size: 90%;
+}

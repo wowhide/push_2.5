@@ -1,0 +1,6 @@
+suPHP_ConfigPath /home/h-yamato/hyamato.net/xserver_php/
+AddHandler x-httpd-php5.3 .php .phps
+
+RewriteEngine on
+RewriteBase /
+RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php

@@ -1,0 +1,537 @@
+html, body {
+    background-color: #fbfaf5;
+    color: #2b2b2b;
+    height: 100%;
+    font-size: 16px;
+}
+
+* html div#container {
+    height: 100%;
+}
+
+div#container {
+    width: 100%;
+    margin: 0px auto;
+    position: relative;
+    min-height: 100%;
+}
+
+body > #container {
+    height: auto;
+}
+
+div#main {
+    padding-bottom: 40px;
+}
+
+h1 {
+    font-size: 200%;
+    font-weight: bold;
+    background-color: #bce2e8;
+    padding: 25px;
+}
+
+div#menu {
+    background-color: #507ea4;
+    height: 40px;
+}
+div#menu ul{
+    margin:0;
+    padding:0;
+}
+div#menu ul li {
+    list-style: none;
+    margin:0;
+    padding:0;
+    float: left;
+    position: relative;
+    width: 150px;/*親メニューの幅*/
+    height: 40px;/*親メニューの高さ*/
+    line-height: 40px;
+    background:#507ea4;/*親メニューの背景色*/
+    color: #fbfaf5;/*親メニューの文字色*/
+    text-align:center;
+    font-weight:bold;
+}
+div#menu ul li a {
+    color: #fbfaf5;
+    display: block;
+    text-decoration: none;
+}
+div#menu ul li:hover, .menu ul li a:hover {
+    background:#00608d;/*ホバー時の親メニューの背景色*/
+    color:#fbfaf5;/*ホバー時の親メニューの文字色*/
+}
+div#menu ul li ul {
+    position: absolute;
+    top: 40px;/*親メニューの高さと同じにする*/
+    width: 150px;
+    z-index: 100;
+}
+div#menu ul li ul li {
+    visibility: hidden;
+    overflow: hidden;
+    width: 150px;/*サブメニューの幅*/
+    height: 0;
+    background:#82cddd;/*サブメニューの背景色*/
+}
+div#menu ul li ul li:hover, .menu ul li ul li a:hover {
+    background:#00afcc;/*ホバー時のサブメニューの背景色*/
+}
+div#menu ul li:hover ul li, .menu ul li a:hover ul li{
+    visibility: visible;
+    overflow: visible;
+    height:40px;/*サブメニューの高さ*/
+    z-index: 10;
+}
+div#menu * {
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    -ms-transition: 0.5s;
+    -o-transition: 0.5s;
+    transition: 0.5s;
+}
+
+p.breadcrumb {
+    padding: 10px 25px;
+    background-color: #e8ecef;
+}
+
+#contents {
+    padding: 15px 25px;
+    clear : both;
+}
+
+#contents p {
+    line-height: 130%;
+}
+
+h2 {
+    font-size: 110%;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+p.note {
+    text-indent: -1em;
+    margin-left: 1em;
+}
+
+#foot {
+    position: absolute;
+    background-color: #bce2e8;
+    bottom: 0px;
+    height: 40px;
+    width: 100%;
+}
+
+#foot p {
+    margin-bottom: 0;
+    padding: 10px 25px;
+    font-weight: bold;
+    text-align: right;
+}
+
+p.entry_btn {
+    margin: 25px 0;
+}
+
+div.btn_row {
+    clear: both;
+    overflow : hidden;
+}
+div.btn_row input {
+    float: left;
+}
+
+/*コントロールボタンベース*/
+a.btn, input[type=button].btn,  
+input[type=reset].btn, input[type=submit].btn {
+    background: #5b6356;
+    border: 1px solid #6b6f59;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    color: #fbfaf5;
+    margin-bottom: 1em;
+    margin-right: 1.5em;
+    padding: 0.3em 1em;
+    text-decoration: none;
+}  
+a.btn:hover, input[type=button].btn:hover,  
+input[type=reset].btn:hover, input[type=submit].btn:hover {  
+    background: #333631;
+}  
+a.btn:active, input[type=button].btn:active,  
+input[type=reset].btn:active, input[type=submit].btn:active   {  
+    background: #333631;  
+}
+
+/*ミニボタンベース*/
+.btn_mini {
+    background: #ddd;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    color: #111;
+    margin-bottom: 0.2em;
+    padding: 0.2em 0.2em;
+    text-decoration: none;
+    font-size: 80%;
+}
+.btn_mini:hover {
+    background: #ccc;
+    border: 1px solid #ddd;
+}
+
+/*テーブルベース*/
+table {
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    border-collapse: collapse;
+    margin-bottom: 1em;
+}
+caption {
+    text-align: left;
+    padding-bottom: 8px;
+    font-size: 1.4em;
+    font-weight: bold;
+}
+td, th {
+    padding: 5px;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+th {
+    background: #eee;
+    word-break: break-all;
+}
+td {
+    background: #fffffc;
+    word-break: break-all;
+}
+
+/*通知情報一覧*/
+table#notice_list {
+    width: 100%;
+}
+table#notice_list tr.notice_done td {
+    color: #595857;
+    background-color: #f3f3f2;
+}
+table#notice_list th.notice_day {
+    width: 8em;
+}
+table#notice_list th.entry_method {
+    width: 6em;
+}
+table#notice_list th.entry_datetime {
+    width: 10em;
+}
+table#notice_list th.disp_link {
+    width: 4em;
+}
+table#notice_list td.disp_link {
+    text-align: center;
+}
+table#notice_list th,
+table#notice_list td {
+    height: 1.3em;
+}
+
+/*通知情報一覧ページング*/
+.page {
+    font-size: 110%;
+}
+
+/*通知情報表示*/
+table#notice_disp {
+    width: 100%;
+    margin-bottom: 25px;
+}
+table#notice_disp th {
+    width: 10em;
+}
+
+/*通知情報登録*/
+/*通知情報編集*/
+table#notice_input {
+    width: 100%;
+    margin-bottom: 25px;
+}
+table#notice_input th {
+    width: 10em;
+}
+
+/*フォームレイアウト　共通*/
+input[type="text"] {
+    padding: 0.2em;
+}
+input[type="password"] {
+    padding: 0.2em;
+}
+textarea {
+    padding: 0.2em;
+}
+input#image_clear {
+    margin-top: 10px;
+    padding: 0.2em;
+}
+input:focus, textarea:focus {
+    background-color: #fdeff2;
+}
+
+/*ログインフォーム*/
+input#id, 
+input#password {
+    width: 15em;
+}
+
+/*通知情報入力フォーム*/
+input#title {
+    width: 96%;
+}
+textarea#text {
+    width: 96%;
+}
+input#url {
+    width: 96%;
+}
+
+/*担当者一覧*/
+div#charge input#name {
+    margin-right: 0.5em;
+}
+div#charge table td.name {
+    width: 10em;
+}
+div#charge table td.del_btn {
+    width: 4em;
+    text-align: center;
+}
+
+/*パスワード変更*/
+div#password_change table {
+    width: 500px;
+}
+div#password_change table th,
+div#password_change table td {
+    width: 50%;
+}
+div#password_change table td input {
+    width: 95%;
+}
+
+/*故人情報一覧*/
+div#search {
+    border: 1px solid #ccc;
+    background: #fffffc;
+    padding: 10px;
+    margin-bottom: 25px;
+}
+div#search input#search_btn,
+div#search input#clear_btn {
+    margin: 0 0 0 1em;
+}
+table#deceased_list {
+    width: 100%;
+}
+table#deceased_list tr.issue_data td {
+    background-color: #f8e58c;
+}
+table#deceased_list tr.issued_data td {
+    background-color: #f2a0a1;
+}
+table#deceased_list tr.del_data td {
+    color: #595857;
+    background-color: #f3f3f2;
+}
+table#deceased_list th.deceased_id,
+table#deceased_list th.entry_day,
+table#deceased_list th.deathday {
+    width: 6em;
+}
+table#deceased_list th.issue_day {
+    width: 8em;
+}
+table#deceased_list th.deceased_name,
+table#deceased_list th.state {
+    width: 10em;
+}
+table#deceased_list th.charge {
+    width: 8em;
+}
+table#deceased_list th.operate1 {
+    width: 3em;
+}
+table#deceased_list th.operate2 {
+    width: 6em;
+}
+table#deceased_list td.operate {
+    text-align: center;
+}
+input#datepickerFrom,
+input#datepickerTo {
+    width: 7em;
+    margin-right: 5px;
+}
+
+/*故人様QR発注*/
+/*故人情報編集*/
+div#qr_order table,
+div#deceased_edit table {
+    width: 100%;
+    margin-bottom: 25px;
+}
+div#qr_order table th,
+div#deceased_edit table th {
+    width:10em;
+}
+div#qr_order input#age,
+div#deceased_edit input#age {
+    width:3em;
+}
+div#qr_order ul#dropdown,
+div#deceased_edit ul#dropdown {
+    display: none;
+    position: absolute;
+    width: 10em;
+    border: 1px solid #ccc;
+    background-color: #fff;
+}
+div#qr_order ul#dropdown li,
+div#deceased_edit ul#dropdown li {
+    cursor: default;
+}
+div#qr_order ul#dropdown li:hover,
+div#deceased_edit ul#dropdown li:hover {
+    background-color: #fdeff2;
+}
+div#qr_order #charge_name,
+div#deceased_edit #charge_name {
+    width: 10em;
+}
+div#qr_order #souke,
+div#qr_order #deceased_last_name, 
+div#qr_order #deceased_first_name,
+div#deceased_edit #souke,
+div#deceased_edit #deceased_last_name,
+div#deceased_edit #deceased_first_name {
+    width: 5em;
+}
+div#qr_order #deceased_birthday_y,
+div#qr_order #deceased_deathday_y,
+div#deceased_edit #deceased_birthday_y,
+div#deceased_edit #deceased_deathday_y {
+    width: 4em;
+}
+div#qr_order #deceased_birthday_m,
+div#qr_order #deceased_birthday_d,
+div#qr_order #deceased_deathday_m,
+div#qr_order #deceased_deathday_d,
+div#deceased_edit #deceased_birthday_m,
+div#deceased_edit #deceased_birthday_d,
+div#deceased_edit #deceased_deathday_m,
+div#deceased_edit #deceased_deathday_d {
+    width: 2em;
+}
+
+/*故人様表示*/
+div#deceased table {
+    width: 100%;
+    margin-bottom: 25px;    
+}
+div#deceased table th {
+    width:10em;
+}
+
+/*通知情報登録*/
+/*通知条件設定テーブル*/
+div#notice_entry #notice_setting_area {
+    display: inline-block;
+    vertical-align: top;
+    height: 100%;
+    margin-right: 20px;
+}
+div#notice_entry #notice_setting {
+    margin-bottom: 5px;
+}
+div#notice_entry #charge_name_combo,
+div#notice_entry #hall_name_combo,
+div#notice_entry #search_name {
+    width: 180px;
+}
+div#notice_entry #search_year {
+    width: 4em;
+}
+div#notice_entry #search_month,
+div#notice_entry #search_day {
+    width: 2em;
+}
+div#notice_entry #search_btn {
+    text-align: right;
+}
+
+/*故人様テーブル*/
+div#notice_entry #deceased_table_area {
+    display: inline-block;
+    vertical-align: top;
+}
+div#notice_entry #deceased_table {
+    margin-top:33px;
+    margin-bottom: 5px;
+}
+div#notice_entry #deceased_table_header,
+div#notice_entry #deceased_table_body {
+    display: block;
+}
+div#notice_entry #deceased_table_body {
+    height: 0px;
+    overflow-y: scroll;
+    border-bottom: 1px solid #ccc;
+}
+div#notice_entry #checkbox_column,
+div#notice_entry #deceased_selection {
+    width: 1em;
+}
+div#notice_entry #name_column,
+div#notice_entry #deceased_table_body #deceased_name {
+    width: 20em;
+}
+div#notice_entry #deathday_column,
+div#notice_entry #deceased_deathday {
+    width: 8em;
+}
+
+/*共通*/
+p {
+    margin-bottom: 1em;
+}
+p.note {
+    text-indent: -1em;
+    margin-left: 1em;
+}
+p.message {
+    color: #e60033;
+    font-size: 95%;
+    font-weight: bold;
+}
+.clear {
+    clear: both;
+}
+.input_caution {
+    font-size: 80%;
+    color: #e60033;
+}
+.right {
+    text-align: right;
+}
+.aka {
+    color: #e60033;
+}
+
+/*JavaScript無効時の表示内容*/
+div#jsng {
+    padding: 15px 25px;
+}
