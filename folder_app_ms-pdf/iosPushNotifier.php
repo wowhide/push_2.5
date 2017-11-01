@@ -19,14 +19,14 @@ class iosPushNotifier {
               故人IDの桁数が1-2桁のデータを削除する（但し故人IDが空のデータは削除しない）
               （故人IDが1-2桁のデータはバックアップデータを展開した際に保存された
       　       デバイストークンであるため削除）*/
-            $delUnnecessaryTokenSql = "DELETE FROM t_ios_device_token 
-                                       WHERE device_token = '(null)' 
+            $delUnnecessaryTokenSql = "DELETE FROM t_ios_device_token
+                                       WHERE device_token = '(null)'
                                        OR (CHAR_LENGTH(deceased_id) > 0 AND CHAR_LENGTH(deceased_id) < 3);";
             $pdo->exec($delUnnecessaryTokenSql);
 
             //無効なデバイストークンを取得する
             // $feedback = new ApnsPHP_Feedback(ApnsPHP_Abstract::ENVIRONMENT_SANDBOX, 'certificates_dev/server_certificates_sandbox.pem');
-            $feedback = new ApnsPHP_Feedback(ApnsPHP_Abstract::ENVIRONMENT_SANDBOX, 'certificates_dev/server_certificates_sandbox_aoki.pem');
+            $feedback = new ApnsPHP_Feedback(ApnsPHP_Abstract::ENVIRONMENT_SANDBOX, 'certificates_dev/server_certificates_sandbox.pem');
             $feedback->setRootCertificationAuthority('certificates_dev/entrust_root_certification_authority.pem');
             $feedback->connect();
             $results = $feedback->receive();
@@ -62,7 +62,7 @@ class iosPushNotifier {
 
             //Push通知準備
             // $push = new ApnsPHP_Push(ApnsPHP_Abstract::ENVIRONMENT_SANDBOX, 'certificates_dev/server_certificates_sandbox.pem');
-            $push = new ApnsPHP_Push(ApnsPHP_Abstract::ENVIRONMENT_SANDBOX, 'certificates_dev/server_certificates_sandbox_aoki.pem');
+            $push = new ApnsPHP_Push(ApnsPHP_Abstract::ENVIRONMENT_SANDBOX, 'certificates_dev/server_certificates_sandbox.pem');
             $push->setRootCertificationAuthority('certificates_dev/entrust_root_certification_authority.pem');
             $push->connect();
 
@@ -86,7 +86,7 @@ class iosPushNotifier {
                                         b.allow_push = 1
                                 )";
             $tokenList = $pdo->query($getTokenSql)->fetchAll();
-            
+
             foreach ($tokenList as $token) {
                 $message = new ApnsPHP_Message($token['device_token']);
                 $message->setCustomIdentifier("MemorialServiceTest");
@@ -100,7 +100,7 @@ class iosPushNotifier {
 
                 $strSendToken .= $token['device_token'] . "¥n";
             }
-            
+
             // echo var_dump($push);
 
             //Push通知実行
