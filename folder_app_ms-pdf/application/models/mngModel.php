@@ -105,7 +105,39 @@ class mngModel {
         }
         return true;
     }
-    
+
+    // ========　    定期通知    ========== //
+
+    /**
+     * 通知情報の登録の有無を取得する（初七日）
+     *
+     * @return  array   通知情報リスト
+     */
+    public function getNoticeInfoSeventhdayafterdeathEntryList()
+    {
+        $sql = "SELECT
+                    *
+                FROM
+                    t_notice_info
+                WHERE
+                    notice_type = 7
+                ";
+        $notcieInfoList = $this->_db->fetchRow($sql);
+        
+        if (empty($notcieInfoList)) {
+            //空の場合falseを返す
+            return false;
+        } else {
+            //データが存在する場合trueを返す
+            return true;
+        }
+        return true;
+    }
+
+
+
+    // ========     通常通知    ========== //
+
     /**
      * 通知情報を登録する
      * 
@@ -255,6 +287,9 @@ class mngModel {
         }
         return true;
     }
+
+
+
     
     /**
      * 最後に登録した通知情報Noの値を取得する

@@ -332,9 +332,22 @@ class MngController extends Zend_Controller_Action
             //ログインしていない場合またはセッションタイムアウトした場合、ログイン画面を表示
             return $this->_forward('disprelogin');
         }
-        //通知情報登録画面表示
-        $this->dispEntryNoticeInfo("");
-        echo $this->_view->render('mng_notice_info_seventhdayafterdeath_entry.tpl');
+
+        //初七日通知登録の有無を調べる
+        $noticeInfoListSeventhday = $this->_mngModel->getNoticeInfoSeventhdayafterdeathEntryList();
+
+        if ($noticeInfoListSeventhday) {
+            //登録済みの場合
+                //通知情報登録画面表示
+                $this->dispEntryNoticeInfo("");
+                echo $this->_view->render('mng_notice_info_fourteendaysafterdeath_entry.tpl'); 
+        }else{
+            //登録未の場合
+                //通知情報登録画面表示
+                $this->dispEntryNoticeInfo("");
+                echo $this->_view->render('mng_notice_info_seventhdayafterdeath_entry.tpl'); 
+        }
+
     }
 
     //通知情報登録画面表示(十四日後)
