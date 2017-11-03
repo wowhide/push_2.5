@@ -324,6 +324,103 @@ class MngController extends Zend_Controller_Action
         $this->dispEntryNoticeInfo("");
         echo $this->_view->render('mng_notice_info_entry.tpl');
     }
+
+    //通知情報登録画面表示(初七日)
+    public function dispentrynoticeinfosevendayafterdeathAction()
+    {
+        if ($this->chkSession() === false) {
+            //ログインしていない場合またはセッションタイムアウトした場合、ログイン画面を表示
+            return $this->_forward('disprelogin');
+        }
+
+        //初七日通知登録の有無を調べる
+        $noticeInfoListSeventhday = $this->_mngModel->getNoticeInfoSeventhdayafterdeathEntryList();
+
+        if ($noticeInfoListSeventhday) {
+            //登録済みの場合
+                //通知情報登録画面表示
+                $this->dispEntryNoticeInfo("");
+                echo $this->_view->render('mng_notice_info_fourteendaysafterdeath_entry.tpl'); 
+        }else{
+            //登録未の場合
+                //通知情報登録画面表示
+                $this->dispEntryNoticeInfo("");
+                echo $this->_view->render('mng_notice_info_seventhdayafterdeath_entry.tpl'); 
+        }
+
+    }
+
+    //通知情報登録画面表示(十四日後)
+    public function dispentrynoticeinfofourteendaysafterdeathAction()
+    {
+        if ($this->chkSession() === false) {
+            //ログインしていない場合またはセッションタイムアウトした場合、ログイン画面を表示
+            return $this->_forward('disprelogin');
+        }
+        //通知情報登録画面表示
+        $this->dispEntryNoticeInfo("");
+        echo $this->_view->render('mng_notice_info_fourteendaysafterdeath_entry.tpl');
+    }
+
+    //通知情報登録画面表示(二十一日後)
+    public function dispentrynoticeinfotwentyonedaysafterdeathAction()
+    {
+        if ($this->chkSession() === false) {
+            //ログインしていない場合またはセッションタイムアウトした場合、ログイン画面を表示
+            return $this->_forward('disprelogin');
+        }
+        //通知情報登録画面表示
+        $this->dispEntryNoticeInfo("");
+        echo $this->_view->render('mng_notice_info_twentyonedaysafterdeath_entry.tpl');
+    }
+
+    //通知情報登録画面表示(二十八日後)
+    public function dispentrynoticeinfotwentyeightdaysafterdeathAction()
+    {
+        if ($this->chkSession() === false) {
+            //ログインしていない場合またはセッションタイムアウトした場合、ログイン画面を表示
+            return $this->_forward('disprelogin');
+        }
+        //通知情報登録画面表示
+        $this->dispEntryNoticeInfo("");
+        echo $this->_view->render('mng_notice_info_twentyeightdaysafterdeath_entry.tpl');
+    }
+
+    //通知情報登録画面表示(三十五日後)
+    public function dispentrynoticeinfothirtyfivedaysafterdeathAction()
+    {
+        if ($this->chkSession() === false) {
+            //ログインしていない場合またはセッションタイムアウトした場合、ログイン画面を表示
+            return $this->_forward('disprelogin');
+        }
+        //通知情報登録画面表示
+        $this->dispEntryNoticeInfo("");
+        echo $this->_view->render('mng_notice_info_thirtyfivedaysafterdeath_entry.tpl');
+    }
+
+    //通知情報登録画面表示(四十二日後)
+    public function dispentrynoticeinfofortytwodaysafterdeathAction()
+    {
+        if ($this->chkSession() === false) {
+            //ログインしていない場合またはセッションタイムアウトした場合、ログイン画面を表示
+            return $this->_forward('disprelogin');
+        }
+        //通知情報登録画面表示
+        $this->dispEntryNoticeInfo("");
+        echo $this->_view->render('mng_notice_info_fortytwodaysafterdeath_entry.tpl');
+    }
+
+    //通知情報登録画面表示(四十九日後)
+    public function dispentrynoticeinfofortyninedaysafterdeathAction()
+    {
+        if ($this->chkSession() === false) {
+            //ログインしていない場合またはセッションタイムアウトした場合、ログイン画面を表示
+            return $this->_forward('disprelogin');
+        }
+        //通知情報登録画面表示
+        $this->dispEntryNoticeInfo("");
+        echo $this->_view->render('mng_notice_info_fortyninedaysafterdeath_entry.tpl');
+    }
     
     /**
      * 通知情報登録画面表示処理
