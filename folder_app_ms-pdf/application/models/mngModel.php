@@ -2,13 +2,13 @@
 
 /**
  * 法要アプリプレミアム版管理システムのDBアクセスを制御するクラス
- * 
- * LICENSE: 
- * 
+ *
+ * LICENSE:
+ *
  * @copyright   2014 Digtalspace WOW CO.,Ltd
- * @license     
+ * @license
  * @version     1.0.0
- * @link        
+ * @link
  * @since       File availabel since Release 1.0.0
  */
 
@@ -28,12 +28,12 @@ require_once '../application/common/comDefine.php';
 
 class mngModel {
     private $_db;   // データベースアダプタのハンドル
-    
+
     /**
      * コンストラクタ
-     * 
+     *
      */
-    public function __construct() 
+    public function __construct()
     {
         // レジストリからデータを取得する
         if (Zend_Registry::isRegistered('database')) {
@@ -47,10 +47,10 @@ class mngModel {
                         'dbname'    => $database['name']
                   );
 
-      
+
         // データベースアダプタを作成する
         $this->_db = Zend_Db::factory($database['type'], $params);
-        
+
         // 文字コードをUTF-8に設定する
         $this->_db->query("set names 'utf8'");
 
@@ -77,7 +77,7 @@ class mngModel {
         $manager = $this->_db->fetchRow($sql, array(':manager_id' => $id));
         return $manager;
     }
-    
+
     /**
      * ログイン成功時に管理者マスタの最終ログイン日時を更新する
      *
@@ -123,7 +123,33 @@ class mngModel {
                     notice_type = 7
                 ";
         $notcieInfoList = $this->_db->fetchRow($sql);
-        
+
+        if (empty($notcieInfoList)) {
+            //空の場合falseを返す
+            return false;
+        } else {
+            //データが存在する場合trueを返す
+            return true;
+        }
+        return true;
+    }
+
+  /**
+    * 通知情報の登録の有無を取得する（十四日後）
+    *
+    * @return  array   通知情報リスト
+    */
+    public function getNoticeInfoFourteendaysafterdeathEntryList()
+    {
+        $sql = "SELECT
+                    *
+                FROM
+                    t_notice_info
+                WHERE
+                    notice_type = 14
+                ";
+        $notcieInfoList = $this->_db->fetchRow($sql);
+
         if (empty($notcieInfoList)) {
             //空の場合falseを返す
             return false;
@@ -135,22 +161,151 @@ class mngModel {
     }
 
 
+    /**
+      * 通知情報の登録の有無を取得する（二十一日後）
+      *
+      * @return  array   通知情報リスト
+      */
+      public function getNoticeInfoTwentyonedaysafterdeathEntryList()
+      {
+          $sql = "SELECT
+                      *
+                  FROM
+                      t_notice_info
+                  WHERE
+                      notice_type = 21
+                  ";
+          $notcieInfoList = $this->_db->fetchRow($sql);
+
+          if (empty($notcieInfoList)) {
+              //空の場合falseを返す
+              return false;
+          } else {
+              //データが存在する場合trueを返す
+              return true;
+          }
+          return true;
+      }
+
+      /**
+        * 通知情報の登録の有無を取得する（二十八日後）
+        *
+        * @return  array   通知情報リスト
+        */
+        public function getNoticeInfoTwentyeightdaysafterdeathEntryList()
+        {
+            $sql = "SELECT
+                        *
+                    FROM
+                        t_notice_info
+                    WHERE
+                        notice_type = 28
+                    ";
+            $notcieInfoList = $this->_db->fetchRow($sql);
+
+            if (empty($notcieInfoList)) {
+                //空の場合falseを返す
+                return false;
+            } else {
+                //データが存在する場合trueを返す
+                return true;
+            }
+            return true;
+        }
+
+        /**
+          * 通知情報の登録の有無を取得する（三十五日後）
+          *
+          * @return  array   通知情報リスト
+          */
+          public function getNoticeInfoThirtyfivedaysafterdeathEntryList()
+          {
+              $sql = "SELECT
+                          *
+                      FROM
+                          t_notice_info
+                      WHERE
+                          notice_type = 35
+                      ";
+              $notcieInfoList = $this->_db->fetchRow($sql);
+
+              if (empty($notcieInfoList)) {
+                  //空の場合falseを返す
+                  return false;
+              } else {
+                  //データが存在する場合trueを返す
+                  return true;
+              }
+              return true;
+          }
+
+          /**
+            * 通知情報の登録の有無を取得する（四十二日後）
+            *
+            * @return  array   通知情報リスト
+            */
+            public function getNoticeInfoFortytwodaysafterdeathEntryList()
+            {
+                $sql = "SELECT
+                            *
+                        FROM
+                            t_notice_info
+                        WHERE
+                            notice_type = 42
+                        ";
+                $notcieInfoList = $this->_db->fetchRow($sql);
+
+                if (empty($notcieInfoList)) {
+                    //空の場合falseを返す
+                    return false;
+                } else {
+                    //データが存在する場合trueを返す
+                    return true;
+                }
+                return true;
+            }
+
+            /**
+              * 通知情報の登録の有無を取得する（四十九日後）
+              *
+              * @return  array   通知情報リスト
+              */
+              public function getNoticeInfoFortyninedaysafterdeathEntryList()
+              {
+                  $sql = "SELECT
+                              *
+                          FROM
+                              t_notice_info
+                          WHERE
+                              notice_type = 49
+                          ";
+                  $notcieInfoList = $this->_db->fetchRow($sql);
+
+                  if (empty($notcieInfoList)) {
+                      //空の場合falseを返す
+                      return false;
+                  } else {
+                      //データが存在する場合trueを返す
+                      return true;
+                  }
+                  return true;
+              }
 
     // ========     通常通知    ========== //
 
     /**
      * 通知情報を登録する
-     * 
+     *
      * @param   array   $noticeInfo    通知情報情報
      * @return  boolean　成否
      */
     public function insertNoticeInfo($noticeInfo)
     {
         $now = new Zend_Date();
-        
+
         //日付の様式を変更するためにZend_Date型の変数を準備
         $date = new Zend_Date($noticeInfo['notice_schedule']);
-        
+
         try {
             if ($noticeInfo['entry_method'] == ENTRY_METHOD_INPUT) {
                 $sql = "INSERT INTO t_notice_info (
@@ -290,10 +445,10 @@ class mngModel {
 
 
 
-    
+
     /**
      * 最後に登録した通知情報Noの値を取得する
-     * 
+     *
      * @return   int   通知情報Noの値
      */
     public function getLastNoticeInfoNo()
@@ -355,17 +510,17 @@ class mngModel {
 
         return $noticeInfo;
     }
-    
+
     /**
      * 通知情報を更新する
-     * 
+     *
      * @param   array   $noticeInfo    通知情報情報
      */
     public function updateNoticeInfo($noticeInfo)
     {
         //日付の様式を変更するためにZend_Date型の変数を準備
         $date = new Zend_Date($noticeInfo['notice_schedule']);
-        
+
         try {
             if ($noticeInfo['entry_method'] == ENTRY_METHOD_INPUT) {
                 $sql = "UPDATE t_notice_info SET
@@ -465,10 +620,10 @@ class mngModel {
         }
         return true;
     }
-    
+
     /**
      * 通知情報を削除する
-     * 
+     *
      * @param   String   $noticeInfoNo    通知情報No
      */
     public function deleteNoticeInfo($noticeInfoNo)
@@ -480,7 +635,7 @@ class mngModel {
                     WHERE
                         notice_info_no = :notice_info_no
                     ";
-            
+
             $this->_db->query($sql, array('notice_info_no' => $noticeInfoNo));
 
             //通知あて先テーブル
@@ -573,7 +728,7 @@ class mngModel {
         $chargeList = $this->_db->fetchAll($sql);
         return $chargeList;
     }
-    
+
     /**
      * 故人様登録時に使用した担当者情報を取得する
      *
@@ -594,7 +749,7 @@ class mngModel {
 
     /**
      * 担当者情報を追加する
-     * 
+     *
      * @param   array   $chargeName    担当者名
      */
     public function addCharge($chargeName)
@@ -615,10 +770,10 @@ class mngModel {
         }
         return true;
     }
-    
+
     /**
      * 担当者情報を削除する
-     * 
+     *
      * @param   String   $chargeNo      担当者No
      */
     public function deleteCharge($chargeNo)
@@ -636,13 +791,13 @@ class mngModel {
         }
         return true;
     }
-    
+
     /**
      * 担当者情報を削除する
-     * 
+     *
      * @param   String   $id        管理者ID
      * @param   String   $password  新しいパスワード
-     * 
+     *
      */
     public function updatePassword($id, $password)
     {
@@ -663,7 +818,7 @@ class mngModel {
         }
         return true;
     }
-    
+
     /**
      * 故人情報を取得する
      *
@@ -682,8 +837,8 @@ class mngModel {
         }
 
         //From:○, To:○, deceased_name:○, charge_name:○
-        if (strlen($searchFrom) > 0 
-            && strlen($searchTo) > 0 
+        if (strlen($searchFrom) > 0
+            && strlen($searchTo) > 0
             && strlen($searchDeceasedName) > 0
             && strlen($searchPersonInCharge) > 0) {
 
@@ -708,8 +863,8 @@ class mngModel {
                                                              ':searchPersonInCharge'   => $searchPersonInCharge));
 
         //From:○, To:○, deceased_name:○, charge_name:X
-        } elseif (strlen($searchFrom) > 0 
-            && strlen($searchTo) > 0 
+        } elseif (strlen($searchFrom) > 0
+            && strlen($searchTo) > 0
             && strlen($searchDeceasedName) > 0) {
 
             $sql = "SELECT
@@ -731,8 +886,8 @@ class mngModel {
 
 
         //From:○, To:○, deceased_name:X, charge_name:○
-        }elseif (strlen($searchFrom) > 0 
-            && strlen($searchTo) > 0 
+        }elseif (strlen($searchFrom) > 0
+            && strlen($searchTo) > 0
             && strlen($searchPersonInCharge) > 0) {
 
             $sql = "SELECT
@@ -753,8 +908,8 @@ class mngModel {
                                                              ':searchPersonInCharge'   => $searchPersonInCharge));
 
         //From:○, To:X, deceased_name:○, charge_name:○
-        }elseif (strlen($searchFrom) > 0 
-            && strlen($searchDeceasedName) > 0 
+        }elseif (strlen($searchFrom) > 0
+            && strlen($searchDeceasedName) > 0
             && strlen($searchPersonInCharge) > 0) {
 
             $sql = "SELECT
@@ -775,8 +930,8 @@ class mngModel {
                                                              ':searchPersonInCharge'   => $searchPersonInCharge));
 
         //From:X, To:○, deceased_name:○, charge_name:○
-        }elseif (strlen($searchTo) > 0 
-            && strlen($searchDeceasedName) > 0 
+        }elseif (strlen($searchTo) > 0
+            && strlen($searchDeceasedName) > 0
             && strlen($searchPersonInCharge) > 0) {
 
             $sql = "SELECT
@@ -796,7 +951,7 @@ class mngModel {
                                                              ':searchDeceasedName'   => $searchDeceasedName,
                                                              ':searchPersonInCharge'   => $searchPersonInCharge));
         //From:X, To:X, deceased_name:○, charge_name:○
-        }elseif (strlen($searchDeceasedName) > 0 
+        }elseif (strlen($searchDeceasedName) > 0
             && strlen($searchPersonInCharge) > 0) {
 
             $sql = "SELECT
@@ -811,10 +966,10 @@ class mngModel {
                         issue_datetime DESC
                     ";
             $deceasedList = $this->_db->fetchAll($sql, array(':searchDeceasedName'   => $searchDeceasedName,
-         
+
                                                              ':searchPersonInCharge'   => $searchPersonInCharge));
         //From:X, To:○, deceased_name:X, charge_name:○
-        }elseif (strlen($searchTo) > 0 
+        }elseif (strlen($searchTo) > 0
             && strlen($searchPersonInCharge) > 0) {
 
             $sql = "SELECT
@@ -831,7 +986,7 @@ class mngModel {
             $deceasedList = $this->_db->fetchAll($sql, array(':search_to'   => $searchTo,
                                                              ':searchPersonInCharge'   => $searchPersonInCharge));
         //From:X, To:○, deceased_name:○, charge_name:X
-        }elseif (strlen($searchTo) > 0 
+        }elseif (strlen($searchTo) > 0
             && strlen($searchDeceasedName) > 0) {
 
             $sql = "SELECT
@@ -849,7 +1004,7 @@ class mngModel {
                                                              ':searchDeceasedName'   => $searchDeceasedName));
 
         //From:○, To:○, deceased_name:X, charge_name:X
-        }elseif (strlen($searchFrom) > 0 
+        }elseif (strlen($searchFrom) > 0
             && strlen($searchTo) > 0) {
 
             $sql = "SELECT
@@ -866,7 +1021,7 @@ class mngModel {
             $deceasedList = $this->_db->fetchAll($sql, array(':search_from'   => $searchFrom,
                                                              ':search_to'   => $searchTo));
         //From:○, To:X, deceased_name:o, charge_name:X
-        }elseif (strlen($searchFrom) > 0 
+        }elseif (strlen($searchFrom) > 0
             && strlen($searchDeceasedName) > 0) {
 
             $sql = "SELECT
@@ -883,7 +1038,7 @@ class mngModel {
             $deceasedList = $this->_db->fetchAll($sql, array(':search_from'   => $searchFrom,
                                                              ':searchDeceasedName'   => $searchDeceasedName));
         //From:○, To:X, deceased_name:X, charge_name:○
-        }elseif (strlen($searchFrom) > 0 
+        }elseif (strlen($searchFrom) > 0
             && strlen($searchPersonInCharge) > 0) {
 
             $sql = "SELECT
@@ -925,7 +1080,7 @@ class mngModel {
                     ";
             $deceasedList = $this->_db->fetchAll($sql, array(':search_to' => $searchTo));
 
-        //Deceased_Name:のみ     
+        //Deceased_Name:のみ
         } elseif (strlen($searchDeceasedName) > 0) {
             $sql = "SELECT
                         *
@@ -937,8 +1092,8 @@ class mngModel {
                         issue_datetime DESC
                     ";
             $deceasedList = $this->_db->fetchAll($sql, array(':searchDeceasedName' => $searchDeceasedName));
-            
-        //Charge_Name:のみ      
+
+        //Charge_Name:のみ
         }  elseif (strlen($searchPersonInCharge) > 0) {
             $sql = "SELECT
                         *
@@ -950,7 +1105,7 @@ class mngModel {
                         issue_datetime DESC
                     ";
             $deceasedList = $this->_db->fetchAll($sql, array(':searchPersonInCharge' => $searchPersonInCharge));
-            
+
         } else {
             $sql = "SELECT
                         *
@@ -964,7 +1119,7 @@ class mngModel {
 
         return $deceasedList;
     }
-    
+
     /**
      * 通知情報の検索条件を元に故人情報を取得する
      *
@@ -1076,7 +1231,7 @@ class mngModel {
 
     /**
      * 故人情報を新規登録する（発行状態コード：1[発行依頼中]で登録）
-     * 
+     *
      * @param   array   $deceasedInfo    故人情報
      * @return  boolean　成否
      */
@@ -1118,7 +1273,7 @@ class mngModel {
                         :allow_push
                     )
             ";
-            $deceasedBirthday = $deceasedInfo['deceased_birthday_y'] . 
+            $deceasedBirthday = $deceasedInfo['deceased_birthday_y'] .
                     sprintf("%02d", $deceasedInfo['deceased_birthday_m']) .
                     sprintf("%02d", $deceasedInfo['deceased_birthday_d']);
             $deceasedDeathday = $deceasedInfo['deceased_deathday_y'] .
@@ -1145,10 +1300,10 @@ class mngModel {
         }
         return true;
     }
-    
+
     /**
      * 故人情報を削除する
-     * 
+     *
      * @param String $deceasedId 故人ID
      * @return boolean
      */
@@ -1169,10 +1324,10 @@ class mngModel {
         }
         return true;
     }
-    
+
     /**
      * 故人情報を論理削除する
-     * 
+     *
      * @param String $deceasedId 故人ID
      * @return boolean
      */
@@ -1193,10 +1348,10 @@ class mngModel {
         }
         return true;
     }
-    
+
     /**
      * 故人情報を完全に削除する
-     * 
+     *
      * @param String $deceasedId 故人ID
      * @return boolean
      */
@@ -1215,18 +1370,18 @@ class mngModel {
         }
         return true;
     }
-    
+
     /**
      * 故人情報を更新する
-     * 
+     *
      * @param   array   $deceasedInfo    故人情報
      * @return  boolean　成否
      */
     public function updateDeceased(array $deceasedInfo)
     {
         try {
-            $sql = "UPDATE 
-                        m_deceased 
+            $sql = "UPDATE
+                        m_deceased
                     SET
                         deceased_name = :deceased_name,
                         deceased_birthday = :deceased_birthday,
@@ -1241,7 +1396,7 @@ class mngModel {
                     WHERE
                         deceased_id = :deceased_id
             ";
-            $deceasedBirthday = $deceasedInfo['deceased_birthday_y'] . 
+            $deceasedBirthday = $deceasedInfo['deceased_birthday_y'] .
                     sprintf("%02d", $deceasedInfo['deceased_birthday_m']) .
                     sprintf("%02d", $deceasedInfo['deceased_birthday_d']);
             $deceasedDeathday = $deceasedInfo['deceased_deathday_y'] .

@@ -2,13 +2,13 @@
 
 /**
  * 法要アプリプレミアム版管理システムを制御するコントローラクラス
- * 
- * LICENSE: 
- * 
+ *
+ * LICENSE:
+ *
  * @copyright   2014 Digtalspace WOW CO.,Ltd
- * @license     
+ * @license
  * @version     1.0.0
- * @link        
+ * @link
  * @since       File availabel since Release 1.0.0
  */
 
@@ -103,7 +103,7 @@ class MngController extends Zend_Controller_Action
         /*サブドメインでない場合
         $this->_config = new Zend_Config_Ini('../application/config/config.ini', null);
         /**/
-        
+
         //データベース関連の設定をレジストリに登録する
         Zend_Registry::set('database', $this->_config->datasource->database->toArray());
 
@@ -111,19 +111,19 @@ class MngController extends Zend_Controller_Action
         $this->_mngModel = new mngModel();
         //logModelのインスタンスを生成する
         $this->_logModel = new logModel();
-        
+
         //Zend_View_Smartyを生成してviewを上書きする
         $this->_view = new Zend_View_Smarty();
         //ビュースクリプトのディレクトリを設定する
         $this->_view->setScriptPath(SMARTY_TEMP_PATH . 'templates');
         //ビュースクリプトのコンパイルディレクトリを設定する
         $this->_view->setCompilePath(SMARTY_TEMP_PATH . 'templates_c');
-        
+
         //セッションを開始する
         $this->_session = new Zend_Session_Namespace('management');
         //セッションタイムアウトを設定する
         $this->_session->setExpirationSeconds(SESSION_TIME);
-        
+
         //ヘッダー情報を取得
         $this->_httpHeaderInfo = 'HTTP_USER_AGENT：' . $this->_request->getServer('HTTP_USER_AGENT') . "\n" .
                                  'REMOTE_ADDR：' . $this->_request->getServer('REMOTE_ADDR') . "\n" .
@@ -161,7 +161,7 @@ class MngController extends Zend_Controller_Action
         }
         return $session;
     }
-    
+
     //初期表示
     public function indexAction()
     {
@@ -170,7 +170,7 @@ class MngController extends Zend_Controller_Action
             //故人様一覧画面表示処理に遷移
             return $this->_forward('dispdeceasedlist');
         }
-        
+
         //CookieからIDとPWを取得する
         $cookieId = comEncryption::decryption(filter_input(INPUT_COOKIE, COOKIE_ID));
         $cookiePassword = comEncryption::decryption(filter_input(INPUT_COOKIE, COOKIE_PASSWORD));
@@ -195,10 +195,10 @@ class MngController extends Zend_Controller_Action
             $this->_view->password = $cookiePassword;
             $this->_view->checked = "";
             //ログイン画面を表示
-            echo $this->_view->render('mng_login.tpl');            
+            echo $this->_view->render('mng_login.tpl');
         }
     }
-    
+
     //ログイン実行
     public function loginAction()
     {
@@ -245,10 +245,10 @@ class MngController extends Zend_Controller_Action
         //Cookieを削除
         setcookie(COOKIE_ID, '', time() - COOKIE_EXPIRATION, '/mng/', $this->_config->domain->url);
         setcookie(COOKIE_PASSWORD, '', time() - COOKIE_EXPIRATION, '/mng/', $this->_config->domain->url);
-        
+
         // セッションをクリアする
         Zend_Session::destroy();
-        
+
         //メッセージと入力したID、PWをviewに設定
         $this->_view->message = "ログアウトしました。";
         $this->_view->id = "";
@@ -258,14 +258,14 @@ class MngController extends Zend_Controller_Action
         //ログイン画面を表示する
         echo $this->_view->render('mng_login.tpl');
     }
-    
+
     //再ログイン画面
     public function dispreloginAction()
     {
         //CookieからIDとPWを取得する
         $cookieId = comEncryption::decryption(filter_input(INPUT_COOKIE, COOKIE_ID));
         $cookiePassword = comEncryption::decryption(filter_input(INPUT_COOKIE, COOKIE_PASSWORD));
-        
+
         //エラーメッセージと入力したID、PWをviewに設定
         $this->_view->message = "ページの有効期限が切れた為、ログアウトしました。<br />お手数ですがもう一度ログインしてください。";
         $this->_view->id = $cookieId;
@@ -312,7 +312,7 @@ class MngController extends Zend_Controller_Action
         //通知情報一覧画面表示
         echo $this->_view->render('mng_notice_info_list.tpl');
     }
-    
+
     //通知情報登録画面表示
     public function dispentrynoticeinfoAction()
     {
@@ -340,12 +340,12 @@ class MngController extends Zend_Controller_Action
             //登録済みの場合
                 //通知情報登録画面表示
                 $this->dispEntryNoticeInfo("");
-                echo $this->_view->render('mng_notice_info_fourteendaysafterdeath_entry.tpl'); 
+                echo $this->_view->render('mng_notice_info_fourteendaysafterdeath_entry.tpl');
         }else{
             //登録未の場合
                 //通知情報登録画面表示
                 $this->dispEntryNoticeInfo("");
-                echo $this->_view->render('mng_notice_info_seventhdayafterdeath_entry.tpl'); 
+                echo $this->_view->render('mng_notice_info_seventhdayafterdeath_entry.tpl');
         }
 
     }
@@ -357,9 +357,21 @@ class MngController extends Zend_Controller_Action
             //ログインしていない場合またはセッションタイムアウトした場合、ログイン画面を表示
             return $this->_forward('disprelogin');
         }
-        //通知情報登録画面表示
-        $this->dispEntryNoticeInfo("");
-        echo $this->_view->render('mng_notice_info_fourteendaysafterdeath_entry.tpl');
+
+        //十四日後通知登録の有無を調べる
+        $noticeInfoListFourteenday = $this->_mngModel->getNoticeInfoFourteendaysafterdeathEntryList();
+
+        if ($noticeInfoListFourteenday) {
+            //登録済みの場合
+                //通知情報登録画面表示
+                $this->dispEntryNoticeInfo("");
+                echo $this->_view->render('mng_notice_info_twentyonedaysafterdeath_entry.tpl');
+        }else{
+            //登録未の場合
+                //通知情報登録画面表示
+                $this->dispEntryNoticeInfo("");
+                echo $this->_view->render('mng_notice_info_fourteendaysafterdeath_entry.tpl');
+        }
     }
 
     //通知情報登録画面表示(二十一日後)
@@ -369,9 +381,21 @@ class MngController extends Zend_Controller_Action
             //ログインしていない場合またはセッションタイムアウトした場合、ログイン画面を表示
             return $this->_forward('disprelogin');
         }
-        //通知情報登録画面表示
-        $this->dispEntryNoticeInfo("");
-        echo $this->_view->render('mng_notice_info_twentyonedaysafterdeath_entry.tpl');
+
+        //二十一日後通知登録の有無を調べる
+        $noticeInfoListTwentyoneday = $this->_mngModel->getNoticeInfoTwentyonedaysafterdeathEntryList();
+
+        if ($noticeInfoListTwentyoneday) {
+            //登録済みの場合
+                //通知情報登録画面表示
+                $this->dispEntryNoticeInfo("");
+                echo $this->_view->render('mng_notice_info_twentyeightdaysafterdeath_entry.tpl');
+        }else{
+            //登録未の場合
+                //通知情報登録画面表示
+                $this->dispEntryNoticeInfo("");
+                echo $this->_view->render('mng_notice_info_twentyonedaysafterdeath_entry.tpl');
+        }
     }
 
     //通知情報登録画面表示(二十八日後)
@@ -381,9 +405,21 @@ class MngController extends Zend_Controller_Action
             //ログインしていない場合またはセッションタイムアウトした場合、ログイン画面を表示
             return $this->_forward('disprelogin');
         }
-        //通知情報登録画面表示
-        $this->dispEntryNoticeInfo("");
-        echo $this->_view->render('mng_notice_info_twentyeightdaysafterdeath_entry.tpl');
+
+        //二十八日後通知登録の有無を調べる
+        $noticeInfoListTwentyeightday = $this->_mngModel->getNoticeInfoTwentyeightdaysafterdeathEntryList();
+
+        if ($noticeInfoListTwentyeightday) {
+            //登録済みの場合
+                //通知情報登録画面表示
+                $this->dispEntryNoticeInfo("");
+                echo $this->_view->render('mng_notice_info_thirtyfivedaysafterdeath_entry.tpl');
+        }else{
+            //登録未の場合
+                //通知情報登録画面表示
+                $this->dispEntryNoticeInfo("");
+                echo $this->_view->render('mng_notice_info_twentyeightdaysafterdeath_entry.tpl');
+        }
     }
 
     //通知情報登録画面表示(三十五日後)
@@ -393,9 +429,21 @@ class MngController extends Zend_Controller_Action
             //ログインしていない場合またはセッションタイムアウトした場合、ログイン画面を表示
             return $this->_forward('disprelogin');
         }
-        //通知情報登録画面表示
-        $this->dispEntryNoticeInfo("");
-        echo $this->_view->render('mng_notice_info_thirtyfivedaysafterdeath_entry.tpl');
+
+        //三十五日後通知登録の有無を調べる
+        $noticeInfoListThirtyfiveday = $this->_mngModel->getNoticeInfoThirtyfivedaysafterdeathEntryList();
+
+        if ($noticeInfoListThirtyfiveday) {
+            //登録済みの場合
+                //通知情報登録画面表示
+                $this->dispEntryNoticeInfo("");
+                echo $this->_view->render('mng_notice_info_fortytwodaysafterdeath_entry.tpl');
+        }else{
+            //登録未の場合
+                //通知情報登録画面表示
+                $this->dispEntryNoticeInfo("");
+                echo $this->_view->render('mng_notice_info_thirtyfivedaysafterdeath_entry.tpl');
+        }
     }
 
     //通知情報登録画面表示(四十二日後)
@@ -405,9 +453,21 @@ class MngController extends Zend_Controller_Action
             //ログインしていない場合またはセッションタイムアウトした場合、ログイン画面を表示
             return $this->_forward('disprelogin');
         }
-        //通知情報登録画面表示
-        $this->dispEntryNoticeInfo("");
-        echo $this->_view->render('mng_notice_info_fortytwodaysafterdeath_entry.tpl');
+
+        //四十二日後通知登録の有無を調べる
+        $noticeInfoListFortytwoday = $this->_mngModel->getNoticeInfoFortytwodaysafterdeathEntryList();
+
+        if ($noticeInfoListFortytwoday) {
+            //登録済みの場合
+                //通知情報登録画面表示
+                $this->dispEntryNoticeInfo("");
+                echo $this->_view->render('mng_notice_info_fortyninedaysafterdeath_entry.tpl');
+        }else{
+            //登録未の場合
+                //通知情報登録画面表示
+                $this->dispEntryNoticeInfo("");
+                echo $this->_view->render('mng_notice_info_fortyninedaysafterdeath_entry.tpl');
+        }
     }
 
     //通知情報登録画面表示(四十九日後)
@@ -417,11 +477,23 @@ class MngController extends Zend_Controller_Action
             //ログインしていない場合またはセッションタイムアウトした場合、ログイン画面を表示
             return $this->_forward('disprelogin');
         }
-        //通知情報登録画面表示
-        $this->dispEntryNoticeInfo("");
-        echo $this->_view->render('mng_notice_info_fortyninedaysafterdeath_entry.tpl');
+
+        //四十九日後通知登録の有無を調べる
+        $noticeInfoListFortynineday = $this->_mngModel->getNoticeInfoFortyninedaysafterdeathEntryList();
+
+        if ($noticeInfoListFortynineday) {
+            //登録済みの場合
+                //通知情報登録画面表示
+                $this->dispEntryNoticeInfo("");
+                echo $this->_view->render('mng_notice_info_seventhdayafterdeath_entry.tpl');
+        }else{
+            //登録未の場合
+                //通知情報登録画面表示
+                $this->dispEntryNoticeInfo("");
+                echo $this->_view->render('mng_notice_info_fortyninedaysafterdeath_entry.tpl');
+        }
     }
-    
+
     /**
      * 通知情報登録画面表示処理
      * ：通知情報登録画面を表示する
@@ -462,7 +534,7 @@ class MngController extends Zend_Controller_Action
             }
             unset($deceasedInfo);
         }
-        
+
         $this->_view->deceasedInfoList = $deceasedInfoList;
 
         //メッセージをviewに設定
@@ -577,7 +649,7 @@ class MngController extends Zend_Controller_Action
             }
         }
     }
-    
+
     //通知情報登録確認画面表示
     public function confentrynoticeinfoAction()
     {
@@ -674,7 +746,7 @@ class MngController extends Zend_Controller_Action
             //ファイルパスをセッションに設定
             $this->_session->image_path = $uploadFile;
         }
-        
+
         if($this->getRequest()->getPost('search')) {
             //検索ボタン押下の場合
             $noticeInfo['selected_category'] = $noticeInfo['search_category'];
@@ -994,14 +1066,14 @@ class MngController extends Zend_Controller_Action
             //ログインしていない場合またはセッションタイムアウトした場合、ログイン画面を表示
             return $this->_forward('disprelogin');
         }
-        
+
         //POST値から通知Noを取得
         $noticeInfoNo = $this->getRequest()->getPost('notice_info_no');
         //通知情報を取得
         $noticeInfo = $this->_mngModel->getNoticeInfo($noticeInfoNo);
         //セッションに画像のパスを設定
         $this->_session->image_path = NOTICE_IMG_PATH . $noticeInfoNo . '.jpg';
-        
+
         //通知情報編集画面表示
         if(empty($noticeInfo) === false){
             $this->dispEntryNoticeInfo("", $noticeInfo);
@@ -1018,7 +1090,7 @@ class MngController extends Zend_Controller_Action
             //ログインしていない場合またはセッションタイムアウトした場合、ログイン画面を表示
             return $this->_forward('disprelogin');
         }
-        
+
         // 押されたボタンを判定する
         if ($this->getRequest()->getPost('back')) {             //戻るボタンの場合
             $this->dispNoticeInfo($this->getRequest()->getPost('notice_info_no'));
@@ -1028,14 +1100,14 @@ class MngController extends Zend_Controller_Action
         $this->_view->noticeInfoNo = $this->getRequest()->getPost('notice_info_no');
         $this->confNoticeInfo('mng_notice_info_edit.tpl', 'mng_notice_info_edit_conf.tpl');
     }
-    
+
     //通知情報編集確認画面表示
     public function compeditnoticeinfoAction() {
         if ($this->chkSession() === false) {
             //ログインしていない場合またはセッションタイムアウトした場合、ログイン画面を表示
             return $this->_forward('disprelogin');
         }
-        
+
         //セッションから入力値を取得
         $noticeInfo = $this->_session->notice_info;
         // 押されたボタンを判定する
@@ -1104,10 +1176,10 @@ class MngController extends Zend_Controller_Action
 
         //POST値から通知Noを取得
         $noticeInfoNo = $this->getRequest()->getPost('notice_info_no');
-        
+
         //通知情報を取得する
         $noticeInfo = $this->_mngModel->getNoticeInfo($noticeInfoNo);
-        
+
         //画像が存在する場合、画像を削除
         if ($noticeInfo['image_existence_flg']  == IMAGE_EXISTENCE_FLG_YES) {
             //画像のパスを取得
@@ -1117,7 +1189,7 @@ class MngController extends Zend_Controller_Action
                 unlink($imagePath);
             }
         }
-        
+
         //削除処理実行
         if ($this->_mngModel->deleteNoticeInfo($noticeInfoNo)) {
             //ログ出力
@@ -1136,7 +1208,7 @@ class MngController extends Zend_Controller_Action
     public function readimageAction() {
         //GET値から通知Noを取得
         $noticeInfoNo = $this->getRequest()->getQuery('nino');
-    
+
         if (empty($noticeInfoNo)) {
             //通知NoをGETで受け取らなかった場合は、セッションから画像パスを取得
             $imagePath = $this->_session->image_path;
@@ -1144,7 +1216,7 @@ class MngController extends Zend_Controller_Action
             //通知NoをGETで受け取った場合は、画像パスを生成する
             $imagePath = NOTICE_IMG_PATH . $noticeInfoNo . '.jpg';
         }
-        
+
         if (file_exists($imagePath)) {
             $fp   = fopen($imagePath,'rb');
             $size = filesize($imagePath);
@@ -1172,23 +1244,23 @@ class MngController extends Zend_Controller_Action
         if (comValidate::chkNotEmpty($password) === false) {
             return false;
         }
-        
+
         //引数のIDを条件に、管理者情報を取得する
         $manager = $this->_mngModel->getManager(comEncryption::encryption($id));
-        
+
         //取得した管理者情報と引数のPWが等しいかチェックする
         if (!$manager || (comEncryption::decryption($manager['manager_password']) !== $password)) {
             return false;
         }
-        
+
         //セッションにログイン状態を設定
         $this->_session->is_login = true;
         //セッションに管理者IDを設定
         $this->_session->manager_id = $manager['manager_id'];
-        
+
         return true;
     }
-    
+
     /**
      * 通知情報チェック
      * ：通知情報が正しいかチェックするメソッド
@@ -1211,7 +1283,7 @@ class MngController extends Zend_Controller_Action
         if (comValidate::chkNotEmpty($noticeInfo['notice_title']) === false) {
             $message = $message . "・タイトルが入力されていません。<br>";
         }
-        
+
         //登録方法が入力の場合
         if ($noticeInfo['entry_method'] === 1) {
             //本文
@@ -1239,7 +1311,7 @@ class MngController extends Zend_Controller_Action
 
         return $message;
     }
-    
+
     /**
      * 通知情報画像チェック
      * ：通知情報の画像ファイルが正しいかチェックするメソッド
@@ -1266,9 +1338,9 @@ class MngController extends Zend_Controller_Action
             default:
                 $message = $message . "・予期せぬエラーが発生しました。<br>";
         }
-            
+
         //選択されている場合、チェックする
-        if ($_FILES["notice_image"]["error"] === UPLOAD_ERR_OK) {            
+        if ($_FILES["notice_image"]["error"] === UPLOAD_ERR_OK) {
             //プロジェクトで定義するサイズ上限(10MB)のオーバーチェック
             if ($_FILES["notice_image"]["size"] > MAX_IMAGE_FILE_SIZE) {
                 $message = $message . "・写真のファイルサイズが大きすぎます。<br>";
@@ -1278,7 +1350,7 @@ class MngController extends Zend_Controller_Action
                 $message = $message . "・写真はJPEG形式のファイルを選択して下さい。<br>";
             }
         }
-        
+
         return $message;
     }
 
@@ -1323,26 +1395,26 @@ class MngController extends Zend_Controller_Action
         $this->_view->message = $message;
 
         //担当者一覧表示
-        echo $this->_view->render('mng_charge_list.tpl');        
+        echo $this->_view->render('mng_charge_list.tpl');
     }
-    
+
     //担当者追加
     public function addchargeAction() {
         if ($this->chkSession() === false) {
             //ログインしていない場合またはセッションタイムアウトした場合、ログイン画面を表示
             return $this->_forward('disprelogin');
         }
-        
+
         //POST値から担当者名を取得
         $chargeName = $this->getRequest()->getPost('charge_name');
-        
+
         //入力チェック
         if (comValidate::chkNotEmpty($chargeName) == false) {
             //担当者一覧表示
             $this->dispChargeList("担当者名が入力されていません");
             return;
         }
-        
+
         //DBに保存
         //DBに通知情報を保存
         if ($this->_mngModel->addCharge($chargeName)) {
@@ -1388,7 +1460,7 @@ class MngController extends Zend_Controller_Action
         }
         $this->dispPasswordChange();
     }
-    
+
     /**
      * パスワード変更画面表示処理
      * ：パスワード変更画面を表示する
@@ -1407,19 +1479,19 @@ class MngController extends Zend_Controller_Action
         //パスワード変更画面表示
         echo $this->_view->render('mng_password_change.tpl');
     }
-    
+
     //パスワード変更確認画面
     public function confpasswordchangeAction() {
         if ($this->chkSession() === false) {
             //ログインしていない場合またはセッションタイムアウトした場合、ログイン画面を表示
             return $this->_forward('disprelogin');
         }
-        
+
         //POSTから入力値を取得
         $nowPassword = $this->getRequest()->getPost('now_password');
         $newPassword = $this->getRequest()->getPost('new_password');
         $confPassword = $this->getRequest()->getPost('conf_password');
-        
+
         //入力チェック
         $message = "";
         //現在のパスワードが正しいかチェック
@@ -1449,13 +1521,13 @@ class MngController extends Zend_Controller_Action
             $this->_session->key = session_id() . '_' . microtime();
             $this->_view->token = comToken::get_token($this->_session->key);
             //パスワード変更確認画面表示
-            echo $this->_view->render('mng_password_change_conf.tpl');            
+            echo $this->_view->render('mng_password_change_conf.tpl');
         } else {
             //不正な場合入力画面の戻る
             $this->dispPasswordChange($nowPassword, $newPassword, $confPassword, $message);
         }
     }
-    
+
     //パスワード変更完了画面
     public function comppasswordchangeAction() {
         if ($this->chkSession() === false) {
@@ -1482,7 +1554,7 @@ class MngController extends Zend_Controller_Action
             if (isset($this->_session->key) === true) {
                 unset($this->_session->key);
             }
-            
+
             //DBのパスワードを変更
             if ($this->_mngModel->updatePassword($this->_session->manager_id, comEncryption::encryption($newPassword))) {
                 //自動ログインを設定している場合、Cookieのパスワードを変更
@@ -1507,7 +1579,7 @@ class MngController extends Zend_Controller_Action
     public function dispinquirypasswordAction() {
         $this->dispInquiryPassword();
     }
-    
+
     /**
      * パスワード問い合わせ画面表示処理
      * ：パスワード問い合わせ画面を表示する
@@ -1524,7 +1596,7 @@ class MngController extends Zend_Controller_Action
         $this->_view->token = comToken::get_token($this->_session->key);
         echo $this->_view->render('mng_password_inquiry.tpl');
     }
-    
+
     //パスワード問い合わせ完了
     public function compinquirypasswordAction() {
         //POSTから入力値を取得
@@ -1541,7 +1613,7 @@ class MngController extends Zend_Controller_Action
         if (isset($this->_session->key) === true) {
             unset($this->_session->key);
         }
-        
+
         //IDが存在するかチェック
         //引数のIDを条件に、管理者情報を取得する
         $manager = $this->_mngModel->getManager(comEncryption::encryption($id));
@@ -1571,7 +1643,7 @@ class MngController extends Zend_Controller_Action
             comMail::sendMail($mailInfo);
 
             $this->_view->mail = $manager['manager_mail'];
-            
+
             //メール送信完了画面表示
             echo $this->_view->render('mng_password_inquiry_comp.tpl');
         } else {
@@ -1579,7 +1651,7 @@ class MngController extends Zend_Controller_Action
             $this->dispInquiryPassword($id, "IDが不正です");
         }
     }
-    
+
     //故人様一覧画面表示
     public function dispdeceasedlistAction() {
         if ($this->chkSession() === false) {
@@ -1596,7 +1668,7 @@ class MngController extends Zend_Controller_Action
         $this->_session->search_deceased_name = "";
         $this->_session->search_person_in_charge = "";
         $this->_session->page_deceased_list = 1;
-        
+
         $this->dispDeceasedList("", "","", "", 1);
     }
 
@@ -1625,7 +1697,7 @@ class MngController extends Zend_Controller_Action
         $paginator->setCurrentPageNumber($pagenum);
         //1ページあたりの表示件数を設定
         $paginator->setItemCountPerPage(DECEASED_LIST_NUMBER);
-        
+
         //テンプレートにページネーター（故人様一覧）を設定
         $this->_view->deceasedInfoList = $paginator;
         //ページ情報を設定
@@ -1646,13 +1718,13 @@ class MngController extends Zend_Controller_Action
             //ログインしていない場合またはセッションタイムアウトした場合、ログイン画面を表示
             return $this->_forward('disprelogin');
         }
-        
+
         //Get値から検索条件を取得
         $searchFrom = $this->getRequest()->getParam('search_from', "");
         $searchTo = $this->getRequest()->getParam('search_to', "");
         $searchDeceasedName = $this->getRequest()->getParam('search_deceased_name', "");
         $searchPersonInCharge = $this->getRequest()->getParam('search_deceased_personincharge', "");
-  
+
         // 押されたボタンがクリアボタンだった場合、検索条件をクリアする
         if ($this->getRequest()->getParam('clear')) {                //クリアボタンの場合
             $searchFrom = "";
@@ -1660,41 +1732,41 @@ class MngController extends Zend_Controller_Action
             $searchDeceasedName = "";
             $searchPersonInCharge = "";
         }
-        
+
         //セッションに検索条件とページを設定
         $this->_session->search_deceased_list_from = $searchFrom;
         $this->_session->search_deceased_list_to = $searchTo;
         $this->_session->search_deceased_name = $searchDeceasedName;
         $this->_session->search_person_in_charge = $searchPersonInCharge ;
         $this->_session->page_deceased_list = 1;
-        
+
         $this->dispDeceasedList($searchFrom, $searchTo, $searchDeceasedName,$searchPersonInCharge,1);
     }
-    
+
     //故人様一覧画面戻る表示
     public function dispdeceasedreturnAction() {
         if ($this->chkSession() === false) {
             //ログインしていない場合またはセッションタイムアウトした場合、ログイン画面を表示
             return $this->_forward('disprelogin');
         }
-        
+
         //セッションから検索条件とページを取得
         $searchFrom = $this->_session->search_deceased_list_from;
         $searchTo = $this->_session->search_deceased_list_to;
         $searchDeceasedName = $this->_session->search_deceased_name;
         $searchPersonInCharge = $this->_session->search_person_in_charge;
         $page = $this->_session->page_deceased_list;
-        
+
         $this->dispDeceasedList($searchFrom, $searchTo,$searchDeceasedName,$searchPersonInCharge, $page);
     }
-    
+
     //故人様一覧画面ページ指定表示
     public function dispdeceasedpagingAction() {
         if ($this->chkSession() === false) {
             //ログインしていない場合またはセッションタイムアウトした場合、ログイン画面を表示
             return $this->_forward('disprelogin');
         }
-        
+
         //Get値からページ番号を取得
         $page = $this->getRequest()->getParam('page', 1);
 
@@ -1706,10 +1778,10 @@ class MngController extends Zend_Controller_Action
 
         //セッションにページを設定
         $this->_session->page_deceased_list = $page;
-        
+
         $this->dispDeceasedList($searchFrom, $searchTo,$searchDeceasedName,$searchPersonInCharge, $page);
     }
-    
+
     /**
      * 故人様一覧画面表示処理
      * ：故人様一覧画面を表示する
@@ -1726,7 +1798,7 @@ class MngController extends Zend_Controller_Action
 
         //DBから故人情報を取得
         $deceasedInfoList = $this->_mngModel->getDeceasedList($searchFrom, $searchTo,$searchDeceasedName,$searchPersonInCharge);
-        
+
         //ページング処理
         //ページネーターを取得
         $paginator = new Zend_Paginator(new Zend_Paginator_Adapter_Array($deceasedInfoList));
@@ -1734,7 +1806,7 @@ class MngController extends Zend_Controller_Action
         $paginator->setCurrentPageNumber($pagenum);
         //1ページあたりの表示件数を設定
         $paginator->setItemCountPerPage(DECEASED_LIST_NUMBER);
-        
+
         //テンプレートにページネーター（故人様一覧）を設定
         $this->_view->deceasedInfoList = $paginator;
         //ページ情報を設定
@@ -1748,7 +1820,7 @@ class MngController extends Zend_Controller_Action
 
         echo $this->_view->render('mng_deceased_list.tpl');
     }
-    
+
     //故人様QR発注フォーム画面表示
     public function dispdeceasedqrorderAction() {
         if ($this->chkSession() === false) {
@@ -1774,7 +1846,7 @@ class MngController extends Zend_Controller_Action
             'cachekey' => "");
         $this->dispDeceasedQrOrder($deceasedInfo);
     }
-    
+
     /**
      * 故人様QR発注フォーム画面表示処理
      * ：故人様QR発注フォームを表示する
@@ -1831,7 +1903,7 @@ class MngController extends Zend_Controller_Action
         $chargeList = $this->makeSelectboxSource($this->_mngModel->getChargeList(), 'charge_name');
         $this->_view->chargeList = $chargeList;
         $this->_view->chargeSelected = $deceasedInfo['charge_name'];
-        
+
         echo $this->_view->render('mng_deceased_qr_order.tpl');
     }
 
@@ -1839,7 +1911,7 @@ class MngController extends Zend_Controller_Action
     public function readdeceasedtempimageAction() {
         //セッションから画像パスを取得
         $imagePath = $this->_session->deceased_temp_data_path;
-        
+
         if (file_exists($imagePath)) {
             $fp   = fopen($imagePath,'rb');
             $size = filesize($imagePath);
@@ -1850,7 +1922,7 @@ class MngController extends Zend_Controller_Action
             echo $img;
         }
     }
-    
+
     //故人様アップロード画像表示
     public function readdeceasedimageAction() {
         //GET値から故人IDを取得
@@ -1858,7 +1930,7 @@ class MngController extends Zend_Controller_Action
 
         //故人IDをGETで受け取った場合は、画像パスを生成する
         $deceased = $this->_mngModel->getDeceased($deceasedId);
-        $imagePath = DECEASED_DATA_PATH . substr($deceased["issue_datetime"], 0, 4) . 
+        $imagePath = DECEASED_DATA_PATH . substr($deceased["issue_datetime"], 0, 4) .
                 '/' . $deceasedId . '/' . $deceasedId . '.jpg';
 
         if (file_exists($imagePath)) {
@@ -1871,7 +1943,7 @@ class MngController extends Zend_Controller_Action
             echo $img;
         }
     }
-    
+
     //QR発注フォーム確認画面表示
     public function confdeceasedqrorderAction() {
         if ($this->chkSession() === false) {
@@ -1931,7 +2003,7 @@ class MngController extends Zend_Controller_Action
         if (comValidate::chkNotEmpty($message) === false) {
             //入力値をセッションに設定
             $this->_session->deceased_info = $deceasedInfo;
-            
+
             //viewを設定
             $this->_view->chargeName = $deceasedInfo['charge_name'];
             $this->_view->souke = $deceasedInfo['souke'];
@@ -1996,12 +2068,12 @@ class MngController extends Zend_Controller_Action
         }
         //GET値から故人IDを取得
         $deceasedId = $this->getRequest()->getQuery('did');
-        
+
         //故人情報フォルダのパスを取得
         $deceased = $this->_mngModel->getDeceased($deceasedId);
-        $deceasedDataPath = DECEASED_DATA_PATH . 
-                substr($deceased["issue_datetime"], 0, 4) . '/' . $deceasedId;        
-        
+        $deceasedDataPath = DECEASED_DATA_PATH .
+                substr($deceased["issue_datetime"], 0, 4) . '/' . $deceasedId;
+
         //DBからデータを削除
         //削除処理実行
         if ($this->_mngModel->deleteDeceased($deceasedId)) {
@@ -2020,7 +2092,7 @@ class MngController extends Zend_Controller_Action
             echo $this->_view->render('mng_error.tpl');
         }
     }
-    
+
     //法要アプリのご案内ダウンロード
     public function downloadqrpdfAction() {
         if ($this->chkSession() === false) {
@@ -2029,17 +2101,17 @@ class MngController extends Zend_Controller_Action
         }
         //GET値から故人IDを取得
         $deceasedId = $this->getRequest()->getQuery('did');
-        
+
         //故人情報を取得
         $deceasedInfo = $this->_mngModel->getDeceased($deceasedId);
-        
+
         if (empty($deceasedInfo) === false) {
             if ($deceasedInfo['issue_state_code'] == ISSUE_STATE_CODE_COMP) {
                 //ファイル名を取得
                 $fileName = sprintf(PDF_FILE_NAME, str_replace("　", "", $deceasedInfo['deceased_name']));
 
                 //ファイルのパスを取得
-                $fileDir = DECEASED_DATA_PATH . substr($deceasedInfo["issue_datetime"], 0, 4) . 
+                $fileDir = DECEASED_DATA_PATH . substr($deceasedInfo["issue_datetime"], 0, 4) .
                         '/' . $deceasedId;
                 $pdfPath = $fileDir . '/' . $fileName;
                 $pdfPath = mb_convert_encoding($pdfPath, 'Shift_JIS', 'UTF-8');
@@ -2084,7 +2156,7 @@ class MngController extends Zend_Controller_Action
                     //エラー画面表示
                     echo $this->_view->render('mng_error.tpl');
                     exit();
-                }                
+                }
             } else {
                 //エラー画面表示
                 echo $this->_view->render('mng_error.tpl');
@@ -2094,17 +2166,17 @@ class MngController extends Zend_Controller_Action
             echo $this->_view->render('mng_error.tpl');
         }
     }
-    
+
     //故人様表示
     public function dispdeceasedinfoAction() {
         if ($this->chkSession() === false) {
             //ログインしていない場合またはセッションタイムアウトした場合、ログイン画面を表示
             return $this->_forward('disprelogin');
         }
-        
+
         //GET値から故人IDを取得
         $deceasedId = $this->getRequest()->getQuery('did');
-        
+
         //故人様表示画面表示
         if($this->dispDeceasedInfo($deceasedId)){
             echo $this->_view->render('mng_deceased_info_display.tpl');
@@ -2112,12 +2184,12 @@ class MngController extends Zend_Controller_Action
             echo $this->_view->render('mng_error.tpl');
         }
     }
-    
+
     //故人様ポップアップ表示
     public function dispdeceasedinfopopupAction() {
         //GET値から故人IDを取得
         $deceasedId = $this->getRequest()->getQuery('did');
-        
+
         //故人様表示画面表示
         if($this->dispDeceasedInfo($deceasedId)){
             echo $this->_view->render('mng_deceased_info_popup.tpl');
@@ -2138,7 +2210,7 @@ class MngController extends Zend_Controller_Action
     private function dispDeceasedInfo($deceasedId) {
         //故人情報を取得
         $deceasedInfo = $this->_mngModel->getDeceased($deceasedId);
-        
+
         if (empty($deceasedInfo) === false) {
             if ($deceasedInfo['issue_state_code'] == ISSUE_STATE_CODE_SUBMIT ||
                 $deceasedInfo['issue_state_code'] == ISSUE_STATE_CODE_COMP) {
@@ -2209,7 +2281,7 @@ class MngController extends Zend_Controller_Action
         if ($this->_mngModel->logicDeleteDeceased($deceasedId)) {
             //故人情報フォルダのパスを取得
             $deceased = $this->_mngModel->getDeceased($deceasedId);
-            $deceasedDataPath = DECEASED_DATA_PATH . 
+            $deceasedDataPath = DECEASED_DATA_PATH .
                     substr($deceased["issue_datetime"], 0, 4) . '/' . $deceasedId;
             if (file_exists($deceasedDataPath)) {
                 //ファイルが存在する場合、削除する
@@ -2234,7 +2306,7 @@ class MngController extends Zend_Controller_Action
             //ログインしていない場合またはセッションタイムアウトした場合、ログイン画面を表示
             return $this->_forward('disprelogin');
         }
-        
+
         //POST値から故人IDを取得
         $deceasedId = $this->getRequest()->getPost('deceased_id');
 
@@ -2263,7 +2335,7 @@ class MngController extends Zend_Controller_Action
                 $fileName = comEncryption::getRandomString() . ".jpg";
                 $tempFile = DECEASED_DATA_TEMP_PATH . $fileName;
             } while(file_exists($tempFile));
-            $photoPath = DECEASED_DATA_PATH . substr($deceasedInfo["issue_datetime"], 0, 4) . 
+            $photoPath = DECEASED_DATA_PATH . substr($deceasedInfo["issue_datetime"], 0, 4) .
                     "/" . $deceasedInfo['deceased_id'] . "/" . $deceasedInfo['deceased_id'] . ".jpg";
             if (copy($photoPath, $tempFile)) {
                 //セッションに写真のパスを設定
@@ -2330,7 +2402,7 @@ class MngController extends Zend_Controller_Action
         //担当者一覧を取得してビューに設定する
         $chargeList = $this->makeSelectboxSource($this->_mngModel->getChargeList(), 'charge_name');
         $this->_view->chargeList = $chargeList;
-        
+
         //画面を表示
         echo $this->_view->render('mng_deceased_info_edit.tpl');
     }
@@ -2452,16 +2524,16 @@ class MngController extends Zend_Controller_Action
             }
         }
     }
-    
+
     public function compeditdeceasedinfoAction() {
         if ($this->chkSession() === false) {
             //ログインしていない場合またはセッションタイムアウトした場合、ログイン画面を表示
             return $this->_forward('disprelogin');
         }
-        
+
         //セッションから入力値を取得
         $deceasedInfo = $this->_session->deceased_info;
-        
+
         // 押されたボタンを判定する
         if ($this->getRequest()->getPost('back')) {              //戻るボタンの場合
             //入力画面に戻る
@@ -2483,7 +2555,7 @@ class MngController extends Zend_Controller_Action
             if ($this->_mngModel->updateDeceased($deceasedInfo)) {
                 //遺影写真保存先デイレクトリのフォルダ取得
                 $deceased = $this->_mngModel->getDeceased($deceasedInfo['deceased_id']);
-                $fileDir = DECEASED_DATA_PATH . substr($deceased["issue_datetime"], 0, 4) . 
+                $fileDir = DECEASED_DATA_PATH . substr($deceased["issue_datetime"], 0, 4) .
                         '/' . $deceasedInfo['deceased_id'];
                 //遺影写真のパス
                 $imagePath = $fileDir . '/' . $deceasedInfo['deceased_id'] . '.jpg';
@@ -2503,7 +2575,7 @@ class MngController extends Zend_Controller_Action
                                 //失敗した場合
                                 echo "ファイルを移動出来ませんでした。";
                             }
-                        }                        
+                        }
                     }
                 } else {
                     //画像を選択していない場合、画像を削除する
@@ -2513,7 +2585,7 @@ class MngController extends Zend_Controller_Action
                     }
                 }
                 //フルネームのフィールドを追加する
-                $deceasedInfo['deceased_name'] = 
+                $deceasedInfo['deceased_name'] =
                         $deceasedInfo['deceased_last_name'] . "　" . $deceasedInfo['deceased_first_name'];
                 //法要アプリのご案内を発行する
                 comGuidanceIssue::issue($deceasedInfo, $fileDir);
@@ -2529,7 +2601,7 @@ class MngController extends Zend_Controller_Action
             echo $this->_view->render('mng_deceased_info_edit_comp.tpl');
         }
     }
-    
+
     /**
      * 担当者一覧HTML生成
      * ：担当者一覧を取得し、表示用HTMLを生成するメソッド
@@ -2544,7 +2616,7 @@ class MngController extends Zend_Controller_Action
         }
         return $strHtml;
     }
-    
+
     /**
      * 故人様情報チェック
      * ：故人様情報が正しいかチェックする
@@ -2584,8 +2656,8 @@ class MngController extends Zend_Controller_Action
                 $deceasedInfo['deceased_deathday_m'] . "/" . $deceasedInfo['deceased_deathday_d'];
         if(comValidate::chkDate($deceasedDeathday) === false) {    //日付形式が正しいか
             $message = $message . "・没年月日はYYYY/M/D形式（例：2014/3/10）で入力してください。<br>";
-        }        
-                
+        }
+
         //生年月日＜没年月日か
         if (comValidate::chkDayLargeSmall($deceasedDeathday, $deceasedBirthday) === false) {
             $message = $message . "・没年月日が生年月日より過去になっています。<br>";
@@ -2599,7 +2671,7 @@ class MngController extends Zend_Controller_Action
         }
         return $message;
     }
-    
+
     /**
      * checkDeceasedImageメソッド
      * ：故人様の画像ファイルが正しいかチェックするメソッド
@@ -2626,9 +2698,9 @@ class MngController extends Zend_Controller_Action
             default:
                 $message = $message . "・予期せぬエラーが発生しました。<br>";
         }
-            
+
         //選択されている場合、チェックする
-        if ($_FILES["deceased_image"]["error"] === UPLOAD_ERR_OK) {            
+        if ($_FILES["deceased_image"]["error"] === UPLOAD_ERR_OK) {
             //プロジェクトで定義するサイズ上限(10MB)のオーバーチェック
             if ($_FILES["deceased_image"]["size"] > MAX_IMAGE_FILE_SIZE) {
                 $message = $message . "・写真のファイルサイズが大きすぎます。<br>";
@@ -2640,17 +2712,17 @@ class MngController extends Zend_Controller_Action
         }
         return $message;
     }
-    
+
     //QR発注フォーム完了画面表示
     public function compdeceasedqrorderAction() {
         if ($this->chkSession() === false) {
             //ログインしていない場合またはセッションタイムアウトした場合、ログイン画面を表示
             return $this->_forward('disprelogin');
         }
-        
+
         //セッションから入力値を取得
         $deceasedInfo = $this->_session->deceased_info;
-        
+
         // 押されたボタンを判定する
         if ($this->getRequest()->getPost('back')) {              //戻るボタンの場合
             //QR発注フォーム入力画面に戻る
@@ -2689,7 +2761,7 @@ class MngController extends Zend_Controller_Action
                 //画像を選択している場合、一時フォルダから正式なフォルダに移動する
                 if ($deceasedInfo['image_existence_flg'] == IMAGE_EXISTENCE_FLG_YES) {
                     //ディレクトリ生成
-                    
+
                     if (mkdir($fileDir, 0755, true)) {
                         //一時フォルダの仮アップ画像を画像フォルダに移動
                         $imagePath = $fileDir . '/' . $deceasedInfo['deceased_id'] . '.jpg';
@@ -2700,11 +2772,11 @@ class MngController extends Zend_Controller_Action
                     }
                 }
                 //フルネームのフィールドを追加する
-                $deceasedInfo['deceased_name'] = 
+                $deceasedInfo['deceased_name'] =
                         $deceasedInfo['deceased_last_name'] . "　" . $deceasedInfo['deceased_first_name'];
                 //法要アプリのご案内を発行する
                 comGuidanceIssue::issue($deceasedInfo, $fileDir);
-                
+
                 //発注があった旨qr@wow.ne.jpにメールする
                 //管理者情報取得
                 $manager = $this->_mngModel->getManager($this->_session->manager_id);
@@ -2712,14 +2784,14 @@ class MngController extends Zend_Controller_Action
                 $this->_view->managerName = $manager['manager_name'];       //管理者名取得
                 $this->_view->chargeName = $deceasedInfo['charge_name'];    //担当者名
                 $this->_view->souke = $deceasedInfo['souke'];               //葬家様
-                $this->_view->deceasedName = 
-                        $deceasedInfo['deceased_last_name'] . '　' . 
+                $this->_view->deceasedName =
+                        $deceasedInfo['deceased_last_name'] . '　' .
                         $deceasedInfo['deceased_first_name'];               //故人様
                 $this->_view->datetime = date("Y-m-d H:i:s");               //発注日時
 
                 //メール文を取得
                 $body = $this->_view->render('mail_order.tpl');
-                
+
                 //送信メールの内容を設定
                 $mailInfo = array(
                     'username' => $this->_config->inquiry_mail->inquiry_mail,
@@ -2743,7 +2815,7 @@ class MngController extends Zend_Controller_Action
             echo $this->_view->render('mng_deceased_qr_order_comp.tpl');
         }
     }
-    
+
     //故人様情報物理削除
     //画面上のリンクからは実行できません
     //テストデータを削除する際にwowの管理者が実行する特殊な処理です
@@ -2752,15 +2824,15 @@ class MngController extends Zend_Controller_Action
             //ログインしていない場合またはセッションタイムアウトした場合、ログイン画面を表示
             return $this->_forward('disprelogin');
         }
-        
+
         //GET値から故人IDを取得
         $deceasedId = $this->getRequest()->getQuery('did');
-        
+
         //故人情報フォルダのパスを取得
         $deceased = $this->_mngModel->getDeceased($deceasedId);
-        $deceasedDataPath = DECEASED_DATA_PATH . 
-                substr($deceased["issue_datetime"], 0, 4) . "/" . $deceasedId;        
-        
+        $deceasedDataPath = DECEASED_DATA_PATH .
+                substr($deceased["issue_datetime"], 0, 4) . "/" . $deceasedId;
+
         //DBからデータを削除
         //削除処理実行
         if ($this->_mngModel->compRemoveDeceased($deceasedId)) {
@@ -2777,7 +2849,7 @@ class MngController extends Zend_Controller_Action
             echo "削除に失敗しました";
         }
     }
-    
+
     public function __call($method, $args)
     {
         $response = $this->getResponse();
