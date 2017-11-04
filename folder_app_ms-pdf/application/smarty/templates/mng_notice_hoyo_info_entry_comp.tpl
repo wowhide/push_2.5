@@ -28,7 +28,7 @@
 編集する場合は、通知情報一覧から表示して行って下さい。</p>
 <h2>通知情報</h2>
 <table id="notice_input">
-    <tr><th>通知条件</th>
+    <!-- <tr><th>通知条件</th>
     {if $search_category == 0}
         <td> すべての故人様 </td>
     {/if}
@@ -47,16 +47,16 @@
     {if $search_category == 5}
         <td>{$memorialYear}{$memorialMonth}に{$memorialEvent}法要の故人様</td>
     {/if}
-    </tr>
-    <tr><th>通知先故人様</th><td><a href="../mng/dispdeceasedlistpopup" onclick="javascript:openDeceasedList(this.href);return false;">{$targetCount}名様</a></td></tr>
-    <tr><th>通知予定日</th><td>{$noticeSchedule}</td></tr>
-    <tr><th>登録方法</th>
+    </tr> -->
+<!--     <tr><th>通知先故人様</th><td><a href="../mng/dispdeceasedlistpopup" onclick="javascript:openDeceasedList(this.href);return false;">{$targetCount}名様</a></td></tr> -->
+    <!-- <tr><th>通知予定日</th><td>{$noticeSchedule}</td></tr> -->
+<!--     <tr><th>登録方法</th>
     {if $entryMethod == "1"}
         <td>通知情報を直接入力</td>
     {else}
         <td>通知情報としてWebページを表示</td>
     {/if}
-    </tr>
+    </tr> -->
     <tr>
         <th>タイトル</th>
         <td>{$noticeTitle|escape}</td>

@@ -25,7 +25,7 @@
 <div id="contents">
 <h2>通知情報登録確認</h2>
 <p>下記内容で登録します。<br />よろしければ登録ボタンをクリックして下さい。</p>
-<form method="post" action="../mng/compentrynoticeinfo" enctype="multipart/form-data" onSubmit="return double()">
+<form method="post" action="../mng/compentrynoticehoyoinfo" enctype="multipart/form-data" onSubmit="return double()">
     <h2>{$noticeTypeTitle}</h2>
     <table id="notice_input">
 <!--         <tr><th>{$noticeTypeTitle}</th>
