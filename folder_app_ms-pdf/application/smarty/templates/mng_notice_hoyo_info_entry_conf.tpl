@@ -26,9 +26,9 @@
 <h2>通知情報登録確認</h2>
 <p>下記内容で登録します。<br />よろしければ登録ボタンをクリックして下さい。</p>
 <form method="post" action="../mng/compentrynoticeinfo" enctype="multipart/form-data" onSubmit="return double()">
-    <h2>通知情報</h2>
+    <h2>{$noticeTypeTitle}</h2>
     <table id="notice_input">
-        <tr><th>通知条件</th>
+<!--         <tr><th>{$noticeTypeTitle}</th>
         {if $search_category == 0}
             <td> すべての故人様 </td>
         {/if}
@@ -47,8 +47,8 @@
         {if $search_category == 5}
             <td>{$memorialYear}{$memorialMonth}に{$memorialEvent}法要の故人様</td>
         {/if}
-        </tr>
-        <tr><th>通知先故人様</th><td><a href="../mng/dispdeceasedlistpopup" onclick="javascript:openDeceasedList(this.href);return false;">{$targetCount}名様</a></td></tr>
+        </tr> -->
+<!--         <tr><th>通知先故人様</th><td><a href="../mng/dispdeceasedlistpopup" onclick="javascript:openDeceasedList(this.href);return false;">{$targetCount}名様</a></td></tr>
         <tr><th>通知予定日</th><td>{$noticeSchedule}</td></tr>
         <tr><th>登録方法</th>
 {if $entryMethod == "1"}
@@ -56,12 +56,11 @@
 {else}
             <td>通知情報としてWebページを表示</td>
 {/if}
-        </tr>
+        </tr> -->
         <tr>
             <th>タイトル</th>
             <td>{$noticeTitle|escape}</td>
         </tr>
-{if $entryMethod == "1"}
         <tr><th>テンプレート</th>
             <td>{$template}</td>
             <input type="hidden" name="template_id" value="{$templateId}" />
@@ -80,14 +79,19 @@
     {/if}
             </td>
         </tr>
-{/if}
+<!-- {if $entryMethod == "1"} -->
+
+
+<!-- {/if} -->
         <tr>
-{if $entryMethod == "1"}
-            <th>お知らせからリンク<br />させたいURL</th>
+<!-- {if $entryMethod == "1"} -->
+<!--             <th>お知らせからリンク<br />させたいURL</th>
 {else}
             <th>お知らせに表示する<br />ページのURL</th>
-{/if}
-            <td>{$url}</td>
+{/if} -->
+
+        <th>お知らせからリンク<br />させたいURL</th>
+        <td>{$url}</td>
         </tr>
     </table>
     <input class="btn" type="submit" name="back" value="戻る" />

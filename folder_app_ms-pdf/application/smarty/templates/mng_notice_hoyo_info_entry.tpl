@@ -98,7 +98,7 @@ $(function() {
 <p class="breadcrumb"><a href="../mng/dispnoticeinfolist">通知情報一覧</a> ＞ 通知情報登録</p>
 <div id="contents">
 <div id="notice_entry">
-<form method="post" action="../mng/confentrynoticeinfo" enctype="multipart/form-data" onSubmit="return double()">
+<form method="post" action="../mng/confentrynoticehoyoinfo" enctype="multipart/form-data" onSubmit="return double()">
     <!-- 故人様の検索条件設定テーブル -->
     <div id="notice_setting_area">
         <h2>{$noticeTypeTitle}</h2>
