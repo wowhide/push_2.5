@@ -361,7 +361,7 @@ class MngController extends Zend_Controller_Action
             //登録未の場合
                 //通知情報登録画面表示
                 $this->dispEntryNoticeHoyoInfo(3,"");
-                echo $this->_view->render('mng_notice_info_seventhdayafterdeath_entry.tpl');
+                echo $this->_view->render('mng_notice_hoyo_info_entry.tpl');
         }
 
     }
@@ -389,7 +389,7 @@ class MngController extends Zend_Controller_Action
             //登録未の場合
                 //通知情報登録画面表示
                 $this->dispEntryNoticeHoyoInfo(4,"");
-                echo $this->_view->render('mng_notice_info_fourteendaysafterdeath_entry.tpl');
+                echo $this->_view->render('mng_notice_hoyo_info_entry.tpl');
         }
     }
 
@@ -413,7 +413,7 @@ class MngController extends Zend_Controller_Action
             //登録未の場合
                 //通知情報登録画面表示
                 $this->dispEntryNoticeHoyoInfo(5,"");
-                echo $this->_view->render('mng_notice_info_twentyonedaysafterdeath_entry.tpl');
+                echo $this->_view->render('mng_notice_hoyo_info_entry.tpl');
         }
     }
 
@@ -437,7 +437,7 @@ class MngController extends Zend_Controller_Action
             //登録未の場合
                 //通知情報登録画面表示
                 $this->dispEntryNoticeHoyoInfo(6,"");
-                echo $this->_view->render('mng_notice_info_twentyeightdaysafterdeath_entry.tpl');
+                echo $this->_view->render('mng_notice_hoyo_info_entry.tpl');
         }
     }
 
@@ -461,7 +461,7 @@ class MngController extends Zend_Controller_Action
             //登録未の場合
                 //通知情報登録画面表示
                 $this->dispEntryNoticeHoyoInfo(7,"");
-                echo $this->_view->render('mng_notice_info_thirtyfivedaysafterdeath_entry.tpl');
+                echo $this->_view->render('mng_notice_hoyo_info_entry.tpl');
         }
     }
 
@@ -485,7 +485,7 @@ class MngController extends Zend_Controller_Action
             //登録未の場合
                 //通知情報登録画面表示
                 $this->dispEntryNoticeHoyoInfo(8,"");
-                echo $this->_view->render('mng_notice_info_fortytwodaysafterdeath_entry.tpl');
+                echo $this->_view->render('mng_notice_hoyo_info_entry.tpl');
         }
     }
 
@@ -509,12 +509,12 @@ class MngController extends Zend_Controller_Action
             //登録未の場合
                 //通知情報登録画面表示
                 $this->dispEntryNoticeHoyoInfo(9,"");
-                echo $this->_view->render('mng_notice_info_fortyninedaysafterdeath_entry.tpl');
+                echo $this->_view->render('mng_notice_hoyo_info_entry.tpl');
         }
     }
 
     /**
-     * 通知情報登録画面表示処理(定期通知：法要)
+     * 通知情報登録画面表示処理(定期通知：追善法要)
      * ：通知情報登録画面を表示する
      * @param string    $message    エラーメッセ―ジ
      * @param array     $noticeInfo 通知情報
@@ -536,6 +536,7 @@ class MngController extends Zend_Controller_Action
                                                                   '',
                                                                   '');
                     $this->_view->templateId = NOTICE_TEMPNO_SEVENTH_DEATHDAY;
+                    $this->_view->noticeTypeTitle = "初七日";
                     break;
 
                 case 4:
@@ -545,6 +546,7 @@ class MngController extends Zend_Controller_Action
                                                                   '',
                                                                   '');
                     $this->_view->templateId = NOTICE_TEMPNO_FOURTEENDAY_DEATHDAY;
+                    $this->_view->noticeTypeTitle = "十四日法要";
                     break;
 
                 case 5:
@@ -554,6 +556,7 @@ class MngController extends Zend_Controller_Action
                                                                   '',
                                                                   '');
                     $this->_view->templateId = NOTICE_TEMPNO_TWENTYONEDAY_DEATHDAY;
+                    $this->_view->noticeTypeTitle = "二十一日法要";
                     break;
 
                 case 6:
@@ -563,6 +566,7 @@ class MngController extends Zend_Controller_Action
                                                                   '',
                                                                   '');
                     $this->_view->templateId = NOTICE_TEMPNO_TWENTYEIGHT_DEATHDAY;
+                    $this->_view->noticeTypeTitle = "二十八日法要";
                     break;
 
                 case 7:
@@ -572,6 +576,7 @@ class MngController extends Zend_Controller_Action
                                                                   '',
                                                                   '');
                     $this->_view->templateId = NOTICE_TEMPNO_THIRTYFIVE_DEATHDAY;
+                    $this->_view->noticeTypeTitle = "三十五日法要";
                     break;
 
                 case 8:
@@ -581,6 +586,7 @@ class MngController extends Zend_Controller_Action
                                                                   '',
                                                                   '');
                     $this->_view->templateId = NOTICE_TEMPNO_FORTYTWO_DEATHDAY;
+                    $this->_view->noticeTypeTitle = "四十二日法要";
                     break;
 
                 case 9:
@@ -590,6 +596,7 @@ class MngController extends Zend_Controller_Action
                                                                   '',
                                                                   '');
                     $this->_view->templateId = NOTICE_TEMPNO_FORTYNINE_DEATHDAY;
+                    $this->_view->noticeTypeTitle = "四十九日法要";
                     break;
             }
 
@@ -671,6 +678,23 @@ class MngController extends Zend_Controller_Action
                 $this->_view->imgWH = $this->getImageSizeAttr($this->_session->image_path);
             }
         }
+    }
+
+
+    //通知情報登録確認画面表示(定期通知：追善法要)
+    public function confentrynoticehoyoinfoAction()
+    {
+        if ($this->chkSession() === false) {
+            //ログインしていない場合またはセッションタイムアウトした場合、ログイン画面を表示
+            return $this->_forward('disprelogin');
+        }
+
+        if($this->getRequest()->getPost('back')) {
+            //戻るボタン押下の場合は通知情報一覧画面に戻る
+            return $this->dispnoticeinfolistAction();
+        }
+
+        $this->confNoticeInfo('mng_notice_info_entry.tpl', 'mng_notice_info_entry_conf.tpl');
     }
 
     /**

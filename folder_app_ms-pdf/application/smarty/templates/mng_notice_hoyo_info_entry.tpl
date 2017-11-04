@@ -95,13 +95,13 @@ $(function() {
 {include file="include/jsng.html"}
 <div id="jsok" style="display:none;">
 {include file="include/mng_menu.html"}
-<p class="breadcrumb"><a href="../mng/dispnoticeinfolist">通知</a> ＞ 二十一日後</p>
+<p class="breadcrumb"><a href="../mng/dispnoticeinfolist">通知情報一覧</a> ＞ 通知情報登録</p>
 <div id="contents">
 <div id="notice_entry">
 <form method="post" action="../mng/confentrynoticeinfo" enctype="multipart/form-data" onSubmit="return double()">
     <!-- 故人様の検索条件設定テーブル -->
     <div id="notice_setting_area">
-        <h2>二十一日法要</h2>
+        <h2>{$noticeTypeTitle}</h2>
 <!--         <table id="notice_setting">
             <tr><th><input type="radio" id="search_category0" name="search_category" value="0" {$settingChecked0} /></th>
                 <td>全ての故人様</td>
@@ -184,8 +184,8 @@ $(function() {
             <td><input id="datepicker" type="text" name="notice_schedule" value="{$noticeSchedule}" readonly="readonly" /><br>
                 <span class="input_caution">※指定できる予定日は翌日～2か月後までです。</span></td></tr>
         <tr><th>登録方法（必須）</th>
-            <td><input type="radio" name="entry_method" value="1" {$checked1}>&nbsp;通知情報を直接入力する&nbsp;&nbsp;<input type="radio" name="entry_method" value="2" {$checked2}>&nbsp;通知情報としてWebページを表示する</td></tr>
-        <tr> -->
+            <td><input type="radio" name="entry_method" value="1" {$checked1}>&nbsp;通知情報を直接入力する&nbsp;&nbsp;<input type="radio" name="entry_method" value="2" {$checked2}>&nbsp;通知情報としてWebページを表示する</td></tr> -->
+        <tr>
             <th>タイトル（必須）</th>
             <td><input id="title" type="text" name="notice_title" value="{$noticeTitle}" maxlength="50" style="ime-mode: active;" /><br>
                 <span class="input_caution">※50文字以内</span></td>
