@@ -382,9 +382,25 @@ class MngController extends Zend_Controller_Action
 
         if ($noticeInfoListFourteenday) {
             //登録済みの場合
-                //通知情報登録画面表示
-                $this->dispEntryNoticeInfo("");
-                echo $this->_view->render('mng_notice_hoyo_info_edit.tpl');
+                // //通知情報登録画面表示
+                // $this->dispEntryNoticeInfo("");
+                // echo $this->_view->render('mng_notice_hoyo_info_edit.tpl');
+
+                //POST値から通知Noを取得
+                    //通知情報を取得
+                    $noticeInfo = $this->_mngModel->getNoticeHoyoInfo(14);
+                    
+                    //セッションに画像のパスを設定
+                    $this->_session->image_path = NOTICE_IMG_PATH . $noticeInfo['notice_info_no'] . '.jpg';
+
+                    //通知情報編集画面表示
+                    if(empty($noticeInfo) === false){
+                        $this->dispEntryNoticeHoyoInfo("", $noticeInfo);
+                        $this->_view->noticeInfoNo = $noticeInfo['notice_info_no'];
+                        echo $this->_view->render('mng_notice_hoyo_info_edit.tpl');
+                    }else{
+                        echo $this->_view->render('mng_error.tpl');
+                    }
         }else{
             //登録未の場合
                 //通知情報登録画面表示

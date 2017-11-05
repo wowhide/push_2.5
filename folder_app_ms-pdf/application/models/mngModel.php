@@ -638,6 +638,28 @@ class mngModel {
     }
 
     /**
+     * 通知情報を取得する(追善法要)
+     * 通知情報種類を条件に通知情報を取得する
+     *
+     * @return  array   通知情報
+     */
+    public function getNoticeHoyoInfo($noticeType)
+    {
+        //お知らせ情報
+        $sql = "SELECT
+                    *
+                FROM
+                    t_notice_info
+                WHERE
+                    notice_type = :notice_type
+                ";
+        $noticeInfo = $this->_db->fetchRow($sql, array(':notice_type' => $noticeType));
+
+        return $noticeInfo;
+    }
+
+
+    /**
      * 通知情報を取得する
      * 通知情報Noを条件に通知情報を取得する
      *
