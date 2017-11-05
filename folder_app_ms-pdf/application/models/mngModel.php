@@ -291,6 +291,166 @@ class mngModel {
                   return true;
               }
 
+
+    // ========     法要通知    ========== //
+
+    /**
+     * 通知情報を登録する（追善法要）
+     *
+     * @param   array   $noticeInfo    通知情報情報
+     * @return  boolean　成否
+     */
+    public function insertNoticeHoyoInfo($noticeInfo)
+    {
+        $now = new Zend_Date();
+
+        //日付の様式を変更するためにZend_Date型の変数を準備
+        $date = new Zend_Date($noticeInfo['notice_schedule']);
+
+        try {
+            if ($noticeInfo['entry_method'] == ENTRY_METHOD_INPUT) {
+                $sql = "INSERT INTO t_notice_info (
+                            notice_schedule,
+                            entry_method,
+                            notice_title,
+                            template_id,
+                            notice_text,
+                            image_existence_flg,
+                            notice_type,
+                            url,
+                            entry_datetime,
+                            search_category,
+                            charge_name,
+                            hall_name,
+                            search_name,
+                            search_year,
+                            search_month,
+                            search_day,
+                            death_month,
+                            memorial_year,
+                            memorial_month,
+                            memorial_event
+                        )
+                        VALUES
+                        (
+                            :notice_schedule,
+                            :entry_method,
+                            :notice_title,
+                            :template_id,
+                            :notice_text,
+                            :image_existence_flg,
+                            :notice_type,
+                            :url,
+                            :entry_datetime,
+                            :search_category,
+                            :charge_name,
+                            :hall_name,
+                            :search_name,
+                            :search_year,
+                            :search_month,
+                            :search_day,
+                            :death_month,
+                            :memorial_year,
+                            :memorial_month,
+                            :memorial_event
+                        )
+                ";
+
+                $this->_db->query($sql, array(
+                    'notice_schedule' => $date->toString('yyyyMMdd'),
+                    'entry_method' => $noticeInfo['entry_method'],
+                    'notice_title' => $noticeInfo['notice_title'],
+                    'template_id' => $noticeInfo['template_id'],
+                    'notice_text' => $noticeInfo['notice_text'],
+                    'image_existence_flg' => $noticeInfo['image_existence_flg'],
+                    'notice_type' => $noticeInfo['notice_type'],
+                    'url' => $noticeInfo['url'],
+                    'entry_datetime' => $now,
+                    'search_category' => $noticeInfo['selected_category'],
+                    'charge_name' => $noticeInfo['charge_name'],
+                    'hall_name' => $noticeInfo['hall_name'],
+                    'search_name' => $noticeInfo['search_name'],
+                    'search_year' => $noticeInfo['search_year'],
+                    'search_month' => $noticeInfo['search_month'],
+                    'search_day' => $noticeInfo['search_day'],
+                    'death_month' => $noticeInfo['death_month'],
+                    'memorial_year' => $noticeInfo['memorial_year'],
+                    'memorial_month' => $noticeInfo['memorial_month'],
+                    'memorial_event' => $noticeInfo['memorial_event'])
+                );
+            } else {
+                $sql = "INSERT INTO t_notice_info (
+                            notice_schedule,
+                            entry_method,
+                            notice_title,
+                            notice_type,
+                            url,
+                            entry_datetime,
+                            search_category,
+                            charge_name,
+                            hall_name,
+                            search_name,
+                            search_year,
+                            search_month,
+                            search_day,
+                            death_month,
+                            memorial_year,
+                            memorial_month,
+                            memorial_event
+                        )
+                        VALUES
+                        (
+                            :notice_schedule,
+                            :entry_method,
+                            :notice_title,
+                            :notice_type,
+                            :url,
+                            :entry_datetime,
+                            :search_category,
+                            :charge_name,
+                            :hall_name,
+                            :search_name,
+                            :search_year,
+                            :search_month,
+                            :search_day,
+                            :death_month,
+                            :memorial_year,
+                            :memorial_month,
+                            :memorial_event
+                        )
+                ";
+
+                $this->_db->query($sql, array(
+                    'notice_schedule' => $date->toString('yyyyMMdd'),
+                    'entry_method' => $noticeInfo['entry_method'],
+                    'notice_title' => $noticeInfo['notice_title'],
+                    'notice_type' => $noticeInfo['notice_type'],
+                    'url' => $noticeInfo['url'],
+                    'entry_datetime' => $now,
+                    'search_category' => $noticeInfo['selected_category'],
+                    'charge_name' => $noticeInfo['charge_name'],
+                    'hall_name' => $noticeInfo['hall_name'],
+                    'search_name' => $noticeInfo['search_name'],
+                    'search_year' => $noticeInfo['search_year'],
+                    'search_month' => $noticeInfo['search_month'],
+                    'search_day' => $noticeInfo['search_day'],
+                    'death_month' => $noticeInfo['death_month'],
+                    'memorial_year' => $noticeInfo['memorial_year'],
+                    'memorial_month' => $noticeInfo['memorial_month'],
+                    'memorial_event' => $noticeInfo['memorial_event'])
+                );
+            }
+
+            $noticeInfoNo = $this->getLastNoticeInfoNo();
+            $this->insertNoticeTarget($noticeInfoNo['notice_info_no'], $noticeInfo['notice_target']);
+        } catch(Exception $e) {
+            Zend_Debug::dump($e->getMessage(), $label = null, $echo = true);
+            return false;
+        }
+        return true;
+    }
+
+
     // ========     通常通知    ========== //
 
     /**

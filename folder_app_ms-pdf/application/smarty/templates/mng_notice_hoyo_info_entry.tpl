@@ -185,6 +185,8 @@ $(function() {
                 <span class="input_caution">※指定できる予定日は翌日～2か月後までです。</span></td></tr>
         <tr><th>登録方法（必須）</th>
             <td><input type="radio" name="entry_method" value="1" {$checked1}>&nbsp;通知情報を直接入力する&nbsp;&nbsp;<input type="radio" name="entry_method" value="2" {$checked2}>&nbsp;通知情報としてWebページを表示する</td></tr> -->
+
+        <input type="hidden" name="notice_type" value="{$noticeTypeNumber}" />
         <tr>
             <th>タイトル（必須）</th>
             <td><input id="title" type="text" name="notice_title" value="{$noticeTitle}" maxlength="50" style="ime-mode: active;" /><br>

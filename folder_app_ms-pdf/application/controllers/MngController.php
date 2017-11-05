@@ -535,8 +535,10 @@ class MngController extends Zend_Controller_Action
                                                                   '[お名前]',
                                                                   '',
                                                                   '');
-                    $this->_view->templateId = NOTICE_TEMPNO_SEVENTH_DEATHDAY;
-                    $this->_view->noticeTypeTitle = "初七日法要";
+                    $this->_view->templateId        = NOTICE_TEMPNO_SEVENTH_DEATHDAY;
+                    $this->_view->noticeTypeTitle   = "初七日法要";
+                    $this->_view->noticeTypeNumber  = 7;
+
                     break;
 
                 case 4:
@@ -545,8 +547,10 @@ class MngController extends Zend_Controller_Action
                                                                   '[お名前]',
                                                                   '',
                                                                   '');
-                    $this->_view->templateId = NOTICE_TEMPNO_FOURTEENDAY_DEATHDAY;
-                    $this->_view->noticeTypeTitle = "二七日法要";
+                    $this->_view->templateId        = NOTICE_TEMPNO_FOURTEENDAY_DEATHDAY;
+                    $this->_view->noticeTypeTitle   = "二七日法要";
+                    $this->_view->noticeTypeNumber  = 14;
+
                     break;
 
                 case 5:
@@ -555,8 +559,10 @@ class MngController extends Zend_Controller_Action
                                                                   '[お名前]',
                                                                   '',
                                                                   '');
-                    $this->_view->templateId = NOTICE_TEMPNO_TWENTYONEDAY_DEATHDAY;
-                    $this->_view->noticeTypeTitle = "三七日法要";
+                    $this->_view->templateId        = NOTICE_TEMPNO_TWENTYONEDAY_DEATHDAY;
+                    $this->_view->noticeTypeTitle   = "三七日法要";
+                    $this->_view->noticeTypeNumber  = 21;
+
                     break;
 
                 case 6:
@@ -565,8 +571,9 @@ class MngController extends Zend_Controller_Action
                                                                   '[お名前]',
                                                                   '',
                                                                   '');
-                    $this->_view->templateId = NOTICE_TEMPNO_TWENTYEIGHT_DEATHDAY;
-                    $this->_view->noticeTypeTitle = "四七日法要";
+                    $this->_view->templateId        = NOTICE_TEMPNO_TWENTYEIGHT_DEATHDAY;
+                    $this->_view->noticeTypeTitle   = "四七日法要";
+                    $this->_view->noticeTypeNumber  = 28;
                     break;
 
                 case 7:
@@ -575,8 +582,9 @@ class MngController extends Zend_Controller_Action
                                                                   '[お名前]',
                                                                   '',
                                                                   '');
-                    $this->_view->templateId = NOTICE_TEMPNO_THIRTYFIVE_DEATHDAY;
-                    $this->_view->noticeTypeTitle = "五七日法要";
+                    $this->_view->templateId        = NOTICE_TEMPNO_THIRTYFIVE_DEATHDAY;
+                    $this->_view->noticeTypeTitle   = "五七日法要";
+                    $this->_view->noticeTypeNumber  = 35;
                     break;
 
                 case 8:
@@ -585,8 +593,9 @@ class MngController extends Zend_Controller_Action
                                                                   '[お名前]',
                                                                   '',
                                                                   '');
-                    $this->_view->templateId = NOTICE_TEMPNO_FORTYTWO_DEATHDAY;
-                    $this->_view->noticeTypeTitle = "六七日法要";
+                    $this->_view->templateId        = NOTICE_TEMPNO_FORTYTWO_DEATHDAY;
+                    $this->_view->noticeTypeTitle   = "六七日法要";
+                    $this->_view->noticeTypeNumber  = 42;
                     break;
 
                 case 9:
@@ -595,8 +604,9 @@ class MngController extends Zend_Controller_Action
                                                                   '[お名前]',
                                                                   '',
                                                                   '');
-                    $this->_view->templateId = NOTICE_TEMPNO_FORTYNINE_DEATHDAY;
-                    $this->_view->noticeTypeTitle = "四十九日法要";
+                    $this->_view->templateId        = NOTICE_TEMPNO_FORTYNINE_DEATHDAY;
+                    $this->_view->noticeTypeTitle   = "四十九日法要";
+                    $this->_view->noticeTypeNumber  = 49;
                     break;
             }
 
@@ -790,6 +800,7 @@ class MngController extends Zend_Controller_Action
             'memorial_event'      => '',
             // 'notice_target'       => $this->getRequest()->getPost('deceased_checkbox'),
             // 'notice_schedule'     => $this->getRequest()->getPost('notice_schedule'),
+            'notice_type'         => $this->getRequest()->getPost('notice_type'),
             'entry_method'        => 1,
             'notice_title'        => $this->getRequest()->getPost('notice_title'),
             'template_id'         => $this->getRequest()->getPost('template_id'),
@@ -960,7 +971,7 @@ class MngController extends Zend_Controller_Action
             }
 
             //DBに通知情報を保存
-            if ($this->_mngModel->insertNoticeInfo($noticeInfo)) {
+            if ($this->_mngModel->insertNoticeHoyoInfo($noticeInfo)) {
                 //画像を選択している場合、一時フォルダから正式なフォルダに移動する
                 if ($noticeInfo['image_existence_flg'] == IMAGE_EXISTENCE_FLG_YES) {
                     //今追加した通知情報の通知情報Noを取得する
