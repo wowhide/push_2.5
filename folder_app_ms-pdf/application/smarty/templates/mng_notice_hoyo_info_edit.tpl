@@ -5,7 +5,7 @@
 <title>KUYOアプリ管理システム</title>
 <meta name="keywords" content="">
 <meta name="description" content="">
-<meta name="robots" content="noindex,nofollow"> 
+<meta name="robots" content="noindex,nofollow">
 <meta name="author" content="株式会社デジタルスペースワウ" />
 <link rel="stylesheet" type="text/css" media="all" href="../../css/default.css">
 <link rel="stylesheet" type="text/css" media="all" href="../../css/layout.css">
@@ -95,14 +95,14 @@ $(function() {
 {include file="include/jsng.html"}
 <div id="jsok" style="display:none;">
 {include file="include/mng_menu.html"}
-<p class="breadcrumb"><a href="../mng/dispnoticeinfolist">通知情報一覧</a> ＞ <a href="../mng/dispnoticeinfo?nino={$noticeInfoNo}">通知情報表示</a> ＞ 通知情報編集</p>
+<p class="breadcrumb">{$noticeTypeTitle}編集</p>
 <div id="contents">
 <div id="notice_entry">
 <form method="post" action="../mng/confeditnoticeinfo" enctype="multipart/form-data" onSubmit="return double()">
     <!-- 故人様の検索条件設定テーブル -->
     <div id="notice_setting_area">
-        <h2>通知条件設定</h2>
-        <table id="notice_setting">
+        <h2>{$noticeTypeTitle}</h2>
+<!--         <table id="notice_setting">
             <tr><th><input type="radio" id="search_category0" name="search_category" value="0" {$settingChecked0} /></th>
                 <td>全ての故人様</td>
             </tr>
@@ -141,10 +141,10 @@ $(function() {
             </tr>
         </table>
         <div id="search_btn"><input type="submit" name="search" value="この条件で検索" onclick="javascript:if(!searchExecute())return false;" /></div>
-        <input type="hidden" id="selected_category" name="selected_category" value="{$selectedCategory}" />
+        <input type="hidden" id="selected_category" name="selected_category" value="{$selectedCategory}" /> -->
     </div>
     <!-- 故人一覧表示テーブル -->
-    <div id="deceased_table_area">
+<!--     <div id="deceased_table_area">
         <h2 style="float: left;">条件に一致する故人様： {count($deceasedInfoList)}名</h2>
         <span style="float: right;">
             <input type="button" id="checkall" value="全てチェック" style="margin-right: 5px;" />
@@ -175,16 +175,16 @@ $(function() {
             </tbody>
         </table>
         ※チェックされている故人様にお知らせが配信されます
-    </div>
+    </div> -->
     <h2>通知情報編集</h2>
     <p class="message">{$message}</p>
     <table id="notice_input">
-        <tr><th>通知予定日（必須）</th>
+        <!-- <tr><th>通知予定日（必須）</th>
             <td><input id="datepicker" type="text" name="notice_schedule" value="{$noticeSchedule|escape|strtotime|date_format:"%Y/%m/%d"}" readonly="readonly" /><br>
                 <span class="input_caution">※指定できる予定日は翌日～2か月後までです。</span></td></tr>
         <tr><th>登録方法（必須）</th>
             <td><input type="radio" name="entry_method" value="1" {$checked1}>&nbsp;通知情報を直接入力する&nbsp;&nbsp;<input type="radio" name="entry_method" value="2" {$checked2}>&nbsp;通知情報としてWebページを表示する</td></tr>
-        <tr>
+        <tr> -->
             <th>タイトル（必須）</th>
             <td><input id="title" type="text" name="notice_title" value="{$noticeTitle}" maxlength="50" style="ime-mode: active;" /><br>
                 <span class="input_caution">※50文字以内</span></td>
@@ -219,7 +219,7 @@ $(function() {
         </tr>
     </table>
     <div class="btn_row">
-        <input class="btn" type="submit" name="back" value="戻る" />
+        <!-- <input class="btn" type="submit" name="back" value="戻る" /> -->
         <input class="btn" type="submit" name="edit" value="更新確認" onclick="javascript:undisabled();" />
         <input type="hidden" name="notice_info_no" value="{$noticeInfoNo}" />
     </div>

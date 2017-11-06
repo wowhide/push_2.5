@@ -360,7 +360,7 @@ class MngController extends Zend_Controller_Action
         }else{
             //登録未の場合
                 //通知情報登録画面表示
-                $this->dispEntryNoticeHoyoInfo(3,"");
+                $this->dispEntryNoticeHoyoInfo(7,"");
                 echo $this->_view->render('mng_notice_hoyo_info_entry.tpl');
         }
 
@@ -389,13 +389,13 @@ class MngController extends Zend_Controller_Action
                 //POST値から通知Noを取得
                     //通知情報を取得
                     $noticeInfo = $this->_mngModel->getNoticeHoyoInfo(14);
-                    
+
                     //セッションに画像のパスを設定
                     $this->_session->image_path = NOTICE_IMG_PATH . $noticeInfo['notice_info_no'] . '.jpg';
 
                     //通知情報編集画面表示
                     if(empty($noticeInfo) === false){
-                        $this->dispEntryNoticeHoyoInfo("", $noticeInfo);
+                        $this->dispEntryNoticeHoyoInfo($noticeInfo['notice_type'],"", $noticeInfo);
                         $this->_view->noticeInfoNo = $noticeInfo['notice_info_no'];
                         echo $this->_view->render('mng_notice_hoyo_info_edit.tpl');
                     }else{
@@ -404,7 +404,7 @@ class MngController extends Zend_Controller_Action
         }else{
             //登録未の場合
                 //通知情報登録画面表示
-                $this->dispEntryNoticeHoyoInfo(4,"");
+                $this->dispEntryNoticeHoyoInfo(14,"");
                 echo $this->_view->render('mng_notice_hoyo_info_entry.tpl');
         }
     }
@@ -428,7 +428,7 @@ class MngController extends Zend_Controller_Action
         }else{
             //登録未の場合
                 //通知情報登録画面表示
-                $this->dispEntryNoticeHoyoInfo(5,"");
+                $this->dispEntryNoticeHoyoInfo(21,"");
                 echo $this->_view->render('mng_notice_hoyo_info_entry.tpl');
         }
     }
@@ -452,7 +452,7 @@ class MngController extends Zend_Controller_Action
         }else{
             //登録未の場合
                 //通知情報登録画面表示
-                $this->dispEntryNoticeHoyoInfo(6,"");
+                $this->dispEntryNoticeHoyoInfo(28,"");
                 echo $this->_view->render('mng_notice_hoyo_info_entry.tpl');
         }
     }
@@ -476,7 +476,7 @@ class MngController extends Zend_Controller_Action
         }else{
             //登録未の場合
                 //通知情報登録画面表示
-                $this->dispEntryNoticeHoyoInfo(7,"");
+                $this->dispEntryNoticeHoyoInfo(35,"");
                 echo $this->_view->render('mng_notice_hoyo_info_entry.tpl');
         }
     }
@@ -500,7 +500,7 @@ class MngController extends Zend_Controller_Action
         }else{
             //登録未の場合
                 //通知情報登録画面表示
-                $this->dispEntryNoticeHoyoInfo(8,"");
+                $this->dispEntryNoticeHoyoInfo(42,"");
                 echo $this->_view->render('mng_notice_hoyo_info_entry.tpl');
         }
     }
@@ -524,7 +524,7 @@ class MngController extends Zend_Controller_Action
         }else{
             //登録未の場合
                 //通知情報登録画面表示
-                $this->dispEntryNoticeHoyoInfo(9,"");
+                $this->dispEntryNoticeHoyoInfo(49,"");
                 echo $this->_view->render('mng_notice_hoyo_info_entry.tpl');
         }
     }
@@ -534,7 +534,7 @@ class MngController extends Zend_Controller_Action
      * ：通知情報登録画面を表示する
      * @param string    $message    エラーメッセ―ジ
      * @param array     $noticeInfo 通知情報
-     */ 
+     */
 
     private function dispEntryNoticeHoyoInfo($noticeType, $message, array $noticeInfo = null){
 
@@ -545,7 +545,7 @@ class MngController extends Zend_Controller_Action
             $this->_view->noticeTitle    = "";
 
             switch ($noticeType) {
-                case 3:
+                case 7:
                     $template = $this->_mngModel->getTemplate(NOTICE_TEMPNO_SEVENTH_DEATHDAY);
                     $this->_view->template = common::makeTemplate($template['template_text'],
                                                                   '[お名前]',
@@ -557,7 +557,7 @@ class MngController extends Zend_Controller_Action
 
                     break;
 
-                case 4:
+                case 14:
                     $template = $this->_mngModel->getTemplate(NOTICE_TEMPNO_FOURTEENDAY_DEATHDAY);
                     $this->_view->template = common::makeTemplate($template['template_text'],
                                                                   '[お名前]',
@@ -569,7 +569,7 @@ class MngController extends Zend_Controller_Action
 
                     break;
 
-                case 5:
+                case 21:
                     $template = $this->_mngModel->getTemplate(NOTICE_TEMPNO_TWENTYONEDAY_DEATHDAY);
                     $this->_view->template = common::makeTemplate($template['template_text'],
                                                                   '[お名前]',
@@ -581,7 +581,7 @@ class MngController extends Zend_Controller_Action
 
                     break;
 
-                case 6:
+                case 28:
                     $template = $this->_mngModel->getTemplate(NOTICE_TEMPNO_TWENTYEIGHT_DEATHDAY);
                     $this->_view->template = common::makeTemplate($template['template_text'],
                                                                   '[お名前]',
@@ -592,7 +592,7 @@ class MngController extends Zend_Controller_Action
                     $this->_view->noticeTypeNumber  = 28;
                     break;
 
-                case 7:
+                case 35:
                     $template = $this->_mngModel->getTemplate(NOTICE_TEMPNO_THIRTYFIVE_DEATHDAY);
                     $this->_view->template = common::makeTemplate($template['template_text'],
                                                                   '[お名前]',
@@ -603,7 +603,7 @@ class MngController extends Zend_Controller_Action
                     $this->_view->noticeTypeNumber  = 35;
                     break;
 
-                case 8:
+                case 42:
                     $template = $this->_mngModel->getTemplate(NOTICE_TEMPNO_FORTYTWO_DEATHDAY);
                     $this->_view->template = common::makeTemplate($template['template_text'],
                                                                   '[お名前]',
@@ -614,7 +614,7 @@ class MngController extends Zend_Controller_Action
                     $this->_view->noticeTypeNumber  = 42;
                     break;
 
-                case 9:
+                case 49:
                     $template = $this->_mngModel->getTemplate(NOTICE_TEMPNO_FORTYNINE_DEATHDAY);
                     $this->_view->template = common::makeTemplate($template['template_text'],
                                                                   '[お名前]',
@@ -696,7 +696,7 @@ class MngController extends Zend_Controller_Action
             // }
 
             switch ($noticeType) {
-                case 3:
+                case 7:
                     $template = $this->_mngModel->getTemplate(NOTICE_TEMPNO_SEVENTH_DEATHDAY);
                     $this->_view->template = common::makeTemplate($template['template_text'],
                                                                   '[お名前]',
@@ -706,7 +706,7 @@ class MngController extends Zend_Controller_Action
                     $this->_view->noticeTypeTitle = "初七日法要";
                     break;
 
-                case 4:
+                case 14:
                     $template = $this->_mngModel->getTemplate(NOTICE_TEMPNO_FOURTEENDAY_DEATHDAY);
                     $this->_view->template = common::makeTemplate($template['template_text'],
                                                                   '[お名前]',
@@ -716,7 +716,7 @@ class MngController extends Zend_Controller_Action
                     $this->_view->noticeTypeTitle = "二七日法要";
                     break;
 
-                case 5:
+                case 21:
                     $template = $this->_mngModel->getTemplate(NOTICE_TEMPNO_TWENTYONEDAY_DEATHDAY);
                     $this->_view->template = common::makeTemplate($template['template_text'],
                                                                   '[お名前]',
@@ -726,7 +726,7 @@ class MngController extends Zend_Controller_Action
                     $this->_view->noticeTypeTitle = "三七日法要";
                     break;
 
-                case 6:
+                case 28:
                     $template = $this->_mngModel->getTemplate(NOTICE_TEMPNO_TWENTYEIGHT_DEATHDAY);
                     $this->_view->template = common::makeTemplate($template['template_text'],
                                                                   '[お名前]',
@@ -736,7 +736,7 @@ class MngController extends Zend_Controller_Action
                     $this->_view->noticeTypeTitle = "四七日法要";
                     break;
 
-                case 7:
+                case 35:
                     $template = $this->_mngModel->getTemplate(NOTICE_TEMPNO_THIRTYFIVE_DEATHDAY);
                     $this->_view->template = common::makeTemplate($template['template_text'],
                                                                   '[お名前]',
@@ -746,7 +746,7 @@ class MngController extends Zend_Controller_Action
                     $this->_view->noticeTypeTitle = "五七日法要";
                     break;
 
-                case 8:
+                case 42:
                     $template = $this->_mngModel->getTemplate(NOTICE_TEMPNO_FORTYTWO_DEATHDAY);
                     $this->_view->template = common::makeTemplate($template['template_text'],
                                                                   '[お名前]',
@@ -756,7 +756,7 @@ class MngController extends Zend_Controller_Action
                     $this->_view->noticeTypeTitle = "六七日法要";
                     break;
 
-                case 9:
+                case 49:
                     $template = $this->_mngModel->getTemplate(NOTICE_TEMPNO_FORTYNINE_DEATHDAY);
                     $this->_view->template = common::makeTemplate($template['template_text'],
                                                                   '[お名前]',
@@ -3540,7 +3540,7 @@ class MngController extends Zend_Controller_Action
                                                  $name,
                                                  "",
                                                  "");
-        //四七日法要   
+        //四七日法要
         }elseif($noticeInfo['template_id'] == NOTICE_TEMPNO_TWENTYEIGHT_DEATHDAY) {
             $template = $this->_mngModel->getTemplate(NOTICE_TEMPNO_TWENTYEIGHT_DEATHDAY);
             $templateText = common::makeTemplate($template['template_text'],
@@ -3548,14 +3548,14 @@ class MngController extends Zend_Controller_Action
                                                  "",
                                                  "");
 
-        //五七日法要   
+        //五七日法要
         }elseif($noticeInfo['template_id'] == NOTICE_TEMPNO_THIRTYFIVE_DEATHDAY) {
             $template = $this->_mngModel->getTemplate(NOTICE_TEMPNO_THIRTYFIVE_DEATHDAY);
             $templateText = common::makeTemplate($template['template_text'],
                                                  $name,
                                                  "",
                                                  "");
-        //六七日法要           
+        //六七日法要
         }elseif($noticeInfo['template_id'] == NOTICE_TEMPNO_FORTYTWO_DEATHDAY) {
             $template = $this->_mngModel->getTemplate(NOTICE_TEMPNO_FORTYTWO_DEATHDAY);
             $templateText = common::makeTemplate($template['template_text'],
@@ -3576,4 +3576,3 @@ class MngController extends Zend_Controller_Action
 
 //Zend_Debug::dump($user, $label = null, $echo = true);
 }
-
