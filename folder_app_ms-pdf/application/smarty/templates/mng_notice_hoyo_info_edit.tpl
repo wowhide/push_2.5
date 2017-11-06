@@ -98,7 +98,7 @@ $(function() {
 <p class="breadcrumb">{$noticeTypeTitle}編集</p>
 <div id="contents">
 <div id="notice_entry">
-<form method="post" action="../mng/confeditnoticeinfo" enctype="multipart/form-data" onSubmit="return double()">
+<form method="post" action="../mng/confeditnoticehoyoinfo" enctype="multipart/form-data" onSubmit="return double()">
     <!-- 故人様の検索条件設定テーブル -->
     <div id="notice_setting_area">
         <h2>{$noticeTypeTitle}</h2>

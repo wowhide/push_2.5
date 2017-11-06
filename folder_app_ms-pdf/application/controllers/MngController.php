@@ -341,46 +341,22 @@ class MngController extends Zend_Controller_Action
         echo $this->_view->render('mng_notice_info_entry.tpl');
     }
 
-    //通知情報登録画面表示(七日後（法要名：初七日法要）)
-    public function dispentrynoticeinfosevendayafterdeathAction()
+
+    //通知情報登録画面表示(追善法要)
+    public function dispentrynoticeinfodayafterdeathAction()
     {
         if ($this->chkSession() === false) {
             //ログインしていない場合またはセッションタイムアウトした場合、ログイン画面を表示
             return $this->_forward('disprelogin');
         }
 
-        //初七日法要通知登録の有無を調べる
-        $noticeInfoListSeventhday = $this->_mngModel->getNoticeInfoSeventhdayafterdeathEntryList();
+        //GET値から法要通知種類を取得
+        $noticeTypeNo = $this->getRequest()->getQuery('ntype');
 
-        if ($noticeInfoListSeventhday) {
-            //登録済みの場合
-                //通知情報登録画面表示
-                $this->dispEntryNoticeHoyoInfo("");
-                echo $this->_view->render('mng_notice_hoyo_info_edit.tpl');
-        }else{
-            //登録未の場合
-                //通知情報登録画面表示
-                $this->dispEntryNoticeHoyoInfo(7,"");
-                echo $this->_view->render('mng_notice_hoyo_info_entry.tpl');
-        }
+        //通知登録の有無を調べる
+        $noticeInfoList = $this->_mngModel->getNoticeInfodayafterdeathEntryList($noticeTypeNo);
 
-    }
-
-
-
-
-    //通知情報登録画面表示(十四日後)
-    public function dispentrynoticeinfofourteendaysafterdeathAction()
-    {
-        if ($this->chkSession() === false) {
-            //ログインしていない場合またはセッションタイムアウトした場合、ログイン画面を表示
-            return $this->_forward('disprelogin');
-        }
-
-        //十四日後通知登録の有無を調べる
-        $noticeInfoListFourteenday = $this->_mngModel->getNoticeInfoFourteendaysafterdeathEntryList();
-
-        if ($noticeInfoListFourteenday) {
+        if ($noticeInfoList) {
             //登録済みの場合
                 // //通知情報登録画面表示
                 // $this->dispEntryNoticeInfo("");
@@ -388,7 +364,7 @@ class MngController extends Zend_Controller_Action
 
                 //POST値から通知Noを取得
                     //通知情報を取得
-                    $noticeInfo = $this->_mngModel->getNoticeHoyoInfo(14);
+                    $noticeInfo = $this->_mngModel->getNoticeHoyoInfo($noticeTypeNo);
 
                     //セッションに画像のパスを設定
                     $this->_session->image_path = NOTICE_IMG_PATH . $noticeInfo['notice_info_no'] . '.jpg';
@@ -404,130 +380,11 @@ class MngController extends Zend_Controller_Action
         }else{
             //登録未の場合
                 //通知情報登録画面表示
-                $this->dispEntryNoticeHoyoInfo(14,"");
+                $this->dispEntryNoticeHoyoInfo($noticeTypeNo,"");
                 echo $this->_view->render('mng_notice_hoyo_info_entry.tpl');
         }
     }
 
-    //通知情報登録画面表示(二十一日後)
-    public function dispentrynoticeinfotwentyonedaysafterdeathAction()
-    {
-        if ($this->chkSession() === false) {
-            //ログインしていない場合またはセッションタイムアウトした場合、ログイン画面を表示
-            return $this->_forward('disprelogin');
-        }
-
-        //二十一日後通知登録の有無を調べる
-        $noticeInfoListTwentyoneday = $this->_mngModel->getNoticeInfoTwentyonedaysafterdeathEntryList();
-
-        if ($noticeInfoListTwentyoneday) {
-            //登録済みの場合
-                //通知情報登録画面表示
-                $this->dispEntryNoticeInfo("");
-                echo $this->_view->render('mng_notice_hoyo_info_edit.tpl');
-        }else{
-            //登録未の場合
-                //通知情報登録画面表示
-                $this->dispEntryNoticeHoyoInfo(21,"");
-                echo $this->_view->render('mng_notice_hoyo_info_entry.tpl');
-        }
-    }
-
-    //通知情報登録画面表示(二十八日後)
-    public function dispentrynoticeinfotwentyeightdaysafterdeathAction()
-    {
-        if ($this->chkSession() === false) {
-            //ログインしていない場合またはセッションタイムアウトした場合、ログイン画面を表示
-            return $this->_forward('disprelogin');
-        }
-
-        //二十八日後通知登録の有無を調べる
-        $noticeInfoListTwentyeightday = $this->_mngModel->getNoticeInfoTwentyeightdaysafterdeathEntryList();
-
-        if ($noticeInfoListTwentyeightday) {
-            //登録済みの場合
-                //通知情報登録画面表示
-                $this->dispEntryNoticeInfo("");
-                echo $this->_view->render('mng_notice_hoyo_info_edit.tpl');
-        }else{
-            //登録未の場合
-                //通知情報登録画面表示
-                $this->dispEntryNoticeHoyoInfo(28,"");
-                echo $this->_view->render('mng_notice_hoyo_info_entry.tpl');
-        }
-    }
-
-    //通知情報登録画面表示(三十五日後)
-    public function dispentrynoticeinfothirtyfivedaysafterdeathAction()
-    {
-        if ($this->chkSession() === false) {
-            //ログインしていない場合またはセッションタイムアウトした場合、ログイン画面を表示
-            return $this->_forward('disprelogin');
-        }
-
-        //三十五日後通知登録の有無を調べる
-        $noticeInfoListThirtyfiveday = $this->_mngModel->getNoticeInfoThirtyfivedaysafterdeathEntryList();
-
-        if ($noticeInfoListThirtyfiveday) {
-            //登録済みの場合
-                //通知情報登録画面表示
-                $this->dispEntryNoticeInfo("");
-                echo $this->_view->render('mng_notice_hoyo_info_edit.tpl');
-        }else{
-            //登録未の場合
-                //通知情報登録画面表示
-                $this->dispEntryNoticeHoyoInfo(35,"");
-                echo $this->_view->render('mng_notice_hoyo_info_entry.tpl');
-        }
-    }
-
-    //通知情報登録画面表示(四十二日後)
-    public function dispentrynoticeinfofortytwodaysafterdeathAction()
-    {
-        if ($this->chkSession() === false) {
-            //ログインしていない場合またはセッションタイムアウトした場合、ログイン画面を表示
-            return $this->_forward('disprelogin');
-        }
-
-        //四十二日後通知登録の有無を調べる
-        $noticeInfoListFortytwoday = $this->_mngModel->getNoticeInfoFortytwodaysafterdeathEntryList();
-
-        if ($noticeInfoListFortytwoday) {
-            //登録済みの場合
-                //通知情報登録画面表示
-                $this->dispEntryNoticeInfo("");
-                echo $this->_view->render('mng_notice_hoyo_info_edit.tpl');
-        }else{
-            //登録未の場合
-                //通知情報登録画面表示
-                $this->dispEntryNoticeHoyoInfo(42,"");
-                echo $this->_view->render('mng_notice_hoyo_info_entry.tpl');
-        }
-    }
-
-    //通知情報登録画面表示(四十九日後)
-    public function dispentrynoticeinfofortyninedaysafterdeathAction()
-    {
-        if ($this->chkSession() === false) {
-            //ログインしていない場合またはセッションタイムアウトした場合、ログイン画面を表示
-            return $this->_forward('disprelogin');
-        }
-
-        //四十九日後通知登録の有無を調べる
-        $noticeInfoListFortynineday = $this->_mngModel->getNoticeInfoFortyninedaysafterdeathEntryList();
-
-        if ($noticeInfoListFortynineday) {
-            //登録済みの場合
-                //通知情報登録画面表示
-                $this->dispEntryNoticeInfo("");
-                echo $this->_view->render('mng_notice_hoyo_info_edit.tpl');
-        }else{
-            //登録未の場合
-                //通知情報登録画面表示
-                $this->dispEntryNoticeHoyoInfo(49,"");
-                echo $this->_view->render('mng_notice_hoyo_info_entry.tpl');
-        }
-    }
 
     /**
      * 通知情報登録画面表示処理(定期通知：追善法要)
@@ -1017,6 +874,18 @@ class MngController extends Zend_Controller_Action
         }
     }
 
+
+
+    //通知情報編集確認画面表示（追善法要）
+    public function confeditnoticehoyoinfoAction() {
+        if ($this->chkSession() === false) {
+            //ログインしていない場合またはセッションタイムアウトした場合、ログイン画面を表示
+            return $this->_forward('disprelogin');
+        }
+
+        $this->_view->noticeInfoNo = $this->getRequest()->getPost('notice_info_no');
+        $this->confNoticeInfo('mng_notice_hoyo_info_edit.tpl', 'mng_notice_hoyo_info_edit_conf.tpl');
+    }
 
     /**
      * 通知情報チェック

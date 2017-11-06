@@ -5,7 +5,7 @@
 <title>KUYOアプリ管理システム</title>
 <meta name="keywords" content="">
 <meta name="description" content="">
-<meta name="robots" content="noindex,nofollow"> 
+<meta name="robots" content="noindex,nofollow">
 <meta name="author" content="株式会社デジタルスペースワウ" />
 <link rel="stylesheet" type="text/css" media="all" href="../../css/default.css">
 <link rel="stylesheet" type="text/css" media="all" href="../../css/layout.css">
@@ -21,7 +21,7 @@
 {include file="include/jsng.html"}
 <div id="jsok" style="display:none;">
 {include file="include/mng_menu.html"}
-<p class="breadcrumb"><a href="../mng/dispnoticeinfolist">通知情報一覧</a> ＞ 通知情報登録</p>
+<p class="breadcrumb">{$noticeTypeTitle}登録</p>
 <div id="contents">
 <h2>通知情報登録確認</h2>
 <p>下記内容で登録します。<br />よろしければ登録ボタンをクリックして下さい。</p>

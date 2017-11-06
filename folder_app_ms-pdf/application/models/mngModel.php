@@ -108,47 +108,21 @@ class mngModel {
 
     // ========　    定期通知    ========== //
 
-    /**
-     * 通知情報の登録の有無を取得する（初七日）
-     *
-     * @return  array   通知情報リスト
-     */
-    public function getNoticeInfoSeventhdayafterdeathEntryList()
-    {
-        $sql = "SELECT
-                    *
-                FROM
-                    t_notice_info
-                WHERE
-                    notice_type = 7
-                ";
-        $notcieInfoList = $this->_db->fetchRow($sql);
-
-        if (empty($notcieInfoList)) {
-            //空の場合falseを返す
-            return false;
-        } else {
-            //データが存在する場合trueを返す
-            return true;
-        }
-        return true;
-    }
-
   /**
-    * 通知情報の登録の有無を取得する（十四日後）
+    * 通知情報の登録の有無を取得する（追善法要）
     *
     * @return  array   通知情報リスト
     */
-    public function getNoticeInfoFourteendaysafterdeathEntryList()
+    public function getNoticeInfodayafterdeathEntryList($noticeType)
     {
         $sql = "SELECT
                     *
                 FROM
                     t_notice_info
                 WHERE
-                    notice_type = 14
+                    notice_type = :notice_type
                 ";
-        $notcieInfoList = $this->_db->fetchRow($sql);
+        $notcieInfoList = $this->_db->fetchRow($sql, array('notice_type' => $noticeType));
 
         if (empty($notcieInfoList)) {
             //空の場合falseを返す
@@ -159,138 +133,6 @@ class mngModel {
         }
         return true;
     }
-
-
-    /**
-      * 通知情報の登録の有無を取得する（二十一日後）
-      *
-      * @return  array   通知情報リスト
-      */
-      public function getNoticeInfoTwentyonedaysafterdeathEntryList()
-      {
-          $sql = "SELECT
-                      *
-                  FROM
-                      t_notice_info
-                  WHERE
-                      notice_type = 21
-                  ";
-          $notcieInfoList = $this->_db->fetchRow($sql);
-
-          if (empty($notcieInfoList)) {
-              //空の場合falseを返す
-              return false;
-          } else {
-              //データが存在する場合trueを返す
-              return true;
-          }
-          return true;
-      }
-
-      /**
-        * 通知情報の登録の有無を取得する（二十八日後）
-        *
-        * @return  array   通知情報リスト
-        */
-        public function getNoticeInfoTwentyeightdaysafterdeathEntryList()
-        {
-            $sql = "SELECT
-                        *
-                    FROM
-                        t_notice_info
-                    WHERE
-                        notice_type = 28
-                    ";
-            $notcieInfoList = $this->_db->fetchRow($sql);
-
-            if (empty($notcieInfoList)) {
-                //空の場合falseを返す
-                return false;
-            } else {
-                //データが存在する場合trueを返す
-                return true;
-            }
-            return true;
-        }
-
-        /**
-          * 通知情報の登録の有無を取得する（三十五日後）
-          *
-          * @return  array   通知情報リスト
-          */
-          public function getNoticeInfoThirtyfivedaysafterdeathEntryList()
-          {
-              $sql = "SELECT
-                          *
-                      FROM
-                          t_notice_info
-                      WHERE
-                          notice_type = 35
-                      ";
-              $notcieInfoList = $this->_db->fetchRow($sql);
-
-              if (empty($notcieInfoList)) {
-                  //空の場合falseを返す
-                  return false;
-              } else {
-                  //データが存在する場合trueを返す
-                  return true;
-              }
-              return true;
-          }
-
-          /**
-            * 通知情報の登録の有無を取得する（四十二日後）
-            *
-            * @return  array   通知情報リスト
-            */
-            public function getNoticeInfoFortytwodaysafterdeathEntryList()
-            {
-                $sql = "SELECT
-                            *
-                        FROM
-                            t_notice_info
-                        WHERE
-                            notice_type = 42
-                        ";
-                $notcieInfoList = $this->_db->fetchRow($sql);
-
-                if (empty($notcieInfoList)) {
-                    //空の場合falseを返す
-                    return false;
-                } else {
-                    //データが存在する場合trueを返す
-                    return true;
-                }
-                return true;
-            }
-
-            /**
-              * 通知情報の登録の有無を取得する（四十九日後）
-              *
-              * @return  array   通知情報リスト
-              */
-              public function getNoticeInfoFortyninedaysafterdeathEntryList()
-              {
-                  $sql = "SELECT
-                              *
-                          FROM
-                              t_notice_info
-                          WHERE
-                              notice_type = 49
-                          ";
-                  $notcieInfoList = $this->_db->fetchRow($sql);
-
-                  if (empty($notcieInfoList)) {
-                      //空の場合falseを返す
-                      return false;
-                  } else {
-                      //データが存在する場合trueを返す
-                      return true;
-                  }
-                  return true;
-              }
-
 
     // ========     法要通知    ========== //
 
