@@ -102,90 +102,12 @@ $(function() {
     <!-- 故人様の検索条件設定テーブル -->
     <div id="notice_setting_area">
         <h2>{$noticeTypeTitle}</h2>
-<!--         <table id="notice_setting">
-            <tr><th><input type="radio" id="search_category0" name="search_category" value="0" {$settingChecked0} /></th>
-                <td>全ての故人様</td>
-            </tr>
-            <tr><th><input type="radio" id="search_category1" name="search_category" value="1" {$settingChecked1} /></th>
-                <td>
-                    担当者名&nbsp;{html_options id=charge_name_combo name=charge_name_combo options=$chargeList selected=$chargeName}&nbsp;様
-                </td>
-            </tr>
-            <tr><th><input type="radio" id="search_category2" name="search_category" value="2" {$settingChecked2} /></th>
-                <td>
-                    会館名&nbsp;<span style="margin-left:1em">{html_options id=hall_name_combo name=hall_name_combo options=$hallList selected=$hallName}</span>
-                </td>
-            </tr>
-            <tr><th><input type="radio" id="search_category3" name="search_category" value="3" {$settingChecked3} /></th>
-                <td>
-                    故人様名&nbsp;<input type="text" id="search_name" name="search_name" value="{$searchName}" />&nbsp;様
-                    <div id="search_deathday" style="margin-top: 5px;">
-                        命日
-                        <span style="margin-left: 2em">
-                            <input type="text" id="search_year"  name="search_year"  value="{$searchYear}"  maxlength="4" style="ime-mode: disabled;" />&nbsp;年&nbsp;
-                            <input type="text" id="search_month" name="search_month" value="{$searchMonth}" maxlength="2" style="ime-mode: disabled;" />&nbsp;月&nbsp;
-                            <input type="text" id="search_day"   name="search_day"   value="{$searchDay}"   maxlength="2" style="ime-mode: disabled;" />&nbsp;日&nbsp;
-                        </span>
-                    </div>
-                </td>
-            </tr>
-            <tr><th><input type="radio" id="search_category4" name="search_category" value="4" {$settingChecked4} /></th>
-                <td>{html_options id=death_day_combo name=death_day_combo options=$deathMonthList selected=$deathMonth} が命日の故人様</td>
-            </tr>
-            <tr><th><input type="radio" id="search_category5" name="search_category" value="5" {$settingChecked5} /></th>
-                <td>
-                    {html_options id=memorial_year_combo name=memorial_year_combo options=$memorialYearList selected=$memorialYear}の
-                    {html_options id=memorial_month_combo name=memorial_month_combo options=$memorialMonthList selected=$memorialMonth}に
-                    {html_options id=memorial_combo name=memorial_combo options=$memorialList selected=$memorialEvent}法要の故人様
-                </td>
-            </tr>
-        </table>
-        <div id="search_btn"><input type="submit" name="search" value="この条件で検索" onclick="javascript:if(!searchExecute())return false;" /></div>
-        <input type="hidden" id="selected_category" name="selected_category" value="{$selectedCategory}" /> -->
     </div>
-    <!-- 故人一覧表示テーブル -->
-<!--     <div id="deceased_table_area">
-        <h2 style="float: left;">条件に一致する故人様： {count($deceasedInfoList)}名</h2>
-        <span style="float: right;">
-            <input type="button" id="checkall" value="全てチェック" style="margin-right: 5px;" />
-            <input type="button" id="uncheckall" value="チェックをクリア"/>
-        </span>
-        <table id="deceased_table" style="clear:both;">
-            <thead id="deceased_table_header">
-                <tr>
-                    <th id="checkbox_column"></th>
-                    <th id="name_column">故人様名</th>
-                    <th id="deathday_column">命日</th>
-                </tr>
-            </thead>
-            <tbody id="deceased_table_body">
-                {foreach from=$deceasedInfoList item="deceasedInfo"}
-                <tr>
-                    {if $deceasedInfo.selected}
-                    <td id="deceased_selection"><input type="checkbox" name="deceased_checkbox[]" value="{$deceasedInfo.deceased_id}" checked="checked" /></td>
-                    {else}
-                    <td id="deceased_selection"><input type="checkbox" name="deceased_checkbox[]" value="{$deceasedInfo.deceased_id}" /></td>
-                    {/if}
-                    <td id="deceased_name">
-                        <a href="../mng/dispdeceasedinfopopup?did={$deceasedInfo.deceased_id}" onclick="javascript:openDeceasedInfo(this.href);return false;">{$deceasedInfo.deceased_name}&nbsp;様</a>
-                    </td>
-                    <td id="deceased_deathday">{date('Y/m/d', strtotime($deceasedInfo.deceased_deathday))}</td>
-                </tr>
-                {/foreach}
-            </tbody>
-        </table>
-        ※チェックされている故人様にお知らせが配信されます
-    </div> -->
+
     <!-- 通知情報入力 -->
     <h2>通知情報登録</h2>
     <p class="message">{$message}</p>
     <table id="notice_input">
-<!--         <tr><th>通知予定日（必須）</th>
-            <td><input id="datepicker" type="text" name="notice_schedule" value="{$noticeSchedule}" readonly="readonly" /><br>
-                <span class="input_caution">※指定できる予定日は翌日～2か月後までです。</span></td></tr>
-        <tr><th>登録方法（必須）</th>
-            <td><input type="radio" name="entry_method" value="1" {$checked1}>&nbsp;通知情報を直接入力する&nbsp;&nbsp;<input type="radio" name="entry_method" value="2" {$checked2}>&nbsp;通知情報としてWebページを表示する</td></tr> -->
-
         <input type="hidden" name="notice_type" value="{$noticeTypeNumber}" />
         <tr>
             <th>タイトル（必須）</th>
