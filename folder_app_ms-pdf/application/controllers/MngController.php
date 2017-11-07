@@ -385,7 +385,6 @@ class MngController extends Zend_Controller_Action
         }
     }
 
-
     /**
      * 通知情報登録画面表示処理(定期通知：追善法要)
      * ：通知情報登録画面を表示する
@@ -489,68 +488,6 @@ class MngController extends Zend_Controller_Action
         } else {
             //キャッシュ対策日時
             $date = new Zend_Date();
-            //viewに入力値を設定
-            //通知条件設定
-            // $this->_view->selectedCategory = $noticeInfo['selected_category'];
-            // switch ($noticeInfo['selected_category']) {
-            //     case 0:
-            //         $this->_view->settingChecked0 = "checked";
-            //         $this->_view->template = "なし";
-            //         $this->_view->templateId = "";
-            //         break;
-            //     case 1:
-            //         $this->_view->settingChecked1 = "checked";
-            //         $this->_view->chargeName = $noticeInfo['charge_name'];
-            //         $this->_view->template = "なし";
-            //         $this->_view->templateId = "";
-            //         break;
-            //     case 2:
-            //         $this->_view->settingChecked2 = "checked";
-            //         $this->_view->hallName = $noticeInfo['hall_name'];
-            //         $this->_view->template = "なし";
-            //         $this->_view->templateId = "";
-            //         break;
-            //     case 3:
-            //         $this->_view->settingChecked3 = "checked";
-            //         $this->_view->searchName  = $noticeInfo['search_name'];
-            //         $this->_view->searchYear  = $noticeInfo['search_year'];
-            //         $this->_view->searchMonth = $noticeInfo['search_month'];
-            //         $this->_view->searchDay   = $noticeInfo['search_day'];
-            //         $this->_view->template = "なし";
-            //         $this->_view->templateId = "";
-            //         break;
-            //     case 4:
-            //         $this->_view->settingChecked4 = "checked";
-            //         $this->_view->deathMonth = $noticeInfo['death_month'];
-            //         $template = $this->_mngModel->getTemplate(NOTICE_TEMPNO_DEATHDAY);
-            //         $this->_view->template = common::makeTemplate($template['template_text'],
-            //                                                       '[お名前]',
-            //                                                       $noticeInfo['death_month'],
-            //                                                       '');
-            //         $this->_view->templateId = NOTICE_TEMPNO_DEATHDAY;
-            //         break;
-            //     case 5:
-            //         $this->_view->settingChecked5 = "checked";
-            //         $this->_view->memorialYear  = $noticeInfo['memorial_year'];
-            //         $this->_view->memorialMonth = $noticeInfo['memorial_month'];
-            //         $this->_view->memorialEvent = $noticeInfo['memorial_event'];
-            //         $template = $this->_mngModel->getTemplate(NOTICE_TEMPNO_EVENT);
-            //         $this->_view->template  = common::makeTemplate($template['template_text'],
-            //                                                        '[お名前]',
-            //                                                        $noticeInfo['memorial_month'],
-            //                                                        $this->_memorialEvent[$noticeInfo['memorial_event']]);
-            //         $this->_view->templateId = NOTICE_TEMPNO_EVENT;
-            //         break;
-            // }
-            //通知情報
-            // $this->_view->noticeSchedule = $noticeInfo['notice_schedule'];
-            // if ($noticeInfo['entry_method'] == ENTRY_METHOD_INPUT) {
-            //     $this->_view->checked1 = "checked";
-            //     $this->_view->checked2 = "";
-            // } elseif ($noticeInfo['entry_method'] == ENTRY_METHOD_URL) {
-            //     $this->_view->checked1 = "";
-            //     $this->_view->checked2 = "checked";
-            // }
 
             switch ($noticeType) {
                 case 7:
@@ -561,6 +498,7 @@ class MngController extends Zend_Controller_Action
                                                                   '');
                     $this->_view->templateId = NOTICE_TEMPNO_SEVENTH_DEATHDAY;
                     $this->_view->noticeTypeTitle = "初七日法要";
+                    $this->_view->noticeTypeNumber  = 7;
                     break;
 
                 case 14:
@@ -571,6 +509,7 @@ class MngController extends Zend_Controller_Action
                                                                   '');
                     $this->_view->templateId = NOTICE_TEMPNO_FOURTEENDAY_DEATHDAY;
                     $this->_view->noticeTypeTitle = "二七日法要";
+                    $this->_view->noticeTypeNumber  = 14;
                     break;
 
                 case 21:
@@ -581,6 +520,7 @@ class MngController extends Zend_Controller_Action
                                                                   '');
                     $this->_view->templateId = NOTICE_TEMPNO_TWENTYONEDAY_DEATHDAY;
                     $this->_view->noticeTypeTitle = "三七日法要";
+                    $this->_view->noticeTypeNumber  = 21;
                     break;
 
                 case 28:
@@ -591,6 +531,7 @@ class MngController extends Zend_Controller_Action
                                                                   '');
                     $this->_view->templateId = NOTICE_TEMPNO_TWENTYEIGHT_DEATHDAY;
                     $this->_view->noticeTypeTitle = "四七日法要";
+                    $this->_view->noticeTypeNumber  = 28;
                     break;
 
                 case 35:
@@ -601,6 +542,7 @@ class MngController extends Zend_Controller_Action
                                                                   '');
                     $this->_view->templateId = NOTICE_TEMPNO_THIRTYFIVE_DEATHDAY;
                     $this->_view->noticeTypeTitle = "五七日法要";
+                    $this->_view->noticeTypeNumber  = 35;
                     break;
 
                 case 42:
@@ -611,6 +553,7 @@ class MngController extends Zend_Controller_Action
                                                                   '');
                     $this->_view->templateId = NOTICE_TEMPNO_FORTYTWO_DEATHDAY;
                     $this->_view->noticeTypeTitle = "六七日法要";
+                    $this->_view->noticeTypeNumber  = 42;
                     break;
 
                 case 49:
@@ -621,6 +564,7 @@ class MngController extends Zend_Controller_Action
                                                                   '');
                     $this->_view->templateId = NOTICE_TEMPNO_FORTYNINE_DEATHDAY;
                     $this->_view->noticeTypeTitle = "四十九日法要";
+                    $this->_view->noticeTypeNumber  = 49;
                     break;
             }
 
@@ -659,20 +603,6 @@ class MngController extends Zend_Controller_Action
     {
         //入力値を取得
         $noticeInfo = array(
-            // 'search_category'     => (int)$this->getRequest()->getPost('search_category'),
-            'selected_category'   => 0,
-            'charge_name'         => '',
-            'hall_name'           => '',
-            'search_name'         => '',
-            'search_year'         => '',
-            'search_month'        => '',
-            'search_day'          => '',
-            'death_month'         => '',
-            'memorial_year'       => '',
-            'memorial_month'      => '',
-            'memorial_event'      => '',
-            // 'notice_target'       => $this->getRequest()->getPost('deceased_checkbox'),
-            // 'notice_schedule'     => $this->getRequest()->getPost('notice_schedule'),
             'notice_type'         => $this->getRequest()->getPost('notice_type'),
             'entry_method'        => 1,
             'notice_title'        => $this->getRequest()->getPost('notice_title'),
@@ -684,37 +614,6 @@ class MngController extends Zend_Controller_Action
 
         $noticeInfoNo = $this->getRequest()->getPost('notice_info_no');
         if(!is_null($noticeInfoNo)) $noticeInfo['notice_info_no'] = $noticeInfoNo;
-
-        // if ($this->getRequest()->getPost('search')) {
-        //     //故人検索のとき
-        //     $queryCategory = $noticeInfo['search_category'];
-        // } else {
-        //     //検索以外のとき
-        //     $queryCategory = $noticeInfo['selected_category'];
-        // }
-
-        // switch ($queryCategory) {
-        //     case 1:
-        //         $noticeInfo['charge_name'] = $this->getRequest()->getPost('charge_name_combo');
-        //         break;
-        //     case 2:
-        //         $noticeInfo['hall_name'] = $this->getRequest()->getPost('hall_name_combo');
-        //         break;
-        //     case 3:
-        //         $noticeInfo['search_name']  = $this->getRequest()->getPost('search_name');
-        //         $noticeInfo['search_year']  = $this->getRequest()->getPost('search_year');
-        //         $noticeInfo['search_month'] = $this->getRequest()->getPost('search_month');
-        //         $noticeInfo['search_day'] = $this->getRequest()->getPost('search_day');
-        //         break;
-        //     case 4:
-        //         $noticeInfo['death_month'] = $this->getRequest()->getPost('death_day_combo');
-        //         break;
-        //     case 5:
-        //         $noticeInfo['memorial_year']  = $this->getRequest()->getPost('memorial_year_combo');
-        //         $noticeInfo['memorial_month'] = $this->getRequest()->getPost('memorial_month_combo');
-        //         $noticeInfo['memorial_event'] = $this->getRequest()->getPost('memorial_combo');
-        //         break;
-        // }
 
         //画像が選択されている場合、一時フォルダに保存
         if (is_uploaded_file($_FILES["notice_image"]["tmp_name"])) {
@@ -735,16 +634,6 @@ class MngController extends Zend_Controller_Action
             //ファイルパスをセッションに設定
             $this->_session->image_path = $uploadFile;
         }
-
-        // if($this->getRequest()->getPost('search')) {
-        //     //検索ボタン押下の場合
-        //     $noticeInfo['selected_category'] = $noticeInfo['search_category'];
-        //     //検索結果を表示
-        //     $this->dispEntryNoticeInfo("", $noticeInfo);
-        //     echo $this->_view->render($inputpage_tpl);
-        //     return;
-        // }
-
         //入力値チェック
         $message = $this->checkNoticeHoyoInfo($noticeInfo);
         //ファイルアップロードチェック
@@ -757,36 +646,30 @@ class MngController extends Zend_Controller_Action
             //キャッシュ対策日時
             $date = new Zend_Date();
             //viewを設定
-            // $this->_view->search_category = $noticeInfo['selected_category'];
-            // switch ($noticeInfo['selected_category']) {
-            //     case 1:
-            //         $this->_view->chargeName = $noticeInfo['charge_name'];
-            //         break;
-            //     case 2:
-            //         $this->_view->hallName = $noticeInfo['hall_name'];
-            //         break;
-            //     case 3:
-            //         $this->_view->searchName = $noticeInfo['search_name'].' 様';
-            //         $ymd = '';
-            //         if(strcmp($noticeInfo['search_year'], '') == 0) $ymd = '－/';
-            //         else $ymd = str_pad($noticeInfo['search_year'], 4, '0', STR_PAD_LEFT).'/';
-            //         if(strcmp($noticeInfo['search_month'], '') == 0) $ymd .= '－/';
-            //         else $ymd .= str_pad($noticeInfo['search_month'], 2, '0', STR_PAD_LEFT).'/';
-            //         if(strcmp($noticeInfo['search_day'], '') == 0) $ymd .= '－';
-            //         else $ymd .= str_pad($noticeInfo['search_day'], 2, '0', STR_PAD_LEFT);
-            //         $this->_view->searchYMD = $ymd;
-            //         break;
-            //     case 4:
-            //         $this->_view->deathMonth = $noticeInfo['death_month'];
-            //         break;
-            //     case 5:
-            //         $this->_view->memorialYear  = $this->_yearList[$noticeInfo['memorial_year']];
-            //         $this->_view->memorialMonth = $this->_monthList[$noticeInfo['memorial_month']];
-            //         $this->_view->memorialEvent = $this->_memorialEvent[$noticeInfo['memorial_event']];
-            //         break;
-            // }
-            // $this->_view->targetCount    = count($noticeInfo['notice_target']);
-            // $this->_view->noticeSchedule = $noticeInfo['notice_schedule'];
+            switch ($noticeInfo['notice_type']) {
+                case 7:
+                    $this->_view->noticeTypeTitle = "初七日法要";
+                    break;
+                case 14:
+                    $this->_view->noticeTypeTitle = "二七日法要";
+                    break;
+                case 21:
+                    $this->_view->noticeTypeTitle = "三七日法要";
+                    break;
+                case 28:
+                    $this->_view->noticeTypeTitle = "四七日法要";
+                    break;
+                case 35:
+                    $this->_view->noticeTypeTitle = "五七日法要";
+                    break;
+                case 42:
+                    $this->_view->noticeTypeTitle = "六七日法要";
+                    break;
+                case 49:
+                    $this->_view->noticeTypeTitle = "四十九日法要";
+                    break;
+            }
+
             $this->_view->entryMethod    = 1;
             $this->_view->noticeTitle    = $noticeInfo['notice_title'];
             $this->_view->noticeText     = $noticeInfo['notice_text'];
@@ -875,7 +758,6 @@ class MngController extends Zend_Controller_Action
     }
 
 
-
     //通知情報編集確認画面表示（追善法要）
     public function confeditnoticehoyoinfoAction() {
         if ($this->chkSession() === false) {
@@ -884,7 +766,124 @@ class MngController extends Zend_Controller_Action
         }
 
         $this->_view->noticeInfoNo = $this->getRequest()->getPost('notice_info_no');
-        $this->confNoticeInfo('mng_notice_hoyo_info_edit.tpl', 'mng_notice_hoyo_info_edit_conf.tpl');
+        $this->confNoticeHoyoInfo('mng_notice_hoyo_info_edit.tpl', 'mng_notice_hoyo_info_edit_conf.tpl');
+    }
+
+    //通知情報編集確認画面表示(追善法要)
+    public function compeditnoticehoyoinfoAction() {
+        if ($this->chkSession() === false) {
+            //ログインしていない場合またはセッションタイムアウトした場合、ログイン画面を表示
+            return $this->_forward('disprelogin');
+        }
+
+        //セッションから入力値を取得
+        $noticeInfo = $this->_session->notice_info;
+        // 押されたボタンを判定する
+        if ($this->getRequest()->getPost('back')) {              //戻るボタンの場合
+            //通知情報編集画面表示
+            $this->dispEntryNoticeHoyoInfo($noticeInfo['notice_type'],"", $noticeInfo);
+            $this->_view->noticeInfoNo = $noticeInfo['notice_info_no'];
+            echo $this->_view->render('mng_notice_hoyo_info_edit.tpl');
+        } elseif ($this->getRequest()->getPost('edit')) {        //編集ボタンの場合
+            // ワンタイムトークンが正しいかチェックする
+            if (comToken::check_token($this->getRequest()->getPost('token'), $this->_session->key) === false) {
+                // エラー画面を表示
+                echo $this->_view->render('mng_error.tpl');
+                exit();
+            }
+
+            // セッション内のワンタイムトークを削除する
+            if (isset($this->_session->key) === true) {
+                unset($this->_session->key);
+            }
+
+            //DBに通知情報を保存
+            if ($this->_mngModel->updateNoticeHoyoInfo($noticeInfo)) {
+                $imagePath = NOTICE_IMG_PATH . $noticeInfo['notice_info_no'] . '.jpg';
+
+                if ($noticeInfo['image_existence_flg'] == IMAGE_EXISTENCE_FLG_YES) {
+                    //画像を選択している場合、一時フォルダから正式なフォルダに移動する
+                    //一時フォルダの仮アップ画像を画像フォルダに移動
+                    if (rename($this->_session->image_path, $imagePath)) {
+                        //移動できたらセッションの画像パスに移動先のパスを指定
+                        $this->_session->image_path = $imagePath;
+                    } else {
+                        echo "ファイルを移動出来ませんでした。";
+                    }
+                } else {
+                    //画像を選択していない場合、ファイルが存在する場合、削除する
+                    if (file_exists($imagePath)) {
+                        //ファイルが存在する場合、削除する
+                        unlink($imagePath);
+                    }
+                }
+
+                $this->compNoticeHoyoInfo($noticeInfo);
+
+                //お知らせ番号設定
+                $this->_view->noticeInfoNo = $noticeInfo['notice_info_no'];
+                //ログ出力
+                $this->_logModel->recordLog(LOG_KIND_NOTICE_EDIT, $this->_session->manager_id, "Success", $this->_httpHeaderInfo);
+                //完了画面を表示
+                echo $this->_view->render('mng_notice_hoyo_info_edit_comp.tpl');
+            } else {
+                //ログ出力
+                $this->_logModel->recordLog(LOG_KIND_NOTICE_EDIT, $this->_session->manager_id, "Failure", $this->_httpHeaderInfo);
+                //DB保存エラーの場合、エラー画面を表示
+                echo $this->_view->render('mng_error.tpl');
+            }
+        }
+    }
+
+    //通知情報登録完了画面表示処理
+    private function compNoticeHoyoInfo($noticeInfo)
+    {
+        //キャッシュ対策日時
+        $date = new Zend_Date();
+        //viewを設定
+        switch ($noticeInfo['notice_type']) {
+            case 7:
+                $this->_view->noticeTypeTitle = "初七日法要";
+                $this->_view->noticeTypeNumber  = 7;
+                break;
+            case 14:
+                $this->_view->noticeTypeTitle = "二七日法要";
+                $this->_view->noticeTypeNumber  = 14;
+                break;
+            case 21:
+                $this->_view->noticeTypeTitle = "三七日法要";
+                $this->_view->noticeTypeNumber  = 21;
+                break;
+            case 28:
+                $this->_view->noticeTypeTitle = "四七日法要";
+                $this->_view->noticeTypeNumber  = 28;
+                break;
+            case 35:
+                $this->_view->noticeTypeTitle = "五七日法要";
+                $this->_view->noticeTypeNumber  = 35;
+                break;
+            case 42:
+                $this->_view->noticeTypeTitle = "六七日法要";
+                $this->_view->noticeTypeNumber  = 42;
+                break;
+            case 49:
+                $this->_view->noticeTypeTitle = "四十九日法要";
+                $this->_view->noticeTypeNumber  = 49;
+                break;
+        }
+
+        $this->_view->entryMethod       = 1;
+        $this->_view->noticeTitle       = $noticeInfo['notice_title'];
+        $this->_view->template          = $this->getTemplateString($noticeInfo);
+        $this->_view->templateId        = $noticeInfo['template_id'];
+        $this->_view->noticeText        = $noticeInfo['notice_text'];
+        $this->_view->imageExistenceFlg = $noticeInfo['image_existence_flg'];
+        $this->_view->cacheKey          = $date->get("yyyyMMddHHmmss");
+        $this->_view->url               = $noticeInfo['url'];
+        //画像が設定してある場合、画像の幅高さを取得してviewに設定する
+        if ($noticeInfo['image_existence_flg'] == IMAGE_EXISTENCE_FLG_YES) {
+            $this->_view->imgWH = $this->getImageSizeAttr($this->_session->image_path);
+        }
     }
 
     /**
@@ -896,14 +895,6 @@ class MngController extends Zend_Controller_Action
     private function checkNoticeHoyoInfo(array $noticeInfo)
     {
         $message = "";          //エラーメッセージ格納用
-        // //通知予定日
-        // //入力されているか
-        // if (comValidate::chkNotEmpty($noticeInfo['notice_schedule']) === false) {
-        //     $message = "・通知予定日が入力されていません。<br>";
-        // } elseif(comValidate::chkDate($noticeInfo['notice_schedule']) === false) {    //日付形式が正しいか
-        //     $message = "・通知予定日はYYYY/MM/DD形式（例：2014/03/10）で入力してください。<br>";
-        // }
-
         //タイトル
         //入力されているか
         if (comValidate::chkNotEmpty($noticeInfo['notice_title']) === false) {
@@ -921,31 +912,6 @@ class MngController extends Zend_Controller_Action
             comValidate::chkUrl($noticeInfo['url']) === false) {
             $message = $message . "・URLの入力形式が正しくありません。<br>";
         }
-
-        // //登録方法が入力の場合
-        // if ($noticeInfo['entry_method'] === 1) {
-        //     //本文
-        //     //入力されているか
-        //     if (comValidate::chkNotEmpty($noticeInfo['notice_text']) === false) {
-        //         $message = $message . "・本文が入力されていません。<br>";
-        //     }
-
-        //     //URL
-        //     //URLが入力されている場合、入力形式が正しいか
-        //     if (comValidate::chkNotEmpty($noticeInfo['url']) &&
-        //         comValidate::chkUrl($noticeInfo['url']) === false) {
-        //         $message = $message . "・URLの入力形式が正しくありません。<br>";
-        //     }
-        // //登録方法がURLの場合
-        // } elseif ($noticeInfo['entry_method'] === 2) {
-        //     //URL
-        //     //入力されているか
-        //     if (comValidate::chkNotEmpty($noticeInfo['url']) === false) {
-        //         $message = $message . "・URLが入力されていません。<br>";
-        //     } elseif (comValidate::chkUrl($noticeInfo['url']) === false) {  //URL形式が正しいか
-        //         $message = $message . "・URLの入力形式が正しくありません。<br>";
-        //     }
-        // }
 
         return $message;
     }

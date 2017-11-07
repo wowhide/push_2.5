@@ -5,7 +5,7 @@
 <title>KUYOアプリ管理システム</title>
 <meta name="keywords" content="">
 <meta name="description" content="">
-<meta name="robots" content="noindex,nofollow"> 
+<meta name="robots" content="noindex,nofollow">
 <meta name="author" content="株式会社デジタルスペースワウ" />
 <link rel="stylesheet" type="text/css" media="all" href="../../css/default.css">
 <link rel="stylesheet" type="text/css" media="all" href="../../css/layout.css">
@@ -21,42 +21,12 @@
 {include file="include/jsng.html"}
 <div id="jsok" style="display:none;">
 {include file="include/mng_menu.html"}
-<p class="breadcrumb"><a href="../mng/dispnoticeinfolist">通知情報一覧</a> ＞ <a href="../mng/dispnoticeinfo?nino={$noticeInfoNo}">通知情報表示</a> ＞ 通知情報編集</p>
+<p class="breadcrumb"><a href="../mng/dispentrynoticeinfodayafterdeath?ntype={$noticeTypeNumber}">{$noticeTypeTitle}登録表示</a> ＞{$noticeTypeTitle}通知情報編集完了</p>
 <div id="contents">
-<h2>通知情報編集完了</h2>
-<p>下記の通り通知の予約を更新しました。<br>
-編集する場合は、通知情報一覧から表示して行って下さい。</p>
+<h2>{$noticeTypeTitle}通知情報編集完了</h2>
+<p>下記の通り通知情報を更新しました。</p>
 <h2>通知情報</h2>
 <table id="notice_input">
-    <tr><th>通知条件</th>
-    {if $search_category == 0}
-        <td> すべての故人様 </td>
-    {/if}
-    {if $search_category == 1}
-        <td>担当者名：{$chargeName}&nbsp;様</td>
-    {/if}
-    {if $search_category == 2}
-        <td>会館名：{$hallName}</td>
-    {/if}
-    {if $search_category == 3}
-        <td>故人様名：{$searchName}&nbsp;&nbsp;命日：{$searchYMD}</td>
-    {/if}
-    {if $search_category == 4}
-        <td>{$deathMonth}月が命日の故人様</td>
-    {/if}
-    {if $search_category == 5}
-        <td>{$memorialYear}{$memorialMonth}に{$memorialEvent}法要の故人様</td>
-    {/if}
-    </tr>
-    <tr><th>通知先故人様</th><td><a href="../mng/dispdeceasedlistpopup" onclick="javascript:openDeceasedList(this.href);return false;">{$targetCount}名様</a></td></tr>
-    <tr><th>通知予定日</th><td>{$noticeSchedule}</td></tr>
-    <tr><th>登録方法</th>
-{if $entryMethod == "1"}
-        <td>通知情報を直接入力</td>
-{else}
-        <td>通知情報としてWebページを表示</td>
-{/if}
-    </tr>
     <tr>
         <th>タイトル</th>
         <td>{$noticeTitle|escape}</td>

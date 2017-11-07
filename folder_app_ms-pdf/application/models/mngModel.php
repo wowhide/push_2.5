@@ -292,6 +292,120 @@ class mngModel {
         return true;
     }
 
+    /**
+     * 通知情報を更新する（追善法要）
+     *
+     * @param   array   $noticeInfo    通知情報情報
+     */
+    public function updateNoticeHoyoInfo($noticeInfo)
+    {
+        //日付の様式を変更するためにZend_Date型の変数を準備
+        $date = new Zend_Date($noticeInfo['notice_schedule']);
+
+        try {
+            if ($noticeInfo['entry_method'] == ENTRY_METHOD_INPUT) {
+                $sql = "UPDATE t_notice_info SET
+                            notice_schedule = :notice_schedule,
+                            entry_method = :entry_method,
+                            notice_title = :notice_title,
+                            template_id = :template_id,
+                            notice_text = :notice_text,
+                            notice_type = :notice_type,
+                            image_existence_flg = :image_existence_flg,
+                            url = :url,
+                            search_category = :search_category,
+                            charge_name = :charge_name,
+                            hall_name = :hall_name,
+                            search_name = :search_name,
+                            search_year = :search_year,
+                            search_month = :search_month,
+                            search_day = :search_day,
+                            death_month = :death_month,
+                            memorial_year = :memorial_year,
+                            memorial_month = :memorial_month,
+                            memorial_event = :memorial_event
+                        WHERE
+                            notice_info_no = :notice_info_no
+                        ";
+
+                $this->_db->query($sql, array(
+                    'notice_schedule' => $date->toString('yyyyMMdd'),
+                    'entry_method' => $noticeInfo['entry_method'],
+                    'notice_title' => $noticeInfo['notice_title'],
+                    'template_id' => $noticeInfo['template_id'],
+                    'notice_text' => $noticeInfo['notice_text'],
+                    'notice_type' => $noticeInfo['notice_type'],
+                    'image_existence_flg' => $noticeInfo['image_existence_flg'],
+                    'url' => $noticeInfo['url'],
+                    'search_category' => $noticeInfo['selected_category'],
+                    'charge_name' => $noticeInfo['charge_name'],
+                    'hall_name' => $noticeInfo['hall_name'],
+                    'search_name' => $noticeInfo['search_name'],
+                    'search_year' => $noticeInfo['search_year'],
+                    'search_month' => $noticeInfo['search_month'],
+                    'search_day' => $noticeInfo['search_day'],
+                    'death_month' => $noticeInfo['death_month'],
+                    'memorial_year' => $noticeInfo['memorial_year'],
+                    'memorial_month' => $noticeInfo['memorial_month'],
+                    'memorial_event' => $noticeInfo['memorial_event'],
+                    'notice_info_no' => $noticeInfo['notice_info_no'])
+                );
+            } else {
+                $sql = "UPDATE t_notice_info SET
+                            notice_schedule = :notice_schedule,
+                            entry_method = :entry_method,
+                            notice_title = :notice_title,
+                            template_id = '',
+                            notice_text = '',
+                            notice_type = '',
+                            image_existence_flg = 0,
+                            url = :url,
+                            search_category = :search_category,
+                            charge_name = :charge_name,
+                            hall_name = :hall_name,
+                            search_name = :search_name,
+                            search_year = :search_year,
+                            search_month = :search_month,
+                            search_day = :search_day,
+                            death_month = :death_month,
+                            memorial_year = :memorial_year,
+                            memorial_month = :memorial_month,
+                            memorial_event = :memorial_event
+                        WHERE
+                            notice_info_no = :notice_info_no
+                        ";
+
+                $this->_db->query($sql, array(
+                    'notice_schedule'   => $date->toString('yyyyMMdd'),
+                    'entry_method'      => $noticeInfo['entry_method'],
+                    'notice_title'      => $noticeInfo['notice_title'],
+                    'notice_type'       => $noticeInfo['notice_type'],
+                    'url'               => $noticeInfo['url'],
+                    'search_category'   => $noticeInfo['selected_category'],
+                    'charge_name'       => $noticeInfo['charge_name'],
+                    'hall_name'         => $noticeInfo['hall_name'],
+                    'search_name'       => $noticeInfo['search_name'],
+                    'search_year'       => $noticeInfo['search_year'],
+                    'search_month'      => $noticeInfo['search_month'],
+                    'search_day'        => $noticeInfo['search_day'],
+                    'death_month'       => $noticeInfo['death_month'],
+                    'memorial_year'     => $noticeInfo['memorial_year'],
+                    'memorial_month'    => $noticeInfo['memorial_month'],
+                    'memorial_event'    => $noticeInfo['memorial_event'],
+                    'notice_info_no'    => $noticeInfo['notice_info_no'])
+                );
+            }
+
+            //通知あて先テーブルを更新
+            $this->deleteNoticeTarget($noticeInfo['notice_info_no']);
+            $this->insertNoticeTarget($noticeInfo['notice_info_no'], $noticeInfo['notice_target']);
+        } catch(Exception $e) {
+            Zend_Debug::dump($e->getMessage(), $label = null, $echo = true);
+            return false;
+        }
+        return true;
+    }
+
 
     // ========     通常通知    ========== //
 
