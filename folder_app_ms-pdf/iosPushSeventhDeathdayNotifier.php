@@ -1,7 +1,7 @@
 <?php
 include '../library/ApnsPHP/Autoload.php';
 
-class iosPushNotifier {
+class iosPushSeventhDeathdayNotifier {
 
     public function push(){
         //本番環境DB
@@ -72,18 +72,12 @@ class iosPushNotifier {
                                 t_ios_device_token
                             WHERE
                                 deceased_id IN (
+
                                     SELECT DISTINCT
-                                        a.deceased_id
+                                        deceased_id
                                     FROM
-                                        c_notice_info_list as a
-                                    INNER JOIN
-                                        c_ios_device_token as b
-                                    ON
-                                        a.deceased_id = b.deceased_id
-                                    WHERE
-                                        a.notice_schedule = '" . date("Ymd", time()) . "'
-                                        and
-                                        b.allow_push = 1
+                                        c_notice_hoyo_info_list
+                                        
                                 )";
             $tokenList = $pdo->query($getTokenSql)->fetchAll();
 
@@ -112,7 +106,6 @@ class iosPushNotifier {
             if (!empty($aErrorQueue)) {
                 var_dump($aErrorQueue);
             }
-
             //送信結果をログに出力
             //送信対象のデバイストークンがある場合
             if (empty($strSendToken) == false) {
