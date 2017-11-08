@@ -586,6 +586,8 @@ class mngModel {
                     *
                 FROM
                     t_notice_info
+                WHERE
+                    notice_type = 0
                 ORDER BY
                     notice_schedule DESC
                 ";
