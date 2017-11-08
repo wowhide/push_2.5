@@ -649,6 +649,38 @@ class cooperationModel {
     }
 
     /*
+     * 通知日とデバイストークンを指定して通知情報＋個人情報を取得する（法要通知（初七日））
+     *
+     * @return noticeInfo 通知情報＋個人情報配列
+     */
+    public function getNoticeHoyoInfoAndDeceasedID($noticeSchedule) {
+        $sql = "(SELECT
+                    *
+                FROM
+                     t_notice_info
+                WHERE
+                    notice_schedule = '77777777'
+                )
+
+              UNION ALL
+
+              (SELECT
+                    *
+                FROM
+                    c_notice_hoyo_info_list
+                WHERE
+                  deceased_id = :deceased_id
+            )
+
+              ";
+              
+        $noticeInfo = $this->_db->fetchAll($sql, array('notice_schedule' => $noticeSchedule,
+                                                       'device_token'    => $deviceToken));
+        return $noticeInfo;
+    }
+
+
+    /*
      * 通知日とデバイストークンを指定して通知情報＋個人情報を取得する
      *
      * @return noticeInfo 通知情報＋個人情報配列

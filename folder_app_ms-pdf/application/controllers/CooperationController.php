@@ -803,8 +803,15 @@ class CooperationController extends Zend_Controller_Action
         $deviceToken    = $this->getRequest()->getPost('deviceToken');
 
         $cooperationModel = new cooperationModel();
-        $arrayNoticeInfo  = $cooperationModel->getNoticeInfoAndDeceasedID($noticeSchedule, $deviceToken);
 
+        //法要通知の場合
+        if ($noticeSchedule == '77777777') {
+            $arrayNoticeInfo  = $cooperationModel->getNoticeHoyoInfoAndDeceasedID($noticeSchedule);
+        //お知らせ通知の場合
+        }else{
+            $arrayNoticeInfo  = $cooperationModel->getNoticeInfoAndDeceasedID($noticeSchedule, $deviceToken);
+        }
+        
         if (count($arrayNoticeInfo) > 0) {
             $noticeInfoData  = array('noticeInfo' => $this->adjustNoticeInfo($arrayNoticeInfo));
             $jNoticeInfoData = Zend_Json::encode($noticeInfoData);

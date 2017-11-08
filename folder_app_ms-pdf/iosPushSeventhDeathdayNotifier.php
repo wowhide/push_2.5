@@ -87,7 +87,7 @@ class iosPushSeventhDeathdayNotifier {
                 $message->setText('KUYOからお知らせ');
                 $message->setSound();
                 //通知日をプロパティとして送る
-                $message->setCustomProperty('notice_schedule', date("Ymd", time()));
+                $message->setCustomProperty('notice_schedule', 77777777);
                 //通知が無効になり破棄できるタイミング（秒）
                 $message->setExpiry(60*60*24*7);
                 $push->add($message);
