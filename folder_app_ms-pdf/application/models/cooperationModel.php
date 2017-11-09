@@ -653,25 +653,24 @@ class cooperationModel {
      *
      * @return noticeInfo 通知情報＋個人情報配列
      */
-    public function getNoticeHoyoInfoAndDeceasedID($noticeSchedule) {
-        $sql = "(SELECT
-                    *
-                FROM
-                     t_notice_info
-                WHERE
-                    notice_schedule = '77777777'
-                )
-
-              UNION ALL
-
-              (SELECT
-                    *
-                FROM
-                    c_notice_hoyo_info_list
-                WHERE
-                  deceased_id = :deceased_id
-            )
-
+    public function getNoticeHoyoInfoAndDeceasedID($noticeSchedule,$deviceToken) {
+        $sql = "SELECT 
+                    c.*, a.deceased_id
+                FROM 
+                    t_notice_info AS c, c_notice_hoyo_info_list AS a
+                WHERE 
+                    c.notice_schedule = :noticeSchedule
+                AND
+                    a.deceased_id IN (
+                        SELECT
+                            deceased_id
+                        FROM
+                            c_ios_device_token
+                        WHERE
+                            device_token = :device_token
+                            and
+                            allow_push = 1
+                    )
               ";
               
         $noticeInfo = $this->_db->fetchAll($sql, array('notice_schedule' => $noticeSchedule,

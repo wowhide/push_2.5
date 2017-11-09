@@ -806,7 +806,7 @@ class CooperationController extends Zend_Controller_Action
 
         //法要通知の場合
         if ($noticeSchedule == '77777777') {
-            $arrayNoticeInfo  = $cooperationModel->getNoticeHoyoInfoAndDeceasedID($noticeSchedule);
+            $arrayNoticeInfo  = $cooperationModel->getNoticeHoyoInfoAndDeceasedID($noticeSchedule,$deviceToken);
         //お知らせ通知の場合
         }else{
             $arrayNoticeInfo  = $cooperationModel->getNoticeInfoAndDeceasedID($noticeSchedule, $deviceToken);
