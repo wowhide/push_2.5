@@ -144,6 +144,7 @@ $(function() {
         <!-- <input class="btn" type="submit" name="back" value="戻る" /> -->
         <input class="btn" type="submit" name="edit" value="更新確認" onclick="javascript:undisabled();" />
         <input type="hidden" name="notice_info_no" value="{$noticeInfoNo}" />
+        <input id="preview" class="btn" type="submit" value="プレビュー" />
     </div>
 </form>
 </div>
