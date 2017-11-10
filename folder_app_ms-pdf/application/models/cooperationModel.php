@@ -655,7 +655,7 @@ class cooperationModel {
      */
     public function getNoticeHoyoInfoAndDeceasedID($noticeSchedule,$deviceToken) {
         $sql = "SELECT 
-                    c.*, a.deceased_id
+                    c.*, a.*
                 FROM 
                     t_notice_info AS c, c_notice_hoyo_info_list AS a
                 WHERE 
