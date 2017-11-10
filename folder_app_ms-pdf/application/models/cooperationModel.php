@@ -659,7 +659,7 @@ class cooperationModel {
                 FROM 
                     t_notice_info AS c, c_notice_hoyo_info_list AS a
                 WHERE 
-                    c.notice_schedule = :noticeSchedule
+                    c.notice_schedule = :notice_schedule
                 AND
                     a.deceased_id IN (
                         SELECT
