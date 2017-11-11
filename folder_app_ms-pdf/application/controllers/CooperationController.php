@@ -813,8 +813,16 @@ class CooperationController extends Zend_Controller_Action
         }
         
         if (count($arrayNoticeInfo) > 0) {
-            $noticeInfoData  = array('noticeInfo' => $this->adjustNoticeInfo($arrayNoticeInfo));
-            $jNoticeInfoData = Zend_Json::encode($noticeInfoData);
+            //法要通知の場合
+            if ($noticeSchedule == '77777777') {
+                    $noticeInfoData  = array('noticeInfo' => $arrayNoticeInfo);
+                    $jNoticeInfoData = Zend_Json::encode($noticeInfoData);
+            //お知らせの場合
+            }else{
+                    $noticeInfoData  = array('noticeInfo' => $this->adjustNoticeInfo($arrayNoticeInfo));
+                    $jNoticeInfoData = Zend_Json::encode($noticeInfoData);
+            }
+
             echo $jNoticeInfoData;
         } else {
             echo '';
