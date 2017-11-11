@@ -805,7 +805,14 @@ class CooperationController extends Zend_Controller_Action
         $cooperationModel = new cooperationModel();
 
         //法要通知の場合
-        if ($noticeSchedule == '77777777') {
+        if ($noticeSchedule == '77777777'||
+            $noticeSchedule == '14141414'||
+            $noticeSchedule == '21212121'||
+            $noticeSchedule == '28282828'||
+            $noticeSchedule == '35353535'||
+            $noticeSchedule == '42424242'||
+            $noticeSchedule == '49494949'
+            ) {
             $arrayNoticeInfo  = $cooperationModel->getNoticeHoyoInfoAndDeceasedID($noticeSchedule,$deviceToken);
         //お知らせ通知の場合
         }else{
@@ -814,7 +821,14 @@ class CooperationController extends Zend_Controller_Action
         
         if (count($arrayNoticeInfo) > 0) {
             //法要通知の場合
-            if ($noticeSchedule == '77777777') {
+            if ($noticeSchedule == '77777777'||
+                $noticeSchedule == '14141414'||
+                $noticeSchedule == '21212121'||
+                $noticeSchedule == '28282828'||
+                $noticeSchedule == '35353535'||
+                $noticeSchedule == '42424242'||
+                $noticeSchedule == '49494949'
+                ) {
                     $noticeInfoData  = array('noticeInfo' => $arrayNoticeInfo);
                     $jNoticeInfoData = Zend_Json::encode($noticeInfoData);
             //お知らせの場合
