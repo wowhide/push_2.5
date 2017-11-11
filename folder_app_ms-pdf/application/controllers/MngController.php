@@ -604,6 +604,7 @@ class MngController extends Zend_Controller_Action
         //入力値を取得
         $noticeInfo = array(
             'notice_type'         => $this->getRequest()->getPost('notice_type'),
+            'notice_schedule'     => $this->getRequest()->getPost('notice_schedule'),
             'entry_method'        => 1,
             'notice_title'        => $this->getRequest()->getPost('notice_title'),
             'template_id'         => $this->getRequest()->getPost('template_id'),

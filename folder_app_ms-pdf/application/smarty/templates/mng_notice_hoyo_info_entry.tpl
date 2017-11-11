@@ -108,7 +108,31 @@ $(function() {
     <h2>通知情報登録</h2>
     <p class="message">{$message}</p>
     <table id="notice_input">
+
         <input type="hidden" name="notice_type" value="{$noticeTypeNumber}" />
+
+        {if $noticeTypeNumber == 7}
+        <input type="hidden" name="notice_schedule" value="77777777" />
+        {/if}
+        {if $noticeTypeNumber == 14}
+        <input type="hidden" name="notice_schedule" value="14141414" />
+        {/if}
+        {if $noticeTypeNumber == 21}
+        <input type="hidden" name="notice_schedule" value="21212121" />
+        {/if}
+        {if $noticeTypeNumber == 28}
+        <input type="hidden" name="notice_schedule" value="282828" />
+        {/if}
+        {if $noticeTypeNumber == 35}
+        <input type="hidden" name="notice_schedule" value="35353535" />
+        {/if}
+        {if $noticeTypeNumber == 42}
+        <input type="hidden" name="notice_schedule" value="42424242" />
+        {/if}
+        {if $noticeTypeNumber == 49}
+        <input type="hidden" name="notice_schedule" value="49494949" />
+        {/if}
+
         <tr>
             <th>タイトル（必須）</th>
             <td><input id="title" type="text" name="notice_title" value="{$noticeTitle}" maxlength="50" style="ime-mode: active;" /><br>

@@ -147,7 +147,7 @@ class mngModel {
         $now = new Zend_Date();
 
         //日付の様式を変更するためにZend_Date型の変数を準備
-        $date = new Zend_Date($noticeInfo['notice_schedule']);
+        // $date = new Zend_Date($noticeInfo['notice_schedule']);
 
         try {
             if ($noticeInfo['entry_method'] == ENTRY_METHOD_INPUT) {
@@ -199,7 +199,7 @@ class mngModel {
                 ";
 
                 $this->_db->query($sql, array(
-                    'notice_schedule' => $date->toString('yyyyMMdd'),
+                    'notice_schedule' => $noticeInfo['notice_schedule'],
                     'entry_method' => $noticeInfo['entry_method'],
                     'notice_title' => $noticeInfo['notice_title'],
                     'template_id' => $noticeInfo['template_id'],
@@ -208,17 +208,17 @@ class mngModel {
                     'notice_type' => $noticeInfo['notice_type'],
                     'url' => $noticeInfo['url'],
                     'entry_datetime' => $now,
-                    'search_category' => $noticeInfo['selected_category'],
-                    'charge_name' => $noticeInfo['charge_name'],
-                    'hall_name' => $noticeInfo['hall_name'],
-                    'search_name' => $noticeInfo['search_name'],
-                    'search_year' => $noticeInfo['search_year'],
-                    'search_month' => $noticeInfo['search_month'],
-                    'search_day' => $noticeInfo['search_day'],
-                    'death_month' => $noticeInfo['death_month'],
-                    'memorial_year' => $noticeInfo['memorial_year'],
-                    'memorial_month' => $noticeInfo['memorial_month'],
-                    'memorial_event' => $noticeInfo['memorial_event'])
+                    'search_category' => 0,
+                    'charge_name' => "",
+                    'hall_name' =>  "",
+                    'search_name' =>  "",
+                    'search_year' =>  "",
+                    'search_month' =>  "",
+                    'search_day' =>  "",
+                    'death_month' =>  "",
+                    'memorial_year' => "",
+                    'memorial_month' =>  "",
+                    'memorial_event' =>  "")
                 );
             } else {
                 $sql = "INSERT INTO t_notice_info (
@@ -263,23 +263,23 @@ class mngModel {
                 ";
 
                 $this->_db->query($sql, array(
-                    'notice_schedule' => $date->toString('yyyyMMdd'),
+                    'notice_schedule' => $noticeInfo['notice_schedule'],
                     'entry_method' => $noticeInfo['entry_method'],
                     'notice_title' => $noticeInfo['notice_title'],
                     'notice_type' => $noticeInfo['notice_type'],
                     'url' => $noticeInfo['url'],
                     'entry_datetime' => $now,
-                    'search_category' => $noticeInfo['selected_category'],
-                    'charge_name' => $noticeInfo['charge_name'],
-                    'hall_name' => $noticeInfo['hall_name'],
-                    'search_name' => $noticeInfo['search_name'],
-                    'search_year' => $noticeInfo['search_year'],
-                    'search_month' => $noticeInfo['search_month'],
-                    'search_day' => $noticeInfo['search_day'],
-                    'death_month' => $noticeInfo['death_month'],
-                    'memorial_year' => $noticeInfo['memorial_year'],
-                    'memorial_month' => $noticeInfo['memorial_month'],
-                    'memorial_event' => $noticeInfo['memorial_event'])
+                    'search_category' => 0,
+                    'charge_name' =>  "",
+                    'hall_name' =>  "",
+                    'search_name' =>  "",
+                    'search_year' =>  "",
+                    'search_month' =>  "",
+                    'search_day' =>  "",
+                    'death_month' =>  "",
+                    'memorial_year' =>  "",
+                    'memorial_month' => "",
+                    'memorial_event' =>  "")
                 );
             }
 
@@ -300,7 +300,7 @@ class mngModel {
     public function updateNoticeHoyoInfo($noticeInfo)
     {
         //日付の様式を変更するためにZend_Date型の変数を準備
-        $date = new Zend_Date($noticeInfo['notice_schedule']);
+        // $date = new Zend_Date($noticeInfo['notice_schedule']);
 
         try {
             if ($noticeInfo['entry_method'] == ENTRY_METHOD_INPUT) {
@@ -329,7 +329,7 @@ class mngModel {
                         ";
 
                 $this->_db->query($sql, array(
-                    'notice_schedule' => $date->toString('yyyyMMdd'),
+                    'notice_schedule' => $noticeInfo['notice_schedule'],
                     'entry_method' => $noticeInfo['entry_method'],
                     'notice_title' => $noticeInfo['notice_title'],
                     'template_id' => $noticeInfo['template_id'],
@@ -376,7 +376,7 @@ class mngModel {
                         ";
 
                 $this->_db->query($sql, array(
-                    'notice_schedule'   => $date->toString('yyyyMMdd'),
+                    'notice_schedule'   => $noticeInfo['notice_schedule'],
                     'entry_method'      => $noticeInfo['entry_method'],
                     'notice_title'      => $noticeInfo['notice_title'],
                     'notice_type'       => $noticeInfo['notice_type'],
