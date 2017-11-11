@@ -121,7 +121,7 @@ $(function() {
         <input type="hidden" name="notice_schedule" value="21212121" />
         {/if}
         {if $noticeTypeNumber == 28}
-        <input type="hidden" name="notice_schedule" value="282828" />
+        <input type="hidden" name="notice_schedule" value="28282828" />
         {/if}
         {if $noticeTypeNumber == 35}
         <input type="hidden" name="notice_schedule" value="35353535" />
