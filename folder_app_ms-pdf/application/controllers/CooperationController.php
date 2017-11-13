@@ -804,6 +804,53 @@ class CooperationController extends Zend_Controller_Action
 
         $cooperationModel = new cooperationModel();
 
+
+        //配信日付取得
+        $DeliveryDate = "";
+
+        //初七日の場合
+        if ($noticeSchedule == '77777777') {
+            // 6日前
+        $DeliveryDate = date('Ymd', strtotime('-6 day', time()));
+        }
+
+        //二七日の場合
+        if ($noticeSchedule == '14141414') {
+            // 14日前
+        $DeliveryDate = date('Ymd', strtotime('-13 day', time()));
+        }
+
+        //三七日の場合
+        if ($noticeSchedule == '21212121') {
+            // 20日前
+        $DeliveryDate = date('Ymd', strtotime('-20 day', time()));
+        }
+
+        //四七日の場合
+        if ($noticeSchedule == '28282828') {
+            // 27日前
+        $DeliveryDate = date('Ymd', strtotime('-27 day', time()));
+        }
+
+        //五七日の場合
+        if ($noticeSchedule == '35353535') {
+            // 34日前
+        $DeliveryDate = date('Ymd', strtotime('-34 day', time()));
+        }
+
+        //六七日の場合
+        if ($noticeSchedule == '42424242') {
+            // 41日前
+        $DeliveryDate = date('Ymd', strtotime('-41 day', time()));
+        }
+        
+        //四十九日の場合
+        if ($noticeSchedule == '49494949') {
+            // 48日前
+        $DeliveryDate = date('Ymd', strtotime('-48 day', time()));
+        }
+
+
         //法要通知の場合
         if ($noticeSchedule == '77777777'||
             $noticeSchedule == '14141414'||
@@ -813,7 +860,7 @@ class CooperationController extends Zend_Controller_Action
             $noticeSchedule == '42424242'||
             $noticeSchedule == '49494949'
             ) {
-            $arrayNoticeInfo  = $cooperationModel->getNoticeHoyoInfoAndDeceasedID($noticeSchedule,$deviceToken);
+            $arrayNoticeInfo  = $cooperationModel->getNoticeHoyoInfoAndDeceasedID($noticeSchedule,$deviceToken,$DeliveryDate);
         //お知らせ通知の場合
         }else{
             $arrayNoticeInfo  = $cooperationModel->getNoticeInfoAndDeceasedID($noticeSchedule, $deviceToken);

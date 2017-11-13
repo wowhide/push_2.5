@@ -653,13 +653,15 @@ class cooperationModel {
      *
      * @return noticeInfo 通知情報＋個人情報配列
      */
-    public function getNoticeHoyoInfoAndDeceasedID($noticeSchedule,$deviceToken) {
+    public function getNoticeHoyoInfoAndDeceasedID($noticeSchedule,$deviceToken,$DeliveryDate) {
         $sql = "SELECT 
                     c.*, a.*
                 FROM 
                     t_notice_info AS c, c_notice_hoyo_info_list AS a
                 WHERE 
-                    c.notice_schedule = :notice_schedule
+                    c.notice_schedule   = :notice_schedule
+                AND
+                    a.deceased_deathday = :deceased_deathday                 
                 AND
                     a.deceased_id IN (
                         SELECT
@@ -673,8 +675,9 @@ class cooperationModel {
                     )
               ";
               
-        $noticeInfo = $this->_db->fetchAll($sql, array('notice_schedule' => $noticeSchedule,
-                                                       'device_token'    => $deviceToken));
+        $noticeInfo = $this->_db->fetchAll($sql, array( 'notice_schedule'   => $noticeSchedule,
+                                                        'deceased_deathday' => $DeliveryDate,
+                                                        'device_token'      => $deviceToken));
         return $noticeInfo;
     }
 
