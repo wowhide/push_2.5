@@ -655,18 +655,72 @@ class CooperationController extends Zend_Controller_Action
 
         // 通知情報配列を取得
         $cooperationModel = new cooperationModel();
-        $arrayNoticeInfo  = $cooperationModel->getNoticeInfoDeliveredByToken($deviceToken);
+        //法要通知情報が配信されているか
+        //六日前
+        $arrayNoticeHoyoInfo_SixDaysAgo         = $cooperationModel->getNoticeHoyoInfoSixdayagoDeliveredByToken($deviceToken);
+        
+
+        //十三日前
+        $arrayNoticeHoyoInfo_ThirteenDaysAgo    = $cooperationModel->getNoticeHoyoInfoThirteendayagoDeliveredByToken($deviceToken);
+
+        //お知らせ
+        $arrayNoticeInfoNotice  = $cooperationModel->getNoticeInfoDeliveredByToken($deviceToken);
+
+        //配列をマージ
+        $arrayNoticeInfo = array_merge($arrayNoticeHoyoInfo_SixDaysAgo, $arrayNoticeHoyoInfo_ThirteenDaysAgo, $arrayNoticeInfoNotice);
 
         // 通知情報が存在する場合は通知情報を返し、ない場合は空文字を返す
+        $noticeInfoData = array();
         if (count($arrayNoticeInfo) > 0) {
             // URLの配列をJSON形式のデータに変換
-            $noticeInfoData  = array('noticeInfo' => $this->adjustNoticeInfo($arrayNoticeInfo));
-            $jNoticeInfoData = Zend_Json::encode($noticeInfoData);
-            echo $jNoticeInfoData;
-        } else {
-            echo '';
+            $noticeInfoData  = array('noticeInfo' => $this->adjustNoticeHoyoInfo($arrayNoticeInfo));
+        } 
+
+        if (count($noticeInfoData) > 0) {
+                $jNoticeInfoData = Zend_Json::encode($noticeInfoData);
+                echo $jNoticeInfoData;
+        }else{
+                echo '';
         }
+
     }
+
+
+
+    private function adjustNoticeHoyoInfo($arrayNoticeInfo) {
+        $adjusted = array();
+        $noticeInfoNoList = array();
+
+        foreach ($arrayNoticeInfo as $noticeInfo) {
+            if($noticeInfo['search_category'] == 4 || $noticeInfo['search_category'] == 5) {
+                if($noticeInfo['entry_method'] == 1){
+                    $adjusted[] = $noticeInfo;
+                    $noticeInfoNoList[] = $noticeInfo['notice_info_no'];
+                    continue;
+                }
+            }
+
+            // if ($noticeInfo['notice_schedule'] != '77777777' || $noticeInfo['notice_schedule'] != '14141414') {
+            //     $noticeInfo['deceased_id'] = '';
+            // }
+
+
+            if ($noticeInfo['notice_schedule'] == '77777777' || $noticeInfo['notice_schedule'] == '14141414') {
+                $noticeInfo['search_category'] = 5;
+            }
+                
+        
+            // echo $noticeInfo['deceased_id']."<br />";
+            
+            if(array_search($noticeInfo['notice_info_no'], $noticeInfoNoList) === false) {
+                $adjusted[] = $noticeInfo;
+                $noticeInfoNoList[] = $noticeInfo['notice_info_no'];
+            }
+        }
+
+        return $adjusted;
+    }
+
 
     //配信済みの通知情報をレジストレーションIDを元に取得
     public function getnoticeinfodeliveredbyregidAction() {

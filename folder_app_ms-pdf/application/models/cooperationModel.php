@@ -550,6 +550,67 @@ class cooperationModel {
     }
 
     /*
+     * 配信済みの通知情報をデバイストークンを指定して取得する(法要通知)
+     * @param deviceToken デバイストークン
+     * @return noticeInfo 通知情報配列 
+     */
+
+    //六日前
+    public function getNoticeHoyoInfoSixdayagoDeliveredByToken($deviceToken) {
+        // 通知情報を取得する
+        $sql = "SELECT 
+                    c.*,a.*
+                FROM 
+                    t_notice_info AS c, m_deceased AS a
+                WHERE 
+                    c.notice_schedule   = '77777777'
+                AND
+                    a.deceased_id IN (
+                        SELECT
+                            deceased_id
+                        FROM
+                            c_ios_device_token
+                        WHERE
+                            device_token = :device_token
+                    )
+                AND
+                    str_to_date(a.deceased_deathday, '%Y%m%d') <= str_to_date(DATE_FORMAT(now(),'%Y%m%d'),'%Y%m%d') - INTERVAL 6 DAY      
+                ORDER BY
+                    notice_schedule DESC";
+        $noticeInfo = $this->_db->fetchAll($sql, array( 'device_token'=> $deviceToken));
+
+        return $noticeInfo;
+    }
+
+    //十三日前
+    public function getNoticeHoyoInfoThirteendayagoDeliveredByToken($deviceToken) {
+        // 通知情報を取得する
+        $sql = "SELECT 
+                    c.*,a.*
+                FROM 
+                    t_notice_info AS c, m_deceased AS a
+                WHERE 
+                    c.notice_schedule   = '14141414'
+                AND
+                    a.deceased_id IN (
+                        SELECT
+                            deceased_id
+                        FROM
+                            c_ios_device_token
+                        WHERE
+                            device_token = :device_token
+                    )
+                AND
+                    str_to_date(a.deceased_deathday, '%Y%m%d') <= str_to_date(DATE_FORMAT(now(),'%Y%m%d'),'%Y%m%d') - INTERVAL 13 DAY      
+                ORDER BY
+                    notice_schedule DESC";
+        $noticeInfo = $this->_db->fetchAll($sql, array( 'device_token'=> $deviceToken));
+
+        return $noticeInfo;
+    }
+
+
+    /*
      * 配信済みの通知情報をデバイストークンを指定して取得する
      * @param deviceToken デバイストークン
      * @return noticeInfo 通知情報配列 
