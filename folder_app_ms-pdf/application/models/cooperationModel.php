@@ -609,6 +609,143 @@ class cooperationModel {
         return $noticeInfo;
     }
 
+    //二十日前
+    public function getNoticeHoyoInfoTwentydayagoDeliveredByToken($deviceToken) {
+        // 通知情報を取得する
+        $sql = "SELECT 
+                    c.*,a.*
+                FROM 
+                    t_notice_info AS c, m_deceased AS a
+                WHERE 
+                    c.notice_schedule   = '21212121'
+                AND
+                    a.deceased_id IN (
+                        SELECT
+                            deceased_id
+                        FROM
+                            c_ios_device_token
+                        WHERE
+                            device_token = :device_token
+                    )
+                AND
+                    str_to_date(a.deceased_deathday, '%Y%m%d') <= str_to_date(DATE_FORMAT(now(),'%Y%m%d'),'%Y%m%d') - INTERVAL 20 DAY      
+                ORDER BY
+                    notice_schedule DESC";
+        $noticeInfo = $this->_db->fetchAll($sql, array( 'device_token'=> $deviceToken));
+
+        return $noticeInfo;
+    }
+
+    //二十七日前
+    public function getNoticeHoyoInfoTwentysevendayagoDeliveredByToken($deviceToken) {
+        // 通知情報を取得する
+        $sql = "SELECT 
+                    c.*,a.*
+                FROM 
+                    t_notice_info AS c, m_deceased AS a
+                WHERE 
+                    c.notice_schedule   = '28282828'
+                AND
+                    a.deceased_id IN (
+                        SELECT
+                            deceased_id
+                        FROM
+                            c_ios_device_token
+                        WHERE
+                            device_token = :device_token
+                    )
+                AND
+                    str_to_date(a.deceased_deathday, '%Y%m%d') <= str_to_date(DATE_FORMAT(now(),'%Y%m%d'),'%Y%m%d') - INTERVAL 27 DAY      
+                ORDER BY
+                    notice_schedule DESC";
+        $noticeInfo = $this->_db->fetchAll($sql, array( 'device_token'=> $deviceToken));
+
+        return $noticeInfo;
+    }
+
+    //三十四日前
+    public function getNoticeHoyoInfoThirtyfourdayagoDeliveredByToken($deviceToken) {
+        // 通知情報を取得する
+        $sql = "SELECT 
+                    c.*,a.*
+                FROM 
+                    t_notice_info AS c, m_deceased AS a
+                WHERE 
+                    c.notice_schedule   = '35353535'
+                AND
+                    a.deceased_id IN (
+                        SELECT
+                            deceased_id
+                        FROM
+                            c_ios_device_token
+                        WHERE
+                            device_token = :device_token
+                    )
+                AND
+                    str_to_date(a.deceased_deathday, '%Y%m%d') <= str_to_date(DATE_FORMAT(now(),'%Y%m%d'),'%Y%m%d') - INTERVAL 34 DAY      
+                ORDER BY
+                    notice_schedule DESC";
+        $noticeInfo = $this->_db->fetchAll($sql, array( 'device_token'=> $deviceToken));
+
+        return $noticeInfo;
+    }
+
+
+    //四十一日前
+    public function getNoticeHoyoInfoFortyonedayagoDeliveredByToken($deviceToken) {
+        // 通知情報を取得する
+        $sql = "SELECT 
+                    c.*,a.*
+                FROM 
+                    t_notice_info AS c, m_deceased AS a
+                WHERE 
+                    c.notice_schedule   = '42424242'
+                AND
+                    a.deceased_id IN (
+                        SELECT
+                            deceased_id
+                        FROM
+                            c_ios_device_token
+                        WHERE
+                            device_token = :device_token
+                    )
+                AND
+                    str_to_date(a.deceased_deathday, '%Y%m%d') <= str_to_date(DATE_FORMAT(now(),'%Y%m%d'),'%Y%m%d') - INTERVAL 41 DAY      
+                ORDER BY
+                    notice_schedule DESC";
+        $noticeInfo = $this->_db->fetchAll($sql, array( 'device_token'=> $deviceToken));
+
+        return $noticeInfo;
+    }
+
+    //四十八日前
+    public function getNoticeHoyoInfoFortyeightdayagoDeliveredByToken($deviceToken) {
+        // 通知情報を取得する
+        $sql = "SELECT 
+                    c.*,a.*
+                FROM 
+                    t_notice_info AS c, m_deceased AS a
+                WHERE 
+                    c.notice_schedule   = '49494949'
+                AND
+                    a.deceased_id IN (
+                        SELECT
+                            deceased_id
+                        FROM
+                            c_ios_device_token
+                        WHERE
+                            device_token = :device_token
+                    )
+                AND
+                    str_to_date(a.deceased_deathday, '%Y%m%d') <= str_to_date(DATE_FORMAT(now(),'%Y%m%d'),'%Y%m%d') - INTERVAL 48 DAY      
+                ORDER BY
+                    notice_schedule DESC";
+        $noticeInfo = $this->_db->fetchAll($sql, array( 'device_token'=> $deviceToken));
+
+        return $noticeInfo;
+    }
+
+
 
     /*
      * 配信済みの通知情報をデバイストークンを指定して取得する

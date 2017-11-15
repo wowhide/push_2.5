@@ -657,16 +657,31 @@ class CooperationController extends Zend_Controller_Action
         $cooperationModel = new cooperationModel();
         //法要通知情報が配信されているか
         //六日前
-        $arrayNoticeHoyoInfo_SixDaysAgo         = $cooperationModel->getNoticeHoyoInfoSixdayagoDeliveredByToken($deviceToken);
-        
+        $arrayNoticeHoyoInfo_SixDaysAgo             = $cooperationModel->getNoticeHoyoInfoSixdayagoDeliveredByToken($deviceToken);
         //十三日前
-        $arrayNoticeHoyoInfo_ThirteenDaysAgo    = $cooperationModel->getNoticeHoyoInfoThirteendayagoDeliveredByToken($deviceToken);
-
-        // //お知らせ
+        $arrayNoticeHoyoInfo_ThirteenDaysAgo        = $cooperationModel->getNoticeHoyoInfoThirteendayagoDeliveredByToken($deviceToken);
+        //二十日前
+        $arrayNoticeHoyoInfo_TwentyDaysAgo          = $cooperationModel->getNoticeHoyoInfoTwentydayagoDeliveredByToken($deviceToken);
+        //二十七日前
+        $arrayNoticeHoyoInfo_TwentysevenDaysAgo     = $cooperationModel->getNoticeHoyoInfoTwentysevendayagoDeliveredByToken($deviceToken);
+        //三十四日前
+        $arrayNoticeHoyoInfo_ThirtyfourDaysAgo      = $cooperationModel->getNoticeHoyoInfoThirtyfourdayagoDeliveredByToken($deviceToken);
+        //四十一日前
+        $arrayNoticeHoyoInfo_FortyoneDaysAgo        = $cooperationModel->getNoticeHoyoInfoFortyonedayagoDeliveredByToken($deviceToken);        
+         //四十八前
+        $arrayNoticeHoyoInfo_FortyeightDaysAgo      = $cooperationModel->getNoticeHoyoInfoFortyeightdayagoDeliveredByToken($deviceToken);         
+        //お知らせ
         $arrayNoticeInfoNotice  = $cooperationModel->getNoticeInfoDeliveredByToken($deviceToken);
 
         // //配列をマージ
-        $arrayNoticeInfo = array_merge($arrayNoticeHoyoInfo_SixDaysAgo, $arrayNoticeHoyoInfo_ThirteenDaysAgo,$arrayNoticeInfoNotice);
+        $arrayNoticeInfo = array_merge( $arrayNoticeHoyoInfo_SixDaysAgo, 
+                                        $arrayNoticeHoyoInfo_ThirteenDaysAgo,
+                                        $arrayNoticeHoyoInfo_TwentyDaysAgo,
+                                        $arrayNoticeHoyoInfo_TwentysevenDaysAgo,
+                                        $arrayNoticeHoyoInfo_ThirtyfourDaysAgo,
+                                        $arrayNoticeHoyoInfo_FortyoneDaysAgo,
+                                        $arrayNoticeHoyoInfo_FortyeightDaysAgo,
+                                        $arrayNoticeInfoNotice);
 
         // 通知情報が存在する場合は通知情報を返し、ない場合は空文字を返す
         $noticeInfoData = array();
@@ -692,7 +707,14 @@ class CooperationController extends Zend_Controller_Action
 
         foreach ($arrayNoticeInfo as $noticeInfo) {
 
-            if ($noticeInfo['notice_schedule'] == '77777777' || $noticeInfo['notice_schedule'] == '14141414') {
+            if ($noticeInfo['notice_schedule'] == '77777777' 
+                || $noticeInfo['notice_schedule'] == '14141414'
+                || $noticeInfo['notice_schedule'] == '21212121'
+                || $noticeInfo['notice_schedule'] == '21212121'
+                || $noticeInfo['notice_schedule'] == '28282828'
+                || $noticeInfo['notice_schedule'] == '35353535'
+                || $noticeInfo['notice_schedule'] == '42424242'
+                || $noticeInfo['notice_schedule'] == '49494949') {
                 $noticeInfo['search_category'] = 5;
                 $adjusted[] = $noticeInfo;
                 continue;
