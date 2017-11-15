@@ -659,19 +659,18 @@ class CooperationController extends Zend_Controller_Action
         //六日前
         $arrayNoticeHoyoInfo_SixDaysAgo         = $cooperationModel->getNoticeHoyoInfoSixdayagoDeliveredByToken($deviceToken);
         
-
         //十三日前
         $arrayNoticeHoyoInfo_ThirteenDaysAgo    = $cooperationModel->getNoticeHoyoInfoThirteendayagoDeliveredByToken($deviceToken);
 
-        //お知らせ
+        // //お知らせ
         $arrayNoticeInfoNotice  = $cooperationModel->getNoticeInfoDeliveredByToken($deviceToken);
 
-        //配列をマージ
-        $arrayNoticeInfo = array_merge($arrayNoticeHoyoInfo_SixDaysAgo, $arrayNoticeHoyoInfo_ThirteenDaysAgo, $arrayNoticeInfoNotice);
+        // //配列をマージ
+        $arrayNoticeInfo = array_merge($arrayNoticeHoyoInfo_SixDaysAgo, $arrayNoticeHoyoInfo_ThirteenDaysAgo,$arrayNoticeInfoNotice);
 
         // 通知情報が存在する場合は通知情報を返し、ない場合は空文字を返す
         $noticeInfoData = array();
-        if (count($arrayNoticeInfo) > 0) {
+        if (count($arrayNoticeHoyoInfo_SixDaysAgo) > 0) {
             // URLの配列をJSON形式のデータに変換
             $noticeInfoData  = array('noticeInfo' => $this->adjustNoticeHoyoInfo($arrayNoticeInfo));
         } 
@@ -683,41 +682,25 @@ class CooperationController extends Zend_Controller_Action
                 echo '';
         }
 
-    }
+        // var_dump($arrayNoticeInfo);
 
+    }
 
 
     private function adjustNoticeHoyoInfo($arrayNoticeInfo) {
         $adjusted = array();
-        $noticeInfoNoList = array();
 
         foreach ($arrayNoticeInfo as $noticeInfo) {
-            if($noticeInfo['search_category'] == 4 || $noticeInfo['search_category'] == 5) {
-                if($noticeInfo['entry_method'] == 1){
-                    $adjusted[] = $noticeInfo;
-                    $noticeInfoNoList[] = $noticeInfo['notice_info_no'];
-                    continue;
-                }
-            }
-
-            // if ($noticeInfo['notice_schedule'] != '77777777' || $noticeInfo['notice_schedule'] != '14141414') {
-            //     $noticeInfo['deceased_id'] = '';
-            // }
-
 
             if ($noticeInfo['notice_schedule'] == '77777777' || $noticeInfo['notice_schedule'] == '14141414') {
                 $noticeInfo['search_category'] = 5;
-            }
-                
-        
-            // echo $noticeInfo['deceased_id']."<br />";
-            
-            if(array_search($noticeInfo['notice_info_no'], $noticeInfoNoList) === false) {
                 $adjusted[] = $noticeInfo;
-                $noticeInfoNoList[] = $noticeInfo['notice_info_no'];
+                continue;
             }
-        }
 
+            $adjusted[] = $noticeInfo;
+
+        }
         return $adjusted;
     }
 
@@ -736,7 +719,7 @@ class CooperationController extends Zend_Controller_Action
             // URLの配列をJSON形式のデータに変換
             $noticeInfoData  = array('noticeInfo' => $this->adjustNoticeInfo($arrayNoticeInfo));
             $jNoticeInfoData = Zend_Json::encode($noticeInfoData);
-            echo $jNoticeInfoData;
+            
         } else {
             echo '';
         }
