@@ -687,7 +687,7 @@ class CooperationController extends Zend_Controller_Action
         $noticeInfoData = array();
         if (count($arrayNoticeHoyoInfo_SixDaysAgo) > 0) {
             // URLの配列をJSON形式のデータに変換
-            $noticeInfoData  = array('noticeInfo' => $this->adjustNoticeHoyoInfo($arrayNoticeInfo));
+            $noticeInfoData  = array('noticeInfo' => $this->adjustNoticeHoyoInfo($arrayNoticeInfo,$deviceToken));
         } 
 
         if (count($noticeInfoData) > 0) {
@@ -702,22 +702,37 @@ class CooperationController extends Zend_Controller_Action
     }
 
 
-    private function adjustNoticeHoyoInfo($arrayNoticeInfo) {
+    private function adjustNoticeHoyoInfo($arrayNoticeInfo,$deviceToken) {
         $adjusted = array();
+        $cooperationModel = new cooperationModel();
 
         foreach ($arrayNoticeInfo as $noticeInfo) {
 
-            if ($noticeInfo['notice_schedule'] == '77777777' 
-                || $noticeInfo['notice_schedule'] == '14141414'
-                || $noticeInfo['notice_schedule'] == '21212121'
-                || $noticeInfo['notice_schedule'] == '21212121'
-                || $noticeInfo['notice_schedule'] == '28282828'
-                || $noticeInfo['notice_schedule'] == '35353535'
-                || $noticeInfo['notice_schedule'] == '42424242'
-                || $noticeInfo['notice_schedule'] == '49494949') {
-                $noticeInfo['search_category'] = 5;
-                $adjusted[] = $noticeInfo;
-                continue;
+            // if ( $noticeInfo['notice_schedule'] == '14141414'
+            //     || $noticeInfo['notice_schedule'] == '21212121'
+            //     || $noticeInfo['notice_schedule'] == '21212121'
+            //     || $noticeInfo['notice_schedule'] == '28282828'
+            //     || $noticeInfo['notice_schedule'] == '35353535'
+            //     || $noticeInfo['notice_schedule'] == '42424242'
+            //     || $noticeInfo['notice_schedule'] == '49494949') 
+            // {
+
+            //     $noticeInfo['search_category'] = 5;
+            //     $adjusted[] = $noticeInfo;
+            //     continue;
+
+            // }
+
+
+            if ($noticeInfo['notice_schedule'] == '77777777') {
+                $arrayNoticeTypeSeventh  = $cooperationModel->getNoticeHoyoInfoDeliveredDay($deviceToken,$noticeInfo['deceased_id'],7);
+                if (strlen($arrayNoticeTypeSeventh['push_time']) > 0) {
+                        // $noticeInfo['notice_schedule']　= $arrayNoticeTypeSeventh['push_time'];
+                        $noticeInfo['search_category'] = $arrayNoticeTypeSeventh['push_time'];
+                        $adjusted[] = $arrayNoticeTypeSeventh;
+                        continue;
+                }
+
             }
 
             $adjusted[] = $noticeInfo;

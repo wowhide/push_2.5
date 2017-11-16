@@ -586,6 +586,34 @@ class cooperationModel {
     }
 
     /*
+     * 配信済みの通知日をデバイストークンを指定して取得する(法要通知)
+     * @param deviceToken   デバイストークン
+     * @param deceasedId    故人ID
+     * @param noticeType    通知種類
+     */
+    public function getNoticeHoyoInfoDeliveredDay($deviceToken,$deceasedId,$noticeType) {
+        // 通知情報を取得する
+        $sql = "SELECT 
+                    *
+                FROM
+                    t_ios_sended_push 
+                WHERE 
+                    device_token  = :device_token
+                AND
+                    deceased_id   = :deceased_id
+                AND
+                    notice_type   = :notice_type
+                ORDER BY
+                    push_time DESC";
+        $noticeInfo = $this->_db->fetchAll($sql, array( 'device_token'  => $deviceToken,
+                                                        'deceased_id'   => $deceasedId,
+                                                        'notice_type'   => $noticeType));
+
+        return $noticeInfo;
+    }
+
+
+    /*
      * 配信済みの通知情報をデバイストークンを指定して取得する(法要通知)
      * @param deviceToken デバイストークン
      * @return noticeInfo 通知情報配列 
