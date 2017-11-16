@@ -361,7 +361,43 @@ class cooperationModel {
         }
         return true;
     }
-    
+
+    /*
+     * 法要通知スケジュールを登録する
+     * 
+     * @param   string  $deviceToken    デバイストークン
+     * @param   string  $deceasedId     故人ID
+     * @param   string  $noticeType     通知種類
+     * @param   string  $pushTime       配信日
+     * 
+     */
+    public function insertHoyoNoticeschedule($deviceToken, $deceasedId, $noticeType, $pushTime) {
+        try {
+            $sql = "INSERT INTO t_ios_sended_push (
+                        device_token,
+                        deceased_id,
+                        notice_type,
+                        push_time
+                    )
+                    VALUES
+                    (
+                        :device_token,
+                        :deceased_id,
+                        :notice_type,
+                        :push_time
+                    )
+                ";
+            $this->_db->query($sql, array('device_token'  => $deviceToken,
+                                          'deceased_id'   => $deceasedId,
+                                          'notice_type'   => $noticeType,
+                                          'push_time'     => $pushTime
+                                          ));
+        } catch(Exception $e) {
+            return false;
+        }
+        return true;
+    }
+   
     /**
      * 通知先引継テーブルにデータを登録する
      * 

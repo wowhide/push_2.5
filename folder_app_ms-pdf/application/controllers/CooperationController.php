@@ -989,11 +989,40 @@ class CooperationController extends Zend_Controller_Action
         if ($cooperationModel->checkDeviceToken($deviceToken, $deceasedId) == false) {
             //存在しない場合保存する
             if ($cooperationModel->insertDeviceToken($deviceToken, $deceasedId)) {
-                echo 'OK';
+
+                //故人情報取得
+                $deceased = $cooperationModel->getDeceased($deceasedId);
+                //故人没年月日をDate型に変換
+                $deceasedDeathday = date("Y-m-d",strtotime($deceased['deceased_deathday']));
+                //多次元連想配列に値を代入
+                $noticetypeList[] = array('noticetype'=>7,  'pushtime'=>'+6 day');
+                $noticetypeList[] = array('noticetype'=>14, 'pushtime'=>'+13 day');
+                $noticetypeList[] = array('noticetype'=>21, 'pushtime'=>'+20 day');
+                $noticetypeList[] = array('noticetype'=>28, 'pushtime'=>'+27 day');
+                $noticetypeList[] = array('noticetype'=>34, 'pushtime'=>'+35 day');
+                $noticetypeList[] = array('noticetype'=>42, 'pushtime'=>'+41 day');
+                $noticetypeList[] = array('noticetype'=>49, 'pushtime'=>'+49 day');
+                //法要スケジュールをＤＢに格納
+                foreach ($noticetypeList as $hoyonoticeinfo) {
+                    if ($cooperationModel->insertHoyoNoticeschedule($deviceToken, 
+                                                                    $deceasedId, 
+                                                                    $hoyonoticeinfo['noticetype'], 
+                                                                    date("Ymd",strtotime($deceasedDeathday . $hoyonoticeinfo['pushtime']))))
+                                                                    {
+                    }else{
+                        //データ格納に失敗した場合
+                        echo '';
+                        break;
+                    }
+
+                }
+
+                // echo 'OK';
             } else {
                 echo '';
             }
         } else {
+
             echo 'OK';
         }
     }
