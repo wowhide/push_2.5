@@ -363,7 +363,7 @@ class cooperationModel {
     }
 
     /*
-     * 法要通知スケジュールを登録する
+     * 法要通知スケジュールを登録する（法要通知）
      * 
      * @param   string  $deviceToken    デバイストークン
      * @param   string  $deceasedId     故人ID

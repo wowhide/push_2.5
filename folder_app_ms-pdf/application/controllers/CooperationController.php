@@ -1002,7 +1002,7 @@ class CooperationController extends Zend_Controller_Action
                 $noticetypeList[] = array('noticetype'=>34, 'pushtime'=>'+35 day');
                 $noticetypeList[] = array('noticetype'=>42, 'pushtime'=>'+41 day');
                 $noticetypeList[] = array('noticetype'=>49, 'pushtime'=>'+49 day');
-                //法要スケジュールをＤＢに格納
+                //法要スケジュールをＤＢに格納処理
                 foreach ($noticetypeList as $hoyonoticeinfo) {
                     if ($cooperationModel->insertHoyoNoticeschedule($deviceToken, 
                                                                     $deceasedId, 
