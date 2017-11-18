@@ -13,7 +13,7 @@ define('DSN',     'mysql:dbname=hyamato_pdf;host=mysql1010.xserver.jp');
 define('DB_USER', 'hyamato_pdf');
 define('DB_PASS', 'wow2784497');
 
-class AndroidSeventhDeathdayPushNotifier {
+class AndroidFourteenthDeathdayPushNotifier {
     public function push() {
         try {
             $pdo = new PDO(DSN, DB_USER, DB_PASS, array(PDO::ATTR_EMULATE_PREPARES => false));
@@ -26,7 +26,7 @@ class AndroidSeventhDeathdayPushNotifier {
             $pdo->exec($delUnnecessaryRegistraSql);
 
             // 今日配信のお知らせが存在するかチェック
-            $noticeSQL = "SELECT * FROM t_notice_info WHERE notice_schedule = 77777777";
+            $noticeSQL = "SELECT * FROM t_notice_info WHERE notice_schedule = 14141414";
             $noticeList = $pdo->query($noticeSQL)->fetchAll();
 
             // 今日配信のお知らせが存在しない場合は終了
@@ -34,7 +34,7 @@ class AndroidSeventhDeathdayPushNotifier {
 
             foreach ($noticeList as $notice) {
                 // ログ出力文字列を初期化
-                $strSendRegistra = "初七日通知:" . $notice['notice_info_no'] . "\n";
+                $strSendRegistra = "二七日通知:" . $notice['notice_info_no'] . "\n";
 
                 // 有効なレジストラIDを取得して取得した分繰り返し、メッセージを作成する
                     $getRegistraSQL = "SELECT DISTINCT
@@ -48,7 +48,6 @@ class AndroidSeventhDeathdayPushNotifier {
                                         deceased_id
                                     FROM
                                         c_notice_hoyo_info_list
-                                        
                                 )";
 
                 $registraResult = $pdo->query($getRegistraSQL);

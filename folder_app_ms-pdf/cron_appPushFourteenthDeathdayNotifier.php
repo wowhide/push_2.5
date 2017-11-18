@@ -1,9 +1,9 @@
 <?php
-// require_once 'AndroidPushNotifier.php';
+require_once 'AndroidFourteenthDeathdayPushNotifier.php';
 require_once 'iosPushFourteenthDeathdayNotifier.php';
 
 
-// $android = new AndroidPushNotifier();
-// $android->push();
+$android = new AndroidFourteenthDeathdayPushNotifier();
+$android->push();
 $iosSeventh = new iosPushFourteenthDeathdayNotifier();
 $iosSeventh->push();

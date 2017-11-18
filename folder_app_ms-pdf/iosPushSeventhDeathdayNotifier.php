@@ -32,6 +32,7 @@ class iosPushSeventhDeathdayNotifier {
             $results = $feedback->receive();
             $feedback->disconnect();
             $strInvalidToken = "";
+            
             foreach ($results as $result) {
                 $strInvalidToken = $strInvalidToken . "'" . $result['deviceToken'] . "',";
             }
