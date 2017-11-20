@@ -48,6 +48,7 @@ class AndroidFourteenthDeathdayPushNotifier {
                                         deceased_id
                                     FROM
                                         c_notice_hoyo_info_list
+                                        
                                 )";
 
                 $registraResult = $pdo->query($getRegistraSQL);

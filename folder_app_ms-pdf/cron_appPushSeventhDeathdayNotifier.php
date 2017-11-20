@@ -3,7 +3,7 @@ require_once 'AndroidSeventhDeathdayPushNotifier.php';
 require_once 'iosPushSeventhDeathdayNotifier.php';
 
 
-$android = new AndroidSeventhDeathdayPushNotifier();
-$android->push();
+$androidSeventh = new AndroidSeventhDeathdayPushNotifier();
+$androidSeventh->push();
 $iosSeventh = new iosPushSeventhDeathdayNotifier();
 $iosSeventh->push();
