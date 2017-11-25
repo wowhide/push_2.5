@@ -663,9 +663,11 @@ class cooperationModel {
         $sql = "SELECT 
                     c.*,a.*
                 FROM 
-                    t_notice_info AS c, m_deceased AS a
+                    t_notice_info AS c, m_deceased AS a, c_date_delete_duplicate_list_android AS b
                 WHERE 
                     c.notice_schedule   = '77777777'
+                AND 
+                    b.deceased_id    = a.deceased_id  
                 AND
                     a.deceased_id IN (
                         SELECT
@@ -691,9 +693,11 @@ class cooperationModel {
         $sql = "SELECT 
                     c.*,a.*
                 FROM 
-                    t_notice_info AS c, m_deceased AS a
+                    t_notice_info AS c, m_deceased AS a, c_date_delete_duplicate_list_android AS b
                 WHERE 
                     c.notice_schedule   = '14141414'
+                AND 
+                    b.deceased_id    = a.deceased_id
                 AND
                     a.deceased_id IN (
                         SELECT
@@ -718,9 +722,11 @@ class cooperationModel {
         $sql = "SELECT 
                     c.*,a.*
                 FROM 
-                    t_notice_info AS c, m_deceased AS a
+                    t_notice_info AS c, m_deceased AS a, c_date_delete_duplicate_list_android AS b
                 WHERE 
                     c.notice_schedule   = '21212121'
+                AND 
+                    b.deceased_id    = a.deceased_id
                 AND
                     a.deceased_id IN (
                         SELECT
@@ -745,9 +751,11 @@ class cooperationModel {
         $sql = "SELECT 
                     c.*,a.*
                 FROM 
-                    t_notice_info AS c, m_deceased AS a
+                    t_notice_info AS c, m_deceased AS a, c_date_delete_duplicate_list_android AS b
                 WHERE 
                     c.notice_schedule   = '28282828'
+                AND 
+                    b.deceased_id    = a.deceased_id
                 AND
                     a.deceased_id IN (
                         SELECT
@@ -772,9 +780,11 @@ class cooperationModel {
         $sql = "SELECT 
                     c.*,a.*
                 FROM 
-                    t_notice_info AS c, m_deceased AS a
+                    t_notice_info AS c, m_deceased AS a, c_date_delete_duplicate_list_android AS b
                 WHERE 
                     c.notice_schedule   = '35353535'
+                AND 
+                    b.deceased_id    = a.deceased_id
                 AND
                     a.deceased_id IN (
                         SELECT
@@ -799,9 +809,11 @@ class cooperationModel {
         $sql = "SELECT 
                     c.*,a.*
                 FROM 
-                    t_notice_info AS c, m_deceased AS a
+                    t_notice_info AS c, m_deceased AS a, c_date_delete_duplicate_list_android AS b
                 WHERE 
                     c.notice_schedule   = '42424242'
+                AND 
+                    b.deceased_id    = a.deceased_id
                 AND
                     a.deceased_id IN (
                         SELECT
@@ -826,9 +838,11 @@ class cooperationModel {
         $sql = "SELECT 
                     c.*,a.*
                 FROM 
-                    t_notice_info AS c, m_deceased AS a
+                    t_notice_info AS c, m_deceased AS a, c_date_delete_duplicate_list_android AS b
                 WHERE 
                     c.notice_schedule   = '49494949'
+                AND 
+                    b.deceased_id    = a.deceased_id
                 AND
                     a.deceased_id IN (
                         SELECT
@@ -887,9 +901,11 @@ class cooperationModel {
         $sql = "SELECT 
                     c.*,a.*
                 FROM 
-                    t_notice_info AS c, m_deceased AS a
+                    t_notice_info AS c, m_deceased AS a, c_date_delete_duplicate_list_ios AS b
                 WHERE 
                     c.notice_schedule   = '77777777'
+                AND 
+                    b.deceased_id    = a.deceased_id                    
                 AND
                     a.deceased_id IN (
                         SELECT
@@ -914,9 +930,11 @@ class cooperationModel {
         $sql = "SELECT 
                     c.*,a.*
                 FROM 
-                    t_notice_info AS c, m_deceased AS a
+                    t_notice_info AS c, m_deceased AS a, c_date_delete_duplicate_list_ios AS b
                 WHERE 
                     c.notice_schedule   = '14141414'
+                AND 
+                    b.deceased_id    = a.deceased_id     
                 AND
                     a.deceased_id IN (
                         SELECT
@@ -941,9 +959,11 @@ class cooperationModel {
         $sql = "SELECT 
                     c.*,a.*
                 FROM 
-                    t_notice_info AS c, m_deceased AS a
+                    t_notice_info AS c, m_deceased AS a, c_date_delete_duplicate_list_ios AS b
                 WHERE 
                     c.notice_schedule   = '21212121'
+                AND 
+                    b.deceased_id    = a.deceased_id  
                 AND
                     a.deceased_id IN (
                         SELECT
@@ -968,9 +988,11 @@ class cooperationModel {
         $sql = "SELECT 
                     c.*,a.*
                 FROM 
-                    t_notice_info AS c, m_deceased AS a
+                    t_notice_info AS c, m_deceased AS a, c_date_delete_duplicate_list_ios AS b
                 WHERE 
                     c.notice_schedule   = '28282828'
+                AND 
+                    b.deceased_id    = a.deceased_id  
                 AND
                     a.deceased_id IN (
                         SELECT
@@ -995,9 +1017,11 @@ class cooperationModel {
         $sql = "SELECT 
                     c.*,a.*
                 FROM 
-                    t_notice_info AS c, m_deceased AS a
+                    t_notice_info AS c, m_deceased AS a, c_date_delete_duplicate_list_ios AS b
                 WHERE 
                     c.notice_schedule   = '35353535'
+                AND 
+                    b.deceased_id    = a.deceased_id 
                 AND
                     a.deceased_id IN (
                         SELECT
@@ -1023,9 +1047,11 @@ class cooperationModel {
         $sql = "SELECT 
                     c.*,a.*
                 FROM 
-                    t_notice_info AS c, m_deceased AS a
+                    t_notice_info AS c, m_deceased AS a, c_date_delete_duplicate_list_ios AS b
                 WHERE 
                     c.notice_schedule   = '42424242'
+                AND 
+                    b.deceased_id    = a.deceased_id 
                 AND
                     a.deceased_id IN (
                         SELECT
@@ -1050,9 +1076,11 @@ class cooperationModel {
         $sql = "SELECT 
                     c.*,a.*
                 FROM 
-                    t_notice_info AS c, m_deceased AS a
+                    t_notice_info AS c, m_deceased AS a, c_date_delete_duplicate_list_ios AS b
                 WHERE 
                     c.notice_schedule   = '49494949'
+                AND 
+                    b.deceased_id    = a.deceased_id 
                 AND
                     a.deceased_id IN (
                         SELECT
