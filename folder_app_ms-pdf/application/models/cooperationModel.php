@@ -667,7 +667,9 @@ class cooperationModel {
                 WHERE 
                     c.notice_schedule   = '77777777'
                 AND 
-                    b.deceased_id    = a.deceased_id  
+                    b.deceased_id    = a.deceased_id
+                AND 
+                    b.registration_id   = :registration_id   
                 AND
                     a.deceased_id IN (
                         SELECT
@@ -698,6 +700,8 @@ class cooperationModel {
                     c.notice_schedule   = '14141414'
                 AND 
                     b.deceased_id    = a.deceased_id
+                AND 
+                    b.registration_id   = :registration_id 
                 AND
                     a.deceased_id IN (
                         SELECT
@@ -727,6 +731,8 @@ class cooperationModel {
                     c.notice_schedule   = '21212121'
                 AND 
                     b.deceased_id    = a.deceased_id
+                AND 
+                    b.registration_id   = :registration_id 
                 AND
                     a.deceased_id IN (
                         SELECT
@@ -756,6 +762,8 @@ class cooperationModel {
                     c.notice_schedule   = '28282828'
                 AND 
                     b.deceased_id    = a.deceased_id
+                AND 
+                    b.registration_id   = :registration_id 
                 AND
                     a.deceased_id IN (
                         SELECT
@@ -785,6 +793,8 @@ class cooperationModel {
                     c.notice_schedule   = '35353535'
                 AND 
                     b.deceased_id    = a.deceased_id
+                AND 
+                    b.registration_id   = :registration_id 
                 AND
                     a.deceased_id IN (
                         SELECT
@@ -814,6 +824,8 @@ class cooperationModel {
                     c.notice_schedule   = '42424242'
                 AND 
                     b.deceased_id    = a.deceased_id
+                AND 
+                    b.registration_id   = :registration_id 
                 AND
                     a.deceased_id IN (
                         SELECT
@@ -843,6 +855,8 @@ class cooperationModel {
                     c.notice_schedule   = '49494949'
                 AND 
                     b.deceased_id    = a.deceased_id
+                AND 
+                    b.registration_id   = :registration_id 
                 AND
                     a.deceased_id IN (
                         SELECT
@@ -905,7 +919,9 @@ class cooperationModel {
                 WHERE 
                     c.notice_schedule   = '77777777'
                 AND 
-                    b.deceased_id    = a.deceased_id                    
+                    b.deceased_id    = a.deceased_id
+                AND 
+                    b.device_token   = :device_token                 
                 AND
                     a.deceased_id IN (
                         SELECT
@@ -934,7 +950,9 @@ class cooperationModel {
                 WHERE 
                     c.notice_schedule   = '14141414'
                 AND 
-                    b.deceased_id    = a.deceased_id     
+                    b.deceased_id    = a.deceased_id
+                AND 
+                    b.device_token   = :device_token     
                 AND
                     a.deceased_id IN (
                         SELECT
@@ -963,7 +981,9 @@ class cooperationModel {
                 WHERE 
                     c.notice_schedule   = '21212121'
                 AND 
-                    b.deceased_id    = a.deceased_id  
+                    b.deceased_id    = a.deceased_id
+                AND 
+                    b.device_token   = :device_token  
                 AND
                     a.deceased_id IN (
                         SELECT
@@ -992,7 +1012,9 @@ class cooperationModel {
                 WHERE 
                     c.notice_schedule   = '28282828'
                 AND 
-                    b.deceased_id    = a.deceased_id  
+                    b.deceased_id    = a.deceased_id
+                AND 
+                    b.device_token   = :device_token   
                 AND
                     a.deceased_id IN (
                         SELECT
@@ -1021,7 +1043,9 @@ class cooperationModel {
                 WHERE 
                     c.notice_schedule   = '35353535'
                 AND 
-                    b.deceased_id    = a.deceased_id 
+                    b.deceased_id    = a.deceased_id
+                AND 
+                    b.device_token   = :device_token  
                 AND
                     a.deceased_id IN (
                         SELECT
@@ -1051,7 +1075,9 @@ class cooperationModel {
                 WHERE 
                     c.notice_schedule   = '42424242'
                 AND 
-                    b.deceased_id    = a.deceased_id 
+                    b.deceased_id    = a.deceased_id
+                AND 
+                    b.device_token   = :device_token 
                 AND
                     a.deceased_id IN (
                         SELECT
@@ -1080,7 +1106,9 @@ class cooperationModel {
                 WHERE 
                     c.notice_schedule   = '49494949'
                 AND 
-                    b.deceased_id    = a.deceased_id 
+                    b.deceased_id    = a.deceased_id
+                AND 
+                    b.device_token   = :device_token 
                 AND
                     a.deceased_id IN (
                         SELECT
