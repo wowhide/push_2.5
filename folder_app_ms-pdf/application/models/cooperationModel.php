@@ -399,6 +399,44 @@ class cooperationModel {
         return true;
     }
 
+    /*
+     * 法要通知スケジュールを更新する（法要通知）(Android)
+     * 
+     * @param   string  $registrationID   レジストレーションID
+     * @param   string  $deceasedId       故人ID
+     * @param   string  $noticeType       通知種類
+     * @param   string  $pushTime         配信日
+     * 
+     */
+    public function updateHoyoNoticescheduleRegistId($registrationID, $deceasedId, $noticeType, $pushTime) {
+        try {
+        
+            $sql = "UPDATE 
+                        t_android_sended_push 
+                    SET 
+                        push_time         =:push_time 
+                    WHERE 
+                        registration_id   =:registration_id
+                    AND
+                        deceased_id       =:deceased_id
+                    AND
+                        notice_type       =:notice_type
+                    ";
+        
+            $this->_db->query($sql, array('registration_id'  => $registrationID,
+                                          'deceased_id'   => $deceasedId,
+                                          'notice_type'   => $noticeType,
+                                          'push_time'     => $pushTime
+                                          ));
+        } catch(Exception $e) {
+
+            Zend_Debug::dump($e->getMessage(), $label = null, $echo = true);
+            return false;
+        }
+
+        return true;
+    }
+
 
     /*
      * 法要通知スケジュールを登録する（法要通知）(iOS)
@@ -435,6 +473,45 @@ class cooperationModel {
         }
         return true;
     }
+
+    /*
+     * 法要通知スケジュールを更新する（法要通知）(iOS)
+     * 
+     * @param   string  $deviceToken    デバイストークン
+     * @param   string  $deceasedId     故人ID
+     * @param   string  $noticeType     通知種類
+     * @param   string  $pushTime       配信日
+     * 
+     */
+    public function updateHoyoNoticeschedule($deviceToken, $deceasedId, $noticeType, $pushTime) {
+        try {
+        
+            $sql = "UPDATE 
+                        t_ios_sended_push 
+                    SET 
+                        push_time     =:push_time 
+                    WHERE 
+                        device_token  =:device_token
+                    AND
+                        deceased_id   =:deceased_id
+                    AND
+                        notice_type   =:notice_type
+                    ";
+        
+            $this->_db->query($sql, array('device_token'  => $deviceToken,
+                                          'deceased_id'   => $deceasedId,
+                                          'notice_type'   => $noticeType,
+                                          'push_time'     => $pushTime
+                                          ));
+        } catch(Exception $e) {
+
+            Zend_Debug::dump($e->getMessage(), $label = null, $echo = true);
+            return false;
+        }
+
+        return true;
+    }
+
    
     /**
      * 通知先引継テーブルにデータを登録する
