@@ -13,7 +13,7 @@ define('DSN',     'mysql:dbname=hyamato_pdf;host=mysql1010.xserver.jp');
 define('DB_USER', 'hyamato_pdf');
 define('DB_PASS', 'wow2784497');
 
-class AndroidSeventhDeathdayPushNotifier {
+class AndroidSeventhDeathdayNotifier {
     public function push() {
         try {
             $pdo = new PDO(DSN, DB_USER, DB_PASS, array(PDO::ATTR_EMULATE_PREPARES => false));

@@ -675,25 +675,30 @@ class CooperationController extends Zend_Controller_Action
         $arrayNoticeInfoNotice  = $cooperationModel->getNoticeInfoDeliveredByToken($deviceToken);
 
         // //配列をマージ
-        $arrayNoticeInfo = array_merge( $arrayNoticeHoyoInfo_SixDaysAgo, 
-                                        $arrayNoticeHoyoInfo_ThirteenDaysAgo,
-                                        $arrayNoticeHoyoInfo_TwentyDaysAgo,
-                                        $arrayNoticeHoyoInfo_TwentysevenDaysAgo,
-                                        $arrayNoticeHoyoInfo_ThirtyfourDaysAgo,
+        $arrayNoticeInfo = array_merge( $arrayNoticeHoyoInfo_FortyeightDaysAgo, 
                                         $arrayNoticeHoyoInfo_FortyoneDaysAgo,
-                                        $arrayNoticeHoyoInfo_FortyeightDaysAgo,
+                                        $arrayNoticeHoyoInfo_ThirtyfourDaysAgo,
+                                        $arrayNoticeHoyoInfo_TwentysevenDaysAgo,
+                                        $arrayNoticeHoyoInfo_TwentyDaysAgo,
+                                        $arrayNoticeHoyoInfo_ThirteenDaysAgo,
+                                        $arrayNoticeHoyoInfo_SixDaysAgo,
                                         $arrayNoticeInfoNotice);
 
         // 通知情報が存在する場合は通知情報を返し、ない場合は空文字を返す
         $noticeInfoData = array();
         if (count($arrayNoticeInfo) > 0) {
-            // URLの配列をJSON形式のデータに変換
-            $noticeInfoData  = array('noticeInfo' => $this->adjustNoticeHoyoInfo($arrayNoticeInfo,$deviceToken));
-        } 
+                // URLの配列をJSON形式のデータに変換
+                $noticeInfoData  = array('noticeInfo' => $this->adjustNoticeHoyoInfo($arrayNoticeInfo,$deviceToken));
 
-        if (count($noticeInfoData) > 0) {
+                foreach ($noticeInfoData['noticeInfo'] as $key => $value) {
+                  $id[$key] = $value['notice_schedule'];
+                }                 
+                // array_multisortで'notice_schedule'の列を日付順に並び替える
+                array_multisort($id, SORT_DESC, $noticeInfoData['noticeInfo']);
+                 
                 $jNoticeInfoData = Zend_Json::encode($noticeInfoData);
                 echo $jNoticeInfoData;
+
         }else{
                 echo '';
         }
@@ -859,21 +864,29 @@ class CooperationController extends Zend_Controller_Action
         $arrayNoticeInfoNotice          = $cooperationModel->getNoticeInfoDeliveredByRegID($registrationID);
 
         //配列をマージ
-        $arrayNoticeInfo = array_merge( $arrayNoticeHoyoInfo_SixDaysAgo, 
-                                        $arrayNoticeHoyoInfo_ThirteenDaysAgo,
-                                        $arrayNoticeHoyoInfo_TwentyDaysAgo,
-                                        $arrayNoticeHoyoInfo_TwentysevenDaysAgo,
-                                        $arrayNoticeHoyoInfo_ThirtyfourDaysAgo,
+        $arrayNoticeInfo = array_merge( $arrayNoticeHoyoInfo_FortyeightDaysAgo, 
                                         $arrayNoticeHoyoInfo_FortyoneDaysAgo,
-                                        $arrayNoticeHoyoInfo_FortyeightDaysAgo,
+                                        $arrayNoticeHoyoInfo_ThirtyfourDaysAgo,
+                                        $arrayNoticeHoyoInfo_TwentysevenDaysAgo,
+                                        $arrayNoticeHoyoInfo_TwentyDaysAgo,
+                                        $arrayNoticeHoyoInfo_ThirteenDaysAgo,
+                                        $arrayNoticeHoyoInfo_SixDaysAgo,
                                         $arrayNoticeInfoNotice);
 
         // 通知情報が存在する場合は通知情報を返し、ない場合は空文字を返す
         if (count($arrayNoticeInfo) > 0) {
             // URLの配列をJSON形式のデータに変換
-            $noticeInfoData  = array('noticeInfo' => $this->adjustNoticeHoyoInfoRegid($arrayNoticeInfo,$registrationID));
-            $jNoticeInfoData = Zend_Json::encode($noticeInfoData);
-            echo $jNoticeInfoData;
+                $noticeInfoData  = array('noticeInfo' => $this->adjustNoticeHoyoInfoRegid($arrayNoticeInfo,$registrationID));
+
+                foreach ($noticeInfoData['noticeInfo'] as $key => $value) {
+                  $id[$key] = $value['notice_schedule'];
+                }                 
+                // array_multisortで'notice_schedule'の列を日付順に並び替える
+                array_multisort($id, SORT_DESC, $noticeInfoData['noticeInfo']);
+                 
+                $jNoticeInfoData = Zend_Json::encode($noticeInfoData);
+                echo $jNoticeInfoData;
+                
         } else {
             echo '';
         }
