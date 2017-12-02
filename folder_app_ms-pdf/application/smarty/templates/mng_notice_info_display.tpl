@@ -72,7 +72,9 @@
     <input type="hidden" name="page" value="{$page}">
     <input class="btn" type="submit" value="戻る" />
 </form>
-{if $noticeFlg == "0"}
+
+<!-- 修正前 -->
+<!-- {if $noticeFlg == "0"}
 <form id="del_form" method="post" action="../mng/delnoticeinfo" onSubmit="return double()">
     <input type="hidden" name="notice_info_no" value="{$noticeInfoNo}">
     <input class="btn" id="notice_info_del" type="button" value="削除" />
@@ -81,7 +83,17 @@
     <input type="hidden" name="notice_info_no" value="{$noticeInfoNo}">
     <input class="btn" type="submit" value="編集" />
 </form>
-{/if}
+{/if} -->
+
+<!-- 修正後-配信後でもお知らせ「編集」「削除」できるようにする-->
+<form id="del_form" method="post" action="../mng/delnoticeinfo" onSubmit="return double()">
+    <input type="hidden" name="notice_info_no" value="{$noticeInfoNo}">
+    <input class="btn" id="notice_info_del" type="button" value="削除" />
+</form>
+<form method="post" action="../mng/dispeditnoticeinfo" onSubmit="return double()">
+    <input type="hidden" name="notice_info_no" value="{$noticeInfoNo}">
+    <input class="btn" type="submit" value="編集" />
+</form>
 {if $entryMethod == "1"}
 <form>
     <input type="hidden" name="notice_info_no" value="{$noticeInfoNo}">
