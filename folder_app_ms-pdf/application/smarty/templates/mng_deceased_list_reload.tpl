@@ -77,3 +77,35 @@
     {/if}
 {/foreach}
 </p>
+
+<!-- QR読込かつ通知可　総数 -->
+        <h2 style="margin-top: 70px;">QR読込かつ通知可　総数</h2>
+        {if empty($allinstallNumber) == false}
+        <span>
+
+            <table>
+                 <tr>
+                    <td colspan=3 align="center" style="font-size: 17px; background: #eee; width: 600px;">現在総数</td>
+                </tr>
+                <tr>
+                    <td align="center" style="font-size: 17px; background: #eee;">Android</td>
+                    <td align="center" style="font-size: 17px; background: #eee;">&nbsp;&nbsp;&nbsp;iOS&nbsp;&nbsp;&nbsp;</td>
+                    <td align="center" style="font-size: 17px; background: #eee;">&nbsp;&nbsp;&nbsp;合計&nbsp;&nbsp;&nbsp;</td>
+                </tr>
+
+                <tr style="height: 200px;">
+                    <td rowspan="3" align="center" style="font-size: 22px;">{$androidIdentificationNumberCount}</td>
+                    <td rowspan="3" align="center" style="font-size: 22px;">{$iosIdentificationNumberCount}</td>
+                    <td rowspan="3" align="center" style="font-size: 22px; font-weight: bold;">{$allIdentificationNumberCount}</td>
+                </tr>
+                <tr>
+
+                </tr>
+                <tr>
+
+                </tr>
+            </table>
+            </span>
+        {else}
+                <p><span style="color:#ff0000;">インストール情報が登録されていません{$allIdentificationNumberCount}</span></p>
+        {/if}

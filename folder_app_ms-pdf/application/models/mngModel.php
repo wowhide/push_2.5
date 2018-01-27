@@ -106,6 +106,68 @@ class mngModel {
         return true;
     }
 
+    // ========　    ＱＲ読込かつ通知許可総数    ========== //
+
+    /**
+     * Android_端末識別番号取得
+     *
+     * @param   String   deceasedId      故人番号
+     */
+     public function getAndroidIdentificationNumberList(){
+       $sql = "SELECT
+            *
+        FROM
+            t_android_registration_id
+        ";
+        $memberList = $this->_db->fetchAll($sql);
+        return $memberList;
+     }
+
+
+    /**
+     * iOS_端末識別番号取得
+     *
+     * @param   String   deceasedId      故人番号
+     */
+     public function getIosIdentificationNumberList(){
+       $sql = "SELECT
+            *
+        FROM
+            t_ios_device_token
+        ";
+         $memberList = $this->_db->fetchAll($sql);
+        return $memberList;
+     }
+
+
+    /**
+     * 全ての端末識別番号取得
+     *
+     * @param   String   deceasedId      故人番号
+     */
+     public function getAllIdentificationNumberList(){
+       $sql = "(SELECT
+                *
+            FROM
+                t_android_registration_id
+                )
+
+        UNION ALL
+
+            (SELECT
+                *
+            FROM
+                t_ios_device_token
+
+            )
+
+            ORDER BY
+                timestamp DESC
+        ";
+         $memberList = $this->_db->fetchAll($sql);
+        return $memberList;
+     }
+
     // ========　    定期通知    ========== //
 
   /**

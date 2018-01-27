@@ -2114,6 +2114,21 @@ class MngController extends Zend_Controller_Action
         //DBから故人情報を取得
         $deceasedInfoList = $this->_mngModel->getDeceasedList($searchFrom, $searchTo,$searchDeceasedName,$searchPersonInCharge);
 
+        //DBから端末識別番号取得（Android）
+        $androidIdentificationNumberList                = $this->_mngModel->getAndroidIdentificationNumberList();
+            $this->_view->androidIdentificationNumberCount  = count($androidIdentificationNumberList);
+
+        //DBから端末識別番号取得（iOS）
+        $iosIdentificationNumberList                    = $this->_mngModel->getIosIdentificationNumberList();
+            $this->_view->iosIdentificationNumberCount      = count($iosIdentificationNumberList);
+
+        //DBから端末識別番号取得（合計）
+        $allIdentificationNumberList                    = $this->_mngModel->getAllIdentificationNumberList();
+            $this->_view->allIdentificationNumberCount      = count($allIdentificationNumberList);
+
+            $this->_view->allinstallNumber      = $allIdentificationNumberList;
+
+
         //ページング処理
         //ページネーターを取得
         $paginator = new Zend_Paginator(new Zend_Paginator_Adapter_Array($deceasedInfoList));
@@ -2222,6 +2237,20 @@ class MngController extends Zend_Controller_Action
 
         //DBから故人情報を取得
         $deceasedInfoList = $this->_mngModel->getDeceasedList($searchFrom, $searchTo,$searchDeceasedName,$searchPersonInCharge);
+
+        //DBから端末識別番号取得（Android）
+        $androidIdentificationNumberList                = $this->_mngModel->getAndroidIdentificationNumberList();
+            $this->_view->androidIdentificationNumberCount  = count($androidIdentificationNumberList);
+
+        //DBから端末識別番号取得（iOS）
+        $iosIdentificationNumberList                    = $this->_mngModel->getIosIdentificationNumberList();
+            $this->_view->iosIdentificationNumberCount      = count($iosIdentificationNumberList);
+
+        //DBから端末識別番号取得（合計）
+        $allIdentificationNumberList                    = $this->_mngModel->getAllIdentificationNumberList();
+            $this->_view->allIdentificationNumberCount      = count($allIdentificationNumberList);
+
+            $this->_view->allinstallNumber      = $allIdentificationNumberList;
 
         //ページング処理
         //ページネーターを取得
