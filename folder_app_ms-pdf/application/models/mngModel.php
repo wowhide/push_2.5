@@ -1028,298 +1028,87 @@ class mngModel {
      * @param   String   $searchTo      検索条件：発注日To
      * @return  array   故人情報リスト
      */
+
     public function getDeceasedList($searchFrom, $searchTo, $searchDeceasedName, $searchPersonInCharge)
     {
-        //日付文字列をSQL条件用に編集
+        // ___SQL生成___ //
+
+        //(From)
+        $searchFromSQL = '';
+
         if (strlen($searchFrom) > 0) {
-            $searchFrom = date('Y-m-d 00:00:00', strtotime($searchFrom));
+            $searchFromSQL = "issue_datetime >='" . $searchFrom . "'";
         }
+
+        //(To)
+        $searchToSQL = '';
+
         if (strlen($searchTo) > 0) {
-            $searchTo = date('Y-m-d 23:59:59', strtotime($searchTo));
+            $searchToSQL = "issue_datetime <='" . $searchTo . "'";
+        }        
+
+        //故人名
+        $searchDeceasedNameSQL = '';
+
+        if (strlen($searchDeceasedName) > 0) {
+            $searchDeceasedNameSQL = "deceased_name LIKE '%" . $searchDeceasedName . "%'";
+        }  
+
+        //担当者名
+        $searchPersonInChargeSQL = '';
+
+        if (strlen($searchPersonInCharge) > 0) {
+            $searchPersonInChargeSQL = "charge_name ='" . $searchPersonInCharge . "'";
         }
 
-        //From:○, To:○, deceased_name:○, charge_name:○
-        if (strlen($searchFrom) > 0
-            && strlen($searchTo) > 0
-            && strlen($searchDeceasedName) > 0
-            && strlen($searchPersonInCharge) > 0) {
+        //引数から生成したSQLを配列に格納
+        $searchArray = array($searchFromSQL, $searchToSQL, $searchDeceasedNameSQL, $searchPersonInChargeSQL);
 
-            $sql = "SELECT
-                        *
-                    FROM
-                        m_deceased
-                    WHERE
-                        issue_datetime >= :search_from
-                    AND
-                        issue_datetime <= :search_to
-                    AND
-                        deceased_name = :searchDeceasedName
-                    AND
-                        charge_name = :searchPersonInCharge
-                    ORDER BY
-                        issue_datetime DESC
-                    ";
-            $deceasedList = $this->_db->fetchAll($sql, array(':search_from' => $searchFrom,
-                                                             ':search_to'   => $searchTo,
-                                                             ':searchDeceasedName'   => $searchDeceasedName,
-                                                             ':searchPersonInCharge'   => $searchPersonInCharge));
+        //配列の空要素を削除する
+        $search = array_filter($searchArray);
 
-        //From:○, To:○, deceased_name:○, charge_name:X
-        } elseif (strlen($searchFrom) > 0
-            && strlen($searchTo) > 0
-            && strlen($searchDeceasedName) > 0) {
+        //検索入力項目カウントを初期化
+        $searchCount = count($search);
 
-            $sql = "SELECT
-                        *
-                    FROM
-                        m_deceased
-                    WHERE
-                        issue_datetime >= :search_from
-                    AND
-                        issue_datetime <= :search_to
-                    AND
-                        deceased_name = :searchDeceasedName
-                    ORDER BY
-                        issue_datetime DESC
-                    ";
-            $deceasedList = $this->_db->fetchAll($sql, array(':search_from' => $searchFrom,
-                                                             ':search_to'   => $searchTo,
-                                                             ':searchDeceasedName'   => $searchDeceasedName));
+        //SQL条件文を初期化
+        $whereBlock = '';
 
+        switch ($searchCount) {
+            case 1:
+                foreach ($search as $searchwhere) {
+                        $whereBlock = "WHERE ";
+                        $whereBlock .= $searchwhere;
+                }
+                break;
+            case 2:
+            case 3:
+            case 4:
+                foreach ($search as $searchwhere) {
+                    if ($searchwhere === reset($search)) {
+                        // 最初
+                        $whereBlock = "WHERE ";
+                        $whereBlock .= $searchwhere;
+                    }
+                        $whereBlock .= "AND ";
+                        $whereBlock .= $searchwhere;
+                }
 
-        //From:○, To:○, deceased_name:X, charge_name:○
-        }elseif (strlen($searchFrom) > 0
-            && strlen($searchTo) > 0
-            && strlen($searchPersonInCharge) > 0) {
+                break;
 
-            $sql = "SELECT
-                        *
-                    FROM
-                        m_deceased
-                    WHERE
-                        issue_datetime >= :search_from
-                    AND
-                        issue_datetime <= :search_to
-                    AND
-                        charge_name = :searchPersonInCharge
-                    ORDER BY
-                        issue_datetime DESC
-                    ";
-            $deceasedList = $this->_db->fetchAll($sql, array(':search_from' => $searchFrom,
-                                                             ':search_to'   => $searchTo,
-                                                             ':searchPersonInCharge'   => $searchPersonInCharge));
-
-        //From:○, To:X, deceased_name:○, charge_name:○
-        }elseif (strlen($searchFrom) > 0
-            && strlen($searchDeceasedName) > 0
-            && strlen($searchPersonInCharge) > 0) {
-
-            $sql = "SELECT
-                        *
-                    FROM
-                        m_deceased
-                    WHERE
-                        issue_datetime >= :search_from
-                    AND
-                        deceased_name = :searchDeceasedName
-                    AND
-                        charge_name = :searchPersonInCharge
-                    ORDER BY
-                        issue_datetime DESC
-                    ";
-            $deceasedList = $this->_db->fetchAll($sql, array(':search_from' => $searchFrom,
-                                                             ':searchDeceasedName'   => $searchDeceasedName,
-                                                             ':searchPersonInCharge'   => $searchPersonInCharge));
-
-        //From:X, To:○, deceased_name:○, charge_name:○
-        }elseif (strlen($searchTo) > 0
-            && strlen($searchDeceasedName) > 0
-            && strlen($searchPersonInCharge) > 0) {
-
-            $sql = "SELECT
-                        *
-                    FROM
-                        m_deceased
-                    WHERE
-                        issue_datetime <= :search_to
-                    AND
-                        deceased_name = :searchDeceasedName
-                    AND
-                        charge_name = :searchPersonInCharge
-                    ORDER BY
-                        issue_datetime DESC
-                    ";
-            $deceasedList = $this->_db->fetchAll($sql, array(':search_to' => $searchTo,
-                                                             ':searchDeceasedName'   => $searchDeceasedName,
-                                                             ':searchPersonInCharge'   => $searchPersonInCharge));
-        //From:X, To:X, deceased_name:○, charge_name:○
-        }elseif (strlen($searchDeceasedName) > 0
-            && strlen($searchPersonInCharge) > 0) {
-
-            $sql = "SELECT
-                        *
-                    FROM
-                        m_deceased
-                    WHERE
-                        deceased_name = :searchDeceasedName
-                    AND
-                        charge_name = :searchPersonInCharge
-                    ORDER BY
-                        issue_datetime DESC
-                    ";
-            $deceasedList = $this->_db->fetchAll($sql, array(':searchDeceasedName'   => $searchDeceasedName,
-
-                                                             ':searchPersonInCharge'   => $searchPersonInCharge));
-        //From:X, To:○, deceased_name:X, charge_name:○
-        }elseif (strlen($searchTo) > 0
-            && strlen($searchPersonInCharge) > 0) {
-
-            $sql = "SELECT
-                        *
-                    FROM
-                        m_deceased
-                    WHERE
-                        issue_datetime <= :search_to
-                    AND
-                        charge_name = :searchPersonInCharge
-                    ORDER BY
-                        issue_datetime DESC
-                    ";
-            $deceasedList = $this->_db->fetchAll($sql, array(':search_to'   => $searchTo,
-                                                             ':searchPersonInCharge'   => $searchPersonInCharge));
-        //From:X, To:○, deceased_name:○, charge_name:X
-        }elseif (strlen($searchTo) > 0
-            && strlen($searchDeceasedName) > 0) {
-
-            $sql = "SELECT
-                        *
-                    FROM
-                        m_deceased
-                    WHERE
-                        issue_datetime <= :search_to
-                    AND
-                        deceased_name = :searchDeceasedName
-                    ORDER BY
-                        issue_datetime DESC
-                    ";
-            $deceasedList = $this->_db->fetchAll($sql, array(':search_to'   => $searchTo,
-                                                             ':searchDeceasedName'   => $searchDeceasedName));
-
-        //From:○, To:○, deceased_name:X, charge_name:X
-        }elseif (strlen($searchFrom) > 0
-            && strlen($searchTo) > 0) {
-
-            $sql = "SELECT
-                        *
-                    FROM
-                        m_deceased
-                    WHERE
-                        issue_datetime >= :search_from
-                    AND
-                        issue_datetime <= :search_to
-                    ORDER BY
-                        issue_datetime DESC
-                    ";
-            $deceasedList = $this->_db->fetchAll($sql, array(':search_from'   => $searchFrom,
-                                                             ':search_to'   => $searchTo));
-        //From:○, To:X, deceased_name:o, charge_name:X
-        }elseif (strlen($searchFrom) > 0
-            && strlen($searchDeceasedName) > 0) {
-
-            $sql = "SELECT
-                        *
-                    FROM
-                        m_deceased
-                    WHERE
-                        issue_datetime >= :search_from
-                    AND
-                        deceased_name = :searchDeceasedName
-                    ORDER BY
-                        issue_datetime DESC
-                    ";
-            $deceasedList = $this->_db->fetchAll($sql, array(':search_from'   => $searchFrom,
-                                                             ':searchDeceasedName'   => $searchDeceasedName));
-        //From:○, To:X, deceased_name:X, charge_name:○
-        }elseif (strlen($searchFrom) > 0
-            && strlen($searchPersonInCharge) > 0) {
-
-            $sql = "SELECT
-                        *
-                    FROM
-                        m_deceased
-                    WHERE
-                        issue_datetime >= :search_from
-                    AND
-                        charge_name = :searchPersonInCharge
-                    ORDER BY
-                        issue_datetime DESC
-                    ";
-            $deceasedList = $this->_db->fetchAll($sql, array(':search_from'   => $searchFrom,
-                                                             ':searchPersonInCharge'   => $searchPersonInCharge));
-        //From:のみ
-        }elseif (strlen($searchFrom) > 0) {
-            $sql = "SELECT
-                        *
-                    FROM
-                        m_deceased
-                    WHERE
-                        issue_datetime >= :search_from
-                    ORDER BY
-                        issue_datetime DESC
-                    ";
-            $deceasedList = $this->_db->fetchAll($sql, array(':search_from' => $searchFrom));
-
-        //To:のみ
-        } elseif (strlen($searchTo) > 0) {
-            $sql = "SELECT
-                        *
-                    FROM
-                        m_deceased
-                    WHERE
-                        issue_datetime <= :search_to
-                    ORDER BY
-                        issue_datetime DESC
-                    ";
-            $deceasedList = $this->_db->fetchAll($sql, array(':search_to' => $searchTo));
-
-        //Deceased_Name:のみ
-        } elseif (strlen($searchDeceasedName) > 0) {
-            $sql = "SELECT
-                        *
-                    FROM
-                        m_deceased
-                    WHERE
-                        deceased_name = :searchDeceasedName
-                    ORDER BY
-                        issue_datetime DESC
-                    ";
-            $deceasedList = $this->_db->fetchAll($sql, array(':searchDeceasedName' => $searchDeceasedName));
-
-        //Charge_Name:のみ
-        }  elseif (strlen($searchPersonInCharge) > 0) {
-            $sql = "SELECT
-                        *
-                    FROM
-                        m_deceased
-                    WHERE
-                        charge_name = :searchPersonInCharge
-                    ORDER BY
-                        issue_datetime DESC
-                    ";
-            $deceasedList = $this->_db->fetchAll($sql, array(':searchPersonInCharge' => $searchPersonInCharge));
-
-        } else {
-            $sql = "SELECT
-                        *
-                    FROM
-                        m_deceased
-                    ORDER BY
-                        issue_datetime DESC
-                    ";
-            $deceasedList = $this->_db->fetchAll($sql);
+            default:
+                $whereBlock = '';
+                break;
         }
+
+        $sql = "SELECT * FROM 
+                ((select * from m_deceased right join c_qr_install_count on m_deceased.deceased_id = c_qr_install_count.qr_install_deceased_id)
+                UNION ALL
+                (select * from m_deceased left join c_qr_install_count on c_qr_install_count.qr_install_count IS NULL)) 
+                as UNI " . $whereBlock . " group by deceased_id ORDER BY issue_datetime DESC";              
+        $deceasedList = $this->_db->fetchAll($sql);
 
         return $deceasedList;
+
     }
 
     /**

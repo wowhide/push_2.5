@@ -1,6 +1,6 @@
 <table id="deceased_list">
     <tr>
-        <th class="deceased_name">故人様名</th><th class="deathday">命日</th><th class="issue_day">発注日時</th><th class="entry_day">発行日</th><th class="state">発行状態</th><th class="charge">担当者</th><th class="operate1"></th><th class="operate2"></th>
+        <th class="deceased_name">故人様名</th><th class="deathday">命日</th><th class="issue_day">発注日時</th><th class="entry_day">QR読込かつ<br>通知可</th><th class="state">発行状態</th><th class="charge">担当者</th><th class="operate1"></th><th class="operate2"></th>
     </tr>
 {foreach from = $deceasedInfoList item = "deceasedInfo"}
     
@@ -16,14 +16,14 @@
         <td>{$deceasedInfo.deceased_name|escape}&nbsp;様</td>
         <td>{date('Y/m/d', strtotime($deceasedInfo.deceased_deathday))}</td>
         <td>{$deceasedInfo.issue_datetime|date_format:"%Y/%m/%d %H:%M"}</td>
-        <td>
-{if $deceasedInfo.issue_state_code == "1" || $deceasedInfo.issue_state_code == "2"}
-            －
+        <td align="center">
+{if $deceasedInfo.qr_install_count == NULL}
+        0
 {else}
-            {$deceasedInfo.entry_datetime|date_format:"%Y/%m/%d"}
+        {$deceasedInfo.qr_install_count}
 {/if}
         </td>
-        <td>
+        <td align="center">
 {if $deceasedInfo.issue_state_code == "1"}
             発行依頼済み
 {elseif $deceasedInfo.issue_state_code == "2"}
@@ -34,7 +34,7 @@
             削除
 {/if}
         </td>
-        <td>
+        <td align="center">
 {if strlen($deceasedInfo.charge_name) > 0 }
             {$deceasedInfo.charge_name|escape}&nbsp;様
 {else}
